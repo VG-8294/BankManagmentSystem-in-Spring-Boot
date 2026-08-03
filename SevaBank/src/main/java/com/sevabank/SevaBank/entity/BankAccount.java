@@ -1,15 +1,17 @@
-package com.sevabank.SevaBank.Entity;
+package com.sevabank.SevaBank.entity;
 
 import com.sevabank.SevaBank.Enum.AccountType;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "bankaccount", schema = "account_schema")
-public abstract class BankAccount {
-    private static int nextAccNo = 1000;
+public class BankAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int accNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
     @Column(name = "balance", nullable = false)
     protected double balance;
     @Enumerated(EnumType.STRING)
@@ -20,9 +22,9 @@ public abstract class BankAccount {
     @Column(name = "overdraft_limit")
     private double overdraft_limit;
 
-    public BankAccount(double balance, AccountType saving){
+    public BankAccount(double balance, AccountType accountType){
         this.balance = balance;
-        this.accNo = nextAccNo++;
+        this.accountType = accountType;
     }
 
     public int getAccNo() {

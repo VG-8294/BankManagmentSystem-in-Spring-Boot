@@ -1,4 +1,4 @@
-package com.sevabank.SevaBank.Entity;
+package com.sevabank.SevaBank.entity;
 
 import jakarta.persistence.*;
 
@@ -17,11 +17,18 @@ public class User {
     @Column(name = "age", nullable = false)
     private int age;
 
+    public User() {
+    }
+
     public User(String name, String email, String password, int age) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.age = age;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {

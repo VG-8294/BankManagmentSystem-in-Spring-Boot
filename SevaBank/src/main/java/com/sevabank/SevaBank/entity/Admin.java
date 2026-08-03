@@ -1,4 +1,4 @@
-package com.sevabank.SevaBank.Entity;
+package com.sevabank.SevaBank.entity;
 
 import jakarta.persistence.*;
 
