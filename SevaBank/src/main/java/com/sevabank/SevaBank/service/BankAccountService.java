@@ -1,14 +1,17 @@
 package com.sevabank.SevaBank.service;
 
 import com.sevabank.SevaBank.Enum.AccountType;
-import com.sevabank.SevaBank.dto.BalanceReq;
+import com.sevabank.SevaBank.Enum.TransactionType;
 import com.sevabank.SevaBank.dto.CreateBankAccountRequest;
 import com.sevabank.SevaBank.entity.BankAccount;
+import com.sevabank.SevaBank.entity.Transaction;
 import com.sevabank.SevaBank.entity.User;
 import com.sevabank.SevaBank.repository.BankAccountRepository;
+import com.sevabank.SevaBank.repository.TransactionRepository;
 import com.sevabank.SevaBank.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,11 +20,25 @@ public class BankAccountService {
 
     UserRepository userRepository;
     BankAccountRepository bankAccountRepository;
+    TransactionRepository transactionRepository;
 
-    public BankAccountService(BankAccountRepository bankAccountRepository, UserRepository userRepository) {
+    public BankAccountService(BankAccountRepository bankAccountRepository, UserRepository userRepository, TransactionRepository transactionRepository) {
         this.bankAccountRepository = bankAccountRepository;
         this.userRepository = userRepository;
+        this.transactionRepository = transactionRepository;
     }
+
+    private void saveTransaction(BankAccount account, TransactionType transactionType, double amount, double currBal){
+        Transaction tx = new Transaction();
+        tx.setBankAccount(account);
+        tx.setAmount(amount);
+        tx.setBalanceAfterTransaction(currBal);
+        tx.setTransactionType(transactionType);
+        tx.setTransactionTime(LocalDateTime.now());
+
+        transactionRepository.save(tx);
+    }
+
 
     public BankAccount createBankAccount(CreateBankAccountRequest bankReq) {
 
@@ -77,6 +94,7 @@ public class BankAccountService {
         BankAccount accountInDep = account.get();
         accountInDep.deposit(balance);
         bankAccountRepository.save(accountInDep);
+        saveTransaction(accountInDep, TransactionType.DEPOSIT, balance, accountInDep.getBalance());
         return true;
     }
 
@@ -89,6 +107,7 @@ public class BankAccountService {
         BankAccount accountInDep = account.get();
         accountInDep.withdraw(balance);
         bankAccountRepository.save(accountInDep);
+        saveTransaction(accountInDep, TransactionType.WITHDRAW, balance, accountInDep.getBalance());
         return true;
     }
 
@@ -108,6 +127,7 @@ public class BankAccountService {
             return null;
         }
         BankAccount accountToExist = accountExist.get();
+        saveTransaction(accountToExist, TransactionType.INTEREST, accountToExist.calculateInt(), accountToExist.getBalance());
         return accountToExist.calculateInt();
     }
 

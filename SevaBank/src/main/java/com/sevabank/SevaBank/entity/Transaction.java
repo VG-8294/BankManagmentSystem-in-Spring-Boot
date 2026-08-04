@@ -23,11 +23,11 @@ public class Transaction {
     @Column(name = "transaction_type", nullable = false)
     private TransactionType transactionType;
 
-    @Column(name = "amount", nullable = false, precision = 15, scale = 2)
-    private BigDecimal amount;
+    @Column(name = "amount", nullable = false)
+    private double amount;
 
-    @Column(name = "balance_after_transaction", nullable = false, precision = 15, scale = 2)
-    private BigDecimal balanceAfterTransaction;
+    @Column(name = "balance_after_transaction", nullable = false)
+    private double balanceAfterTransaction;
 
     @Column(name = "transaction_time", nullable = false)
     private LocalDateTime transactionTime;
@@ -37,8 +37,8 @@ public class Transaction {
 
     public Transaction(BankAccount bankAccount,
                        TransactionType transactionType,
-                       BigDecimal amount,
-                       BigDecimal balanceAfterTransaction) {
+                       double amount,
+                       double balanceAfterTransaction) {
         this.bankAccount = bankAccount;
         this.transactionType = transactionType;
         this.amount = amount;
@@ -66,19 +66,19 @@ public class Transaction {
         this.transactionType = transactionType;
     }
 
-    public BigDecimal getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
-    public BigDecimal getBalanceAfterTransaction() {
+    public double getBalanceAfterTransaction() {
         return balanceAfterTransaction;
     }
 
-    public void setBalanceAfterTransaction(BigDecimal balanceAfterTransaction) {
+    public void setBalanceAfterTransaction(double balanceAfterTransaction) {
         this.balanceAfterTransaction = balanceAfterTransaction;
     }
 
