@@ -1,5 +1,6 @@
 package com.sevabank.SevaBank.controller;
 
+import com.sevabank.SevaBank.dto.BalanceReq;
 import com.sevabank.SevaBank.dto.CreateBankAccountRequest;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.service.BankAccountService;
@@ -54,4 +55,49 @@ public class BankAccountController {
                 .status(HttpStatus.OK)
                 .body("Account Deleted!");
     }
+
+    @PostMapping("/deposit/{id}")
+    public ResponseEntity<String> deposit(@PathVariable Long id, @RequestBody BalanceReq balanceReq){
+        Boolean isDeposited = bankAccountService.depositInAccount(id, balanceReq.getBalance());
+        if(!isDeposited){
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Not able to deposit your amount");
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("Amount deposited!");
+    }
+
+    @PostMapping("/withdraw/{id}")
+    public ResponseEntity<String> withdraw(@PathVariable Long id, @RequestBody BalanceReq balanceReq){
+        Boolean isWithdrawlSuccess = bankAccountService.withdrawInAccount(id, balanceReq.getBalance());
+        if(!isWithdrawlSuccess){
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Not able to withdraw your amount");
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("Amount withdrawal successfull!");
+    }
+
+    @GetMapping("/balance/{id}")
+    public ResponseEntity<String> checkBalance(@PathVariable Long id){
+        Double bal = bankAccountService.checkBalance(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(String.valueOf(bal));
+    }
+
+    @GetMapping("/interest/{id}")
+    public ResponseEntity<Double> checkInterest(@PathVariable Long id){
+        Double interest = bankAccountService.calculateInterest(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(interest);
+    }
+
 }

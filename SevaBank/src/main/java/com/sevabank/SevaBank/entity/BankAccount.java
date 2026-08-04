@@ -106,6 +106,10 @@ public class BankAccount {
         isDeleted = deleted;
     }
 
+    public double calculateInt(){
+        return balance*interestRate;
+    }
+
     @Override
     public String toString() {
         return "BankAccount{" +

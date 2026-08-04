@@ -1,6 +1,7 @@
 package com.sevabank.SevaBank.service;
 
 import com.sevabank.SevaBank.Enum.AccountType;
+import com.sevabank.SevaBank.dto.BalanceReq;
 import com.sevabank.SevaBank.dto.CreateBankAccountRequest;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.entity.User;
@@ -66,4 +67,49 @@ public class BankAccountService {
         bankAccountRepository.save(accountToDel);
         return accountToDel.getDeleted();
     }
+
+    public Boolean depositInAccount(Long id, double balance) {
+        Boolean isAmountDep = bankAccountRepository.existsById(id);
+        if(!isAmountDep){
+            return false;
+        }
+        Optional<BankAccount> account = bankAccountRepository.findById(id);
+        BankAccount accountInDep = account.get();
+        accountInDep.deposit(balance);
+        bankAccountRepository.save(accountInDep);
+        return true;
+    }
+
+    public Boolean withdrawInAccount(Long id, double balance) {
+        Boolean isAmountDep = bankAccountRepository.existsById(id);
+        if(!isAmountDep){
+            return false;
+        }
+        Optional<BankAccount> account = bankAccountRepository.findById(id);
+        BankAccount accountInDep = account.get();
+        accountInDep.withdraw(balance);
+        bankAccountRepository.save(accountInDep);
+        return true;
+    }
+
+
+    public Double checkBalance(Long id) {
+        Optional<BankAccount> accountExist = bankAccountRepository.findById(id);
+        if(accountExist.isEmpty()){
+            return null;
+        }
+        BankAccount accountToExist = accountExist.get();
+        return accountToExist.getBalance();
+    }
+
+    public Double calculateInterest(Long id) {
+        Optional<BankAccount> accountExist = bankAccountRepository.findById(id);
+        if(accountExist.isEmpty()){
+            return null;
+        }
+        BankAccount accountToExist = accountExist.get();
+        return accountToExist.calculateInt();
+    }
+
+
 }
