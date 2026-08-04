@@ -1,5 +1,6 @@
 package com.sevabank.SevaBank.controller;
 
+import com.sevabank.SevaBank.dto.CreateBankAccountRequest;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.service.BankAccountService;
 import org.springframework.http.HttpStatus;
@@ -20,8 +21,8 @@ public class BankAccountController {
     }
 
     @PostMapping
-    public ResponseEntity<BankAccount> createBankAccount(@RequestBody BankAccount bankAccount){
-        BankAccount createdBankAccount = bankAccountService.createBankAccount(bankAccount);
+    public ResponseEntity<BankAccount> createBankAccount(@RequestBody CreateBankAccountRequest bankReq){
+        BankAccount createdBankAccount = bankAccountService.createBankAccount(bankReq);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(createdBankAccount);

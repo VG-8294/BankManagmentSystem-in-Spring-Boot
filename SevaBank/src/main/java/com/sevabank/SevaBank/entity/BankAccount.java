@@ -22,9 +22,12 @@ public class BankAccount {
     @Column(name = "overdraft_limit")
     private double overdraft_limit;
 
-    public BankAccount(double balance, AccountType accountType){
+    public BankAccount() {
+    }
+
+    public BankAccount(double balance, String accountType){
         this.balance = balance;
-        this.accountType = accountType;
+        this.accountType = AccountType.valueOf(accountType);
     }
 
     public int getAccNo() {
@@ -49,6 +52,38 @@ public class BankAccount {
 
     public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public double getInterest_rate() {
+        return interest_rate;
+    }
+
+    public void setInterest_rate(double interest_rate) {
+        this.interest_rate = interest_rate;
+    }
+
+    public double getOverdraft_limit() {
+        return overdraft_limit;
+    }
+
+    public void setOverdraft_limit(double overdraft_limit) {
+        this.overdraft_limit = overdraft_limit;
     }
 
     @Override
