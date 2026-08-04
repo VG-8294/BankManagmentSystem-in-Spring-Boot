@@ -3,12 +3,12 @@ package com.sevabank.SevaBank.dto;
 import com.sevabank.SevaBank.Enum.AccountType;
 
 public class CreateBankAccountRequest {
+
     private Long userId;
     private double balance;
     private AccountType accountType;
     private Double interestRate;
     private Double overdraftLimit;
-
 
     public Long getUserId() {
         return userId;

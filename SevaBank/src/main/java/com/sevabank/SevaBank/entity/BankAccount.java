@@ -6,43 +6,55 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "bankaccount", schema = "account_schema")
 public class BankAccount {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int accNo;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
     @Column(name = "balance", nullable = false)
     protected double balance;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
     protected AccountType accountType;
+
     @Column(name = "interest_rate")
-    private double interest_rate;
+    private Double interestRate;
+
     @Column(name = "overdraft_limit")
-    private double overdraft_limit;
+    private Double overdraftLimit;
+
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
 
     public BankAccount() {
     }
 
-    public BankAccount(double balance, String accountType){
+    public BankAccount(double balance, String accountType, Double interestRate, Double overdraftLimit) {
         this.balance = balance;
         this.accountType = AccountType.valueOf(accountType);
+        this.interestRate = interestRate;
+        this.overdraftLimit = overdraftLimit;
+        this.isDeleted = false;
     }
 
     public int getAccNo() {
         return accNo;
     }
 
-    public void deposit(double amt){
+    public void deposit(double amt) {
         balance += amt;
     }
 
-    public void withdraw(double amt){
+    public void withdraw(double amt) {
         balance -= amt;
     }
 
-    public double checkBalance(){
+    public double checkBalance() {
         return balance;
     }
 
@@ -70,20 +82,28 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public double getInterest_rate() {
-        return interest_rate;
+    public Double getInterestRate() {
+        return interestRate;
     }
 
-    public void setInterest_rate(double interest_rate) {
-        this.interest_rate = interest_rate;
+    public void setInterestRate(Double interestRate) {
+        this.interestRate = interestRate;
     }
 
-    public double getOverdraft_limit() {
-        return overdraft_limit;
+    public Double getOverdraftLimit() {
+        return overdraftLimit;
     }
 
-    public void setOverdraft_limit(double overdraft_limit) {
-        this.overdraft_limit = overdraft_limit;
+    public void setOverdraftLimit(Double overdraftLimit) {
+        this.overdraftLimit = overdraftLimit;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.sevabank.SevaBank.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users", schema = "user_schema")
 public class User {
@@ -16,6 +18,8 @@ public class User {
     private String password;
     @Column(name = "age", nullable = false)
     private int age;
+    @OneToMany(mappedBy = "user")
+    private List<BankAccount> bankAccounts;
 
     public User() {
     }
