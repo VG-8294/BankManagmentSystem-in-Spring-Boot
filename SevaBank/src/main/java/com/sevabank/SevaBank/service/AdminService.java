@@ -1,6 +1,7 @@
 package com.sevabank.SevaBank.service;
 
 import com.sevabank.SevaBank.Enum.AccountType;
+import com.sevabank.SevaBank.dto.AgeReqDto;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.entity.User;
 import com.sevabank.SevaBank.repository.BankAccountRepository;
@@ -115,6 +116,29 @@ public class AdminService {
                 .stream()
                 .filter(x -> x.getBalance() > amt)
                 .map(BankAccount::getUser)
+                .collect(Collectors.toList());
+    }
+
+    public List<User> getUserAboveAge(Integer age) {
+        return userRepository.findAll()
+                .stream()
+                .filter(x -> x.getAge() > age)
+                .collect(Collectors.toList());
+    }
+
+    public User getUserByAccNo(Long accNo) {
+        return bankAccountRepository.findAll()
+                .stream()
+                .filter(x -> x.getAccNo() == accNo)
+                .map(BankAccount::getUser)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<User> getUserBwAge(AgeReqDto ageReqDto) {
+        return userRepository.findAll()
+                .stream()
+                .filter(x -> x.getAge() > ageReqDto.getAge1() && x.getAge() <ageReqDto.getAge2())
                 .collect(Collectors.toList());
     }
 }

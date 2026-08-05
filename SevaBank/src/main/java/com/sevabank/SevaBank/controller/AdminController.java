@@ -1,13 +1,11 @@
 package com.sevabank.SevaBank.controller;
 
+import com.sevabank.SevaBank.dto.AgeReqDto;
 import com.sevabank.SevaBank.entity.User;
 import com.sevabank.SevaBank.service.AdminService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -107,5 +105,32 @@ public class AdminController {
                 .status(HttpStatus.OK)
                 .body(user);
     }
+
+    @GetMapping("/getUsersAboveSomeAge/{age}")
+    public ResponseEntity<List<User>> getUserAboveAge(@PathVariable Integer age){
+        List<User> user = adminService.getUserAboveAge(age);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(user);
+    }
+
+    @GetMapping("/getUserByAccNo/{accNo}")
+    public ResponseEntity<User> getUserByAccNo(@PathVariable Long accNo){
+        User user = adminService.getUserByAccNo(accNo);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(user);
+    }
+
+    @GetMapping("/getUsersBwAge")
+    public ResponseEntity<List<User>> getUserBwAge(@RequestBody AgeReqDto ageReqDto){
+        List<User> users = adminService.getUserBwAge(ageReqDto);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(users);
+    }
+
+
+
 
  }
