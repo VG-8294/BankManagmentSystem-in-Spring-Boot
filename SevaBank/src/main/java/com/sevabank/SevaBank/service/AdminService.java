@@ -1,0 +1,120 @@
+package com.sevabank.SevaBank.service;
+
+import com.sevabank.SevaBank.Enum.AccountType;
+import com.sevabank.SevaBank.entity.BankAccount;
+import com.sevabank.SevaBank.entity.User;
+import com.sevabank.SevaBank.repository.BankAccountRepository;
+import com.sevabank.SevaBank.repository.UserRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+@Service
+public class AdminService {
+
+    private UserRepository userRepository;
+    private BankAccountRepository bankAccountRepository;
+
+    public AdminService(UserRepository userRepository, BankAccountRepository bankAccountRepository) {
+        this.userRepository = userRepository;
+        this.bankAccountRepository = bankAccountRepository;
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public List<User> getUsersLessThanBal(Double balance){
+        List<BankAccount> accounts = bankAccountRepository.findAll();
+        return accounts.stream()
+                .filter(x -> x.getBalance() < balance)
+                .map(BankAccount::getUser)
+                .collect(Collectors.toList());
+    }
+
+    public List<User> getUsersHavingSaving(){
+        List<BankAccount> accounts = bankAccountRepository.findAll();
+        return accounts
+                .stream()
+                .filter(x -> x.getAccountType() == AccountType.SAVING)
+                .map(BankAccount::getUser)
+                .collect(Collectors.toList());
+    }
+
+    public List<User> getUsersHavingCurrent() {
+        List<BankAccount> accounts = bankAccountRepository.findAll();
+        return accounts
+                .stream()
+                .filter(x -> x.getAccountType() == AccountType.CURRENT)
+                .map(BankAccount::getUser)
+                .collect(Collectors.toList());
+    }
+
+    public List<User> getOldAgeUsers() {
+        List<User> users = userRepository.findAll();
+        return users
+                .stream()
+                .filter(x -> x.getAge() >= 60)
+                .collect(Collectors.toList());
+    }
+
+    public User getUsersByEmail(String email) {
+        List<User> users = userRepository.findAll();
+        Optional<User> user = users
+                .stream()
+                .filter(x -> x.getEmail().equals(email))
+                .findFirst();
+
+        return user.orElse(null);
+
+    }
+
+
+    public List<String> getAllUsersEmail() {
+        List<User> users = userRepository.findAll();
+        return users
+                .stream()
+                .map(User::getEmail)
+                .collect(Collectors.toList());
+    }
+
+    public Integer getTotalNoAcc() {
+        List<BankAccount> accounts = bankAccountRepository.findAll();
+        return Math.toIntExact(accounts
+                .stream()
+                .count());
+    }
+
+
+    public Double getTotalMoneyInBank() {
+        List<BankAccount> accounts = bankAccountRepository.findAll();
+        return accounts
+                .stream()
+                .mapToDouble(BankAccount::getBalance)
+                .sum();
+    }
+
+    public User getUserWithMaxBal() {
+        List<BankAccount> accounts = bankAccountRepository.findAll();
+        return accounts
+                .stream()
+                .max(Comparator.comparing(BankAccount::getBalance))
+                .map(BankAccount::getUser)
+                .stream().findFirst()
+                .orElse(null);
+    }
+
+    public List<User> getUserOverSpecificBal(Double amt) {
+        List<BankAccount> accounts = bankAccountRepository.findAll();
+        return accounts
+                .stream()
+                .filter(x -> x.getBalance() > amt)
+                .map(BankAccount::getUser)
+                .collect(Collectors.toList());
+    }
+}
