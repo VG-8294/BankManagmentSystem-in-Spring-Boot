@@ -20,91 +20,58 @@ public class AdminController {
     }
 
     @GetMapping("/getAllUsers")
-    public ResponseEntity<List<User>> getAllUsers(){
-        List<User> allUsers = adminService.getAllUsers();
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(allUsers);
+    public List<UserResponseDto> getAllUsers(){
+        return adminService.getAllUsers();
     }
 
     @GetMapping("/getUsersLessThanBal/{amount}")
-    public ResponseEntity<List<User>> getUsersLessThanBal(@PathVariable Double amount){
-        List<User> users = adminService.getUsersLessThanBal(amount);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(users);
+    public List<UserResponseDto> getUsersLessThanBal(@PathVariable Double amount){
+        return adminService.getUsersLessThanBal(amount);
     }
 
     @GetMapping("/v1/getUsersThanBal/{amount}")
-    public ResponseEntity<List<User>> getUsersLessThanBalV1(@PathVariable Double amount){
-        List<User> users = adminService.getUsersLessThanBalV1(amount);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(users);
+    public List<UserResponseDto> getUsersLessThanBalV1(@PathVariable Double amount){
+        return adminService.getUsersLessThanBalV1(amount);
     }
 
     @GetMapping("/getUsersHavingSaving")
-    public ResponseEntity<List<User>> getUsersHavingSaving(){
-        List<User> users = adminService.getUsersHavingSaving();
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(users);
+    public List<UserResponseDto> getUsersHavingSaving(){
+        return adminService.getUsersHavingSaving();
     }
 
     @GetMapping("/getUsersHavingCurrent")
-    public ResponseEntity<List<User>> getUsersHavingCurrent(){
-        List<User> users = adminService.getUsersHavingCurrent();
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(users);
+    public List<UserResponseDto> getUsersHavingCurrent(){
+        return adminService.getUsersHavingCurrent();
     }
 
     @GetMapping("/getOldAgeUsers")
-    public ResponseEntity<List<User>> getOldAgeUsers(){
-        List<User> users = adminService.getOldAgeUsers();
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(users);
+    public List<UserResponseDto> getOldAgeUsers(){
+        return adminService.getOldAgeUsers();
     }
 
     @GetMapping("/getUsersByEmail/{email}")
-    public ResponseEntity<User> getUsersByEmail(@PathVariable String email){
-        User user = adminService.getUsersByEmail(email);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(user);
+    public UserResponseDto getUsersByEmail(@PathVariable String email){
+        return adminService.getUsersByEmail(email);
     }
 
     @GetMapping("/getAllUsersEmail")
-    public ResponseEntity<List<String>> getAllUsersEmail(){
-        List<String> emails = adminService.getAllUsersEmail();
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(emails);
+    public List<String> getAllUsersEmail(){
+         return adminService.getAllUsersEmail();
     }
 
     @GetMapping("/getTotalNoAcc")
-    public ResponseEntity<Integer> getTotalNoAcc(){
-        Integer acc = adminService.getTotalNoAcc();
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(acc);
+    public Integer getTotalNoAcc(){
+        return adminService.getTotalNoAcc();
     }
 
     @GetMapping("/v1/getTotalNoAcc")
-    public ResponseEntity<Long> getTotalNoAccV1(){
-        Long acc = adminService.getTotalNoAccV1();
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(acc);
+    public Long getTotalNoAccV1(){
+        return adminService.getTotalNoAccV1();
     }
 
     @GetMapping("/getTotalMoney")
-    public ResponseEntity<Double> getTotalMoney(){
-        Double money = adminService.getTotalMoneyInBank();
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(money);
+    public Double getTotalMoney(){
+        return adminService.getTotalMoneyInBank();
     }
 
 //    @GetMapping("/getUserWithMaxBal")
@@ -116,63 +83,42 @@ public class AdminController {
 //    }
 
     @GetMapping("/getUsersOverCertainBal/{amt}")
-    public ResponseEntity<List<User>> getUserWithSpecificBal(@PathVariable Double amt){
-        List<User> user = adminService.getUserOverSpecificBal(amt);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(user);
+    public List<UserResponseDto> getUserWithSpecificBal(@PathVariable Double amt){
+        return adminService.getUserOverSpecificBal(amt);
     }
 
     @GetMapping("/v1/getUsersOverCertainBal/{amt}")
-    public ResponseEntity<List<User>> getUserWithSpecificBalV1(@PathVariable Double amt){
-        List<User> user = adminService.getUserOverSpecificBalV1(amt);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(user);
+    public List<UserResponseDto> getUserWithSpecificBalV1(@PathVariable Double amt){
+        return adminService.getUserOverSpecificBalV1(amt);
     }
 
     @GetMapping("/getUsersAboveSomeAge/{age}")
-    public ResponseEntity<List<User>> getUserAboveAge(@PathVariable Integer age){
-        List<User> user = adminService.getUserAboveAge(age);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(user);
+    public List<UserResponseDto> getUserAboveAge(@PathVariable Integer age){
+        return adminService.getUserAboveAge(age);
     }
 
     @GetMapping("/v1/getUsersAboveSomeAge/{age}")
-    public ResponseEntity<List<User>> getUserAboveAgeV1(@PathVariable Integer age){
-        List<User> user = adminService.getUserAboveAgeV1(age);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(user);
+    public List<UserResponseDto> getUserAboveAgeV1(@PathVariable Integer age){
+        return adminService.getUserAboveAgeV1(age);
     }
 
 
 
     @GetMapping("/getUserByAccNo/{accNo}")
-    public ResponseEntity<User> getUserByAccNo(@PathVariable Long accNo){
-        User user = adminService.getUserByAccNo(accNo);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(user);
+    public UserResponseDto getUserByAccNo(@PathVariable Long accNo){
+        return adminService.getUserByAccNo(accNo);
     }
 
     @GetMapping("/v1/getUserByAccNo/{accNo}")
-    public ResponseEntity<UserResponseDto> getUserByAccNoV1(@PathVariable Long accNo){
-        UserResponseDto user = adminService.getUserByAccNoV1(accNo);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(user);
+    public UserResponseDto getUserByAccNoV1(@PathVariable Long accNo){
+        return adminService.getUserByAccNoV1(accNo);
     }
 
 
 
     @GetMapping("/getUsersBwAge")
-    public ResponseEntity<List<User>> getUserBwAge(@RequestBody AgeReqDto ageReqDto){
-        List<User> users = adminService.getUserBwAge(ageReqDto);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(users);
+    public List<UserResponseDto> getUserBwAge(@RequestBody AgeReqDto ageReqDto){
+        return adminService.getUserBwAge(ageReqDto);
     }
 
 

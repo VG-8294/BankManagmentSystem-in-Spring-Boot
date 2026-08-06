@@ -6,6 +6,9 @@ public class RegisterReqDto {
     private String password;
     private int age;
 
+    public RegisterReqDto() {
+    }
+
     public String getName() {
         return name;
     }

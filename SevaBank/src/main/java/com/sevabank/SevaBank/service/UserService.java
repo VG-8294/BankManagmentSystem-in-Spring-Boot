@@ -1,6 +1,8 @@
 package com.sevabank.SevaBank.service;
 
 import com.sevabank.SevaBank.dto.LoginReqDto;
+import com.sevabank.SevaBank.dto.RegisterReqDto;
+import com.sevabank.SevaBank.dto.UserResponseDto;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.entity.User;
 import com.sevabank.SevaBank.repository.BankAccountRepository;
@@ -22,10 +24,14 @@ public class UserService {
         this.bankAccountRepository = bankAccountRepository;
     }
 
-    public User createUser(User user){
-        User newUser = new User(user.getName(), user.getEmail(), user.getPassword(), user.getAge());
+    public UserResponseDto createUser(RegisterReqDto dto){
+        User newUser = new User(dto.getName(),dto.getEmail(), dto.getPassword(), dto.getAge());
         userRepo.save(newUser);
-        return newUser;
+        UserResponseDto createdDto = new UserResponseDto();
+        createdDto.setId(newUser.getId());
+        createdDto.setName(newUser.getName());
+        createdDto.setEmail(newUser.getEmail());
+        return createdDto;
     }
 
     public List<User> getAllUsers() {

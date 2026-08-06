@@ -9,12 +9,8 @@ import com.sevabank.SevaBank.repository.BankAccountRepository;
 import com.sevabank.SevaBank.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalDouble;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class AdminService {
@@ -27,59 +23,99 @@ public class AdminService {
         this.bankAccountRepository = bankAccountRepository;
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserResponseDto> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(user -> {
+                    UserResponseDto dto = new UserResponseDto();
+                    dto.setId(user.getId());
+                    dto.setName(user.getName());
+                    dto.setEmail(user.getEmail());
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 
-    public List<User> getUsersLessThanBal(Double balance){
+    public List<UserResponseDto> getUsersLessThanBal(Double balance){
         List<BankAccount> accounts = bankAccountRepository.findAll();
         return accounts.stream()
                 .filter(x -> x.getBalance() < balance)
                 .map(BankAccount::getUser)
+                .map(x -> {
+                    UserResponseDto dto = new UserResponseDto();
+                    dto.setId(x.getId());
+                    dto.setName(x.getName());
+                    dto.setEmail(x.getEmail());
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 
-    public List<User> getUsersHavingSaving(){
+    public List<UserResponseDto> getUsersHavingSaving(){
         List<BankAccount> accounts = bankAccountRepository.findAll();
         return accounts
                 .stream()
                 .filter(x -> x.getAccountType() == AccountType.SAVING)
                 .map(BankAccount::getUser)
+                .map(user -> {
+                    UserResponseDto dto = new UserResponseDto();
+                    dto.setId(user.getId());
+                    dto.setName(user.getName());
+                    dto.setEmail(user.getEmail());
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 
-    public List<User> getUsersHavingCurrent() {
+    public List<UserResponseDto> getUsersHavingCurrent() {
         List<BankAccount> accounts = bankAccountRepository.findAll();
         return accounts
                 .stream()
                 .filter(x -> x.getAccountType() == AccountType.CURRENT)
                 .map(BankAccount::getUser)
+                .map(user -> {
+                    UserResponseDto dto = new UserResponseDto();
+                    dto.setId(user.getId());
+                    dto.setName(user.getName());
+                    dto.setEmail(user.getEmail());
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 
-    public List<User> getOldAgeUsers() {
-        List<User> users = userRepository.findAll();
-        return users
+    public List<UserResponseDto> getOldAgeUsers() {
+        return userRepository.findAll()
                 .stream()
                 .filter(x -> x.getAge() >= 60)
+                .map(user -> {
+                    UserResponseDto dto = new UserResponseDto();
+                    dto.setId(user.getId());
+                    dto.setName(user.getName());
+                    dto.setEmail(user.getEmail());
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 
-    public User getUsersByEmail(String email) {
-        List<User> users = userRepository.findAll();
-        Optional<User> user = users
+    public UserResponseDto getUsersByEmail(String email) {
+           return userRepository.findAll()
                 .stream()
                 .filter(x -> x.getEmail().equals(email))
-                .findFirst();
-
-        return user.orElse(null);
+                            .map(user -> {
+                                UserResponseDto dto = new UserResponseDto();
+                                dto.setId(user.getId());
+                                dto.setName(user.getName());
+                                dto.setEmail(user.getEmail());
+                                return dto;
+                            })
+                        .findFirst()
+                   .orElse(null);
 
     }
 
 
     public List<String> getAllUsersEmail() {
-        List<User> users = userRepository.findAll();
-        return users
+        return userRepository.findAll()
                 .stream()
                 .map(User::getEmail)
                 .collect(Collectors.toList());
@@ -110,35 +146,63 @@ public class AdminService {
 //                .get();
 //    }
 
-    public List<User> getUserOverSpecificBal(Double amt) {
+    public List<UserResponseDto> getUserOverSpecificBal(Double amt) {
         List<BankAccount> accounts = bankAccountRepository.findAll();
         return accounts
                 .stream()
                 .filter(x -> x.getBalance() > amt)
                 .map(BankAccount::getUser)
+                .map(user -> {
+                    UserResponseDto dto = new UserResponseDto();
+                    dto.setId(user.getId());
+                    dto.setName(user.getName());
+                    dto.setEmail(user.getEmail());
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 
-    public List<User> getUserAboveAge(Integer age) {
+    public List<UserResponseDto> getUserAboveAge(Integer age) {
         return userRepository.findAll()
                 .stream()
                 .filter(x -> x.getAge() > age)
+                .map(user -> {
+                    UserResponseDto dto = new UserResponseDto();
+                    dto.setId(user.getId());
+                    dto.setName(user.getName());
+                    dto.setEmail(user.getEmail());
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 
-    public User getUserByAccNo(Long accNo) {
+    public UserResponseDto getUserByAccNo(Long accNo) {
         return bankAccountRepository.findAll()
                 .stream()
                 .filter(x -> x.getAccNo() == accNo)
                 .map(BankAccount::getUser)
+                .map(user -> {
+                    UserResponseDto dto = new UserResponseDto();
+                    dto.setId(user.getId());
+                    dto.setName(user.getName());
+                    dto.setEmail(user.getEmail());
+                    return dto;
+                })
                 .findFirst()
                 .orElse(null);
     }
 
-    public List<User> getUserBwAge(AgeReqDto ageReqDto) {
+    public List<UserResponseDto> getUserBwAge(AgeReqDto ageReqDto) {
         return userRepository.findAll()
                 .stream()
                 .filter(x -> x.getAge() > ageReqDto.getAge1() && x.getAge() <ageReqDto.getAge2())
+                .map(user -> {
+                    UserResponseDto dto = new UserResponseDto();
+                    dto.setId(user.getId());
+                    dto.setName(user.getName());
+                    dto.setEmail(user.getEmail());
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -146,7 +210,7 @@ public class AdminService {
         return bankAccountRepository.count();
     }
 
-    public List<User> getUserAboveAgeV1(Integer age) {
+    public List<UserResponseDto> getUserAboveAgeV1(Integer age) {
         return userRepository.findByAgeGreaterThan(age);
     }
 
@@ -165,17 +229,32 @@ public class AdminService {
         return userResponseDto;
     }
 
-    public List<User> getUserOverSpecificBalV1(Double amt) {
+    public List<UserResponseDto> getUserOverSpecificBalV1(Double amt) {
         return bankAccountRepository.findByBalanceGreaterThan(amt)
                 .stream().map(BankAccount::getUser)
+                .map(user -> {
+                    UserResponseDto dto = new UserResponseDto();
+                    dto.setId(user.getId());
+                    dto.setName(user.getName());
+                    dto.setEmail(user.getEmail());
+                    return dto;
+                })
                 .collect(Collectors.toList());
 
     }
 
 
-    public List<User> getUsersLessThanBalV1(Double amount) {
+    public List<UserResponseDto> getUsersLessThanBalV1(Double amount) {
         return bankAccountRepository.findByBalanceLessThan(amount)
                 .stream().map(BankAccount::getUser)
+                .map(x -> {
+                    UserResponseDto dto = new UserResponseDto();
+                    dto.setId(x.getId());
+                    dto.setName(x.getName());
+                    dto.setEmail(x.getEmail());
+                    return dto;
+                })
+
                 .collect(Collectors.toList());
     }
 }
