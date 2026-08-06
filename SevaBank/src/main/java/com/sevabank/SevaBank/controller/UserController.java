@@ -1,6 +1,8 @@
 package com.sevabank.SevaBank.controller;
 
 import com.sevabank.SevaBank.dto.LoginReqDto;
+import com.sevabank.SevaBank.dto.RegisterReqDto;
+import com.sevabank.SevaBank.dto.UserResponseDto;
 import com.sevabank.SevaBank.entity.User;
 import com.sevabank.SevaBank.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -22,11 +24,8 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<User> createUser(@RequestBody User user){
-        User createdUser = userService.createUser(user);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(createdUser);
+    public UserResponseDto createUser(@RequestBody RegisterReqDto registerReqDto){
+        return userService.createUser(registerReqDto);
     }
 
 
