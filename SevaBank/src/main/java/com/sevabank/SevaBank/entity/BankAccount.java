@@ -1,10 +1,15 @@
 package com.sevabank.SevaBank.entity;
 
 import com.sevabank.SevaBank.Enum.AccountType;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "bankaccount", schema = "account_schema")
+@Getter
+@Setter
 public class BankAccount {
 
     @Id
@@ -42,10 +47,6 @@ public class BankAccount {
         this.isDeleted = false;
     }
 
-    public Long getAccNo() {
-        return accNo;
-    }
-
     public void deposit(double amt) {
         balance += amt;
     }
@@ -56,46 +57,6 @@ public class BankAccount {
 
     public double checkBalance() {
         return balance;
-    }
-
-    public AccountType getAccountType() {
-        return accountType;
-    }
-
-    public void setAccountType(AccountType accountType) {
-        this.accountType = accountType;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
-    public Double getInterestRate() {
-        return interestRate;
-    }
-
-    public void setInterestRate(Double interestRate) {
-        this.interestRate = interestRate;
-    }
-
-    public Double getOverdraftLimit() {
-        return overdraftLimit;
-    }
-
-    public void setOverdraftLimit(Double overdraftLimit) {
-        this.overdraftLimit = overdraftLimit;
     }
 
     public Boolean getDeleted() {

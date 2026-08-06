@@ -2,6 +2,7 @@ package com.sevabank.SevaBank.service;
 
 import com.sevabank.SevaBank.Enum.AccountType;
 import com.sevabank.SevaBank.dto.AgeReqDto;
+import com.sevabank.SevaBank.dto.UserResponseDto;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.entity.User;
 import com.sevabank.SevaBank.repository.BankAccountRepository;
@@ -106,8 +107,7 @@ public class AdminService {
 //                .stream()
 //                .max(Comparator.comparing(BankAccount::getBalance))
 //                .map(BankAccount::getUser)
-//                .stream().findFirst()
-//                .orElse(null);
+//                .get();
 //    }
 
     public List<User> getUserOverSpecificBal(Double amt) {
@@ -144,5 +144,38 @@ public class AdminService {
 
     public Long getTotalNoAccV1() {
         return bankAccountRepository.count();
+    }
+
+    public List<User> getUserAboveAgeV1(Integer age) {
+        return userRepository.findByAgeGreaterThan(age);
+    }
+
+    public UserResponseDto getUserByAccNoV1(Long accNo) {
+        User user =  bankAccountRepository.findByAccNo(accNo)
+                .map(BankAccount::getUser)
+                .orElse(null);
+
+        if(user == null){
+            return null;
+        }
+        UserResponseDto userResponseDto = new UserResponseDto();
+        userResponseDto.setId(user.getId());
+        userResponseDto.setName(user.getName());
+        userResponseDto.setEmail(user.getEmail());
+        return userResponseDto;
+    }
+
+    public List<User> getUserOverSpecificBalV1(Double amt) {
+        return bankAccountRepository.findByBalanceGreaterThan(amt)
+                .stream().map(BankAccount::getUser)
+                .collect(Collectors.toList());
+
+    }
+
+
+    public List<User> getUsersLessThanBalV1(Double amount) {
+        return bankAccountRepository.findByBalanceLessThan(amount)
+                .stream().map(BankAccount::getUser)
+                .collect(Collectors.toList());
     }
 }

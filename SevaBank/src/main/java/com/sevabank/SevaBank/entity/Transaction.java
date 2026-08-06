@@ -1,6 +1,9 @@
 package com.sevabank.SevaBank.entity;
 
 import com.sevabank.SevaBank.Enum.TransactionType;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 import javax.persistence.Entity;
@@ -9,6 +12,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "transactions", schema = "transaction_schema")
+@Getter
+@Setter
 public class Transaction {
 
     @Id
@@ -45,50 +50,6 @@ public class Transaction {
         this.amount = amount;
         this.balanceAfterTransaction = balanceAfterTransaction;
         this.transactionTime = LocalDateTime.now();
-    }
-
-    public Long getTransactionId() {
-        return transactionId;
-    }
-
-    public BankAccount getBankAccount() {
-        return bankAccount;
-    }
-
-    public void setBankAccount(BankAccount bankAccount) {
-        this.bankAccount = bankAccount;
-    }
-
-    public TransactionType getTransactionType() {
-        return transactionType;
-    }
-
-    public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public double getBalanceAfterTransaction() {
-        return balanceAfterTransaction;
-    }
-
-    public void setBalanceAfterTransaction(double balanceAfterTransaction) {
-        this.balanceAfterTransaction = balanceAfterTransaction;
-    }
-
-    public LocalDateTime getTransactionTime() {
-        return transactionTime;
-    }
-
-    public void setTransactionTime(LocalDateTime transactionTime) {
-        this.transactionTime = transactionTime;
     }
 
     @Override

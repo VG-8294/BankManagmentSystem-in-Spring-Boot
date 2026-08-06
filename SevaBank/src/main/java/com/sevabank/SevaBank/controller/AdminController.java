@@ -1,6 +1,7 @@
 package com.sevabank.SevaBank.controller;
 
 import com.sevabank.SevaBank.dto.AgeReqDto;
+import com.sevabank.SevaBank.dto.UserResponseDto;
 import com.sevabank.SevaBank.entity.User;
 import com.sevabank.SevaBank.service.AdminService;
 import org.springframework.http.HttpStatus;
@@ -26,9 +27,17 @@ public class AdminController {
                 .body(allUsers);
     }
 
-    @GetMapping("/getUsers/{amount}")
+    @GetMapping("/getUsersLessThanBal/{amount}")
     public ResponseEntity<List<User>> getUsersLessThanBal(@PathVariable Double amount){
         List<User> users = adminService.getUsersLessThanBal(amount);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(users);
+    }
+
+    @GetMapping("/v1/getUsersThanBal/{amount}")
+    public ResponseEntity<List<User>> getUsersLessThanBalV1(@PathVariable Double amount){
+        List<User> users = adminService.getUsersLessThanBalV1(amount);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(users);
@@ -114,6 +123,14 @@ public class AdminController {
                 .body(user);
     }
 
+    @GetMapping("/v1/getUsersOverCertainBal/{amt}")
+    public ResponseEntity<List<User>> getUserWithSpecificBalV1(@PathVariable Double amt){
+        List<User> user = adminService.getUserOverSpecificBalV1(amt);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(user);
+    }
+
     @GetMapping("/getUsersAboveSomeAge/{age}")
     public ResponseEntity<List<User>> getUserAboveAge(@PathVariable Integer age){
         List<User> user = adminService.getUserAboveAge(age);
@@ -122,6 +139,16 @@ public class AdminController {
                 .body(user);
     }
 
+    @GetMapping("/v1/getUsersAboveSomeAge/{age}")
+    public ResponseEntity<List<User>> getUserAboveAgeV1(@PathVariable Integer age){
+        List<User> user = adminService.getUserAboveAgeV1(age);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(user);
+    }
+
+
+
     @GetMapping("/getUserByAccNo/{accNo}")
     public ResponseEntity<User> getUserByAccNo(@PathVariable Long accNo){
         User user = adminService.getUserByAccNo(accNo);
@@ -129,6 +156,16 @@ public class AdminController {
                 .status(HttpStatus.OK)
                 .body(user);
     }
+
+    @GetMapping("/v1/getUserByAccNo/{accNo}")
+    public ResponseEntity<UserResponseDto> getUserByAccNoV1(@PathVariable Long accNo){
+        UserResponseDto user = adminService.getUserByAccNoV1(accNo);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(user);
+    }
+
+
 
     @GetMapping("/getUsersBwAge")
     public ResponseEntity<List<User>> getUserBwAge(@RequestBody AgeReqDto ageReqDto){
