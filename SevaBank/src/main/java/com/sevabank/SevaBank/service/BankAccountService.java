@@ -64,7 +64,7 @@ public class BankAccountService {
     public Optional<BankAccount> getBankAccountById(Long id) {
         Optional<BankAccount> bankAccount = bankAccountRepository.findById(id);
         
-        if(bankAccount.isEmpty()){
+        if(!bankAccount.isPresent()){
             return null;
         }
         return bankAccount;
@@ -76,7 +76,7 @@ public class BankAccountService {
 
     public Boolean deleteAccountById(Long id) {
         Optional<BankAccount> account = bankAccountRepository.findById(id);
-        if(account.isEmpty()){
+        if(!account.isPresent()){
             return null;
         }
         BankAccount accountToDel = account.get();
@@ -114,7 +114,7 @@ public class BankAccountService {
 
     public Double checkBalance(Long id) {
         Optional<BankAccount> accountExist = bankAccountRepository.findById(id);
-        if(accountExist.isEmpty()){
+        if(!accountExist.isPresent()){
             return null;
         }
         BankAccount accountToExist = accountExist.get();
@@ -123,13 +123,11 @@ public class BankAccountService {
 
     public Double calculateInterest(Long id) {
         Optional<BankAccount> accountExist = bankAccountRepository.findById(id);
-        if(accountExist.isEmpty()){
+        if(!accountExist.isPresent()){
             return null;
         }
         BankAccount accountToExist = accountExist.get();
         saveTransaction(accountToExist, TransactionType.INTEREST, accountToExist.calculateInt(), accountToExist.getBalance());
         return accountToExist.calculateInt();
     }
-
-
 }

@@ -82,6 +82,14 @@ public class AdminController {
                 .body(acc);
     }
 
+    @GetMapping("/v1/getTotalNoAcc")
+    public ResponseEntity<Long> getTotalNoAccV1(){
+        Long acc = adminService.getTotalNoAccV1();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(acc);
+    }
+
     @GetMapping("/getTotalMoney")
     public ResponseEntity<Double> getTotalMoney(){
         Double money = adminService.getTotalMoneyInBank();
@@ -90,13 +98,13 @@ public class AdminController {
                 .body(money);
     }
 
-    @GetMapping("/getUserWithMaxBal")
-    public ResponseEntity<User> getUserWithMaxBal(){
-        User user = adminService.getUserWithMaxBal();
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(user);
-    }
+//    @GetMapping("/getUserWithMaxBal")
+//    public ResponseEntity<User> getUserWithMaxBal(){
+//        User user = adminService.getUserWithMaxBal();
+//        return ResponseEntity
+//                .status(HttpStatus.OK)
+//                .body(user);
+//    }
 
     @GetMapping("/getUsersOverCertainBal/{amt}")
     public ResponseEntity<List<User>> getUserWithSpecificBal(@PathVariable Double amt){

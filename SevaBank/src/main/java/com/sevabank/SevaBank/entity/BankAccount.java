@@ -1,7 +1,7 @@
 package com.sevabank.SevaBank.entity;
 
 import com.sevabank.SevaBank.Enum.AccountType;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "bankaccount", schema = "account_schema")
@@ -9,7 +9,7 @@ public class BankAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected int accNo;
+    protected Long accNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -42,7 +42,7 @@ public class BankAccount {
         this.isDeleted = false;
     }
 
-    public int getAccNo() {
+    public Long getAccNo() {
         return accNo;
     }
 

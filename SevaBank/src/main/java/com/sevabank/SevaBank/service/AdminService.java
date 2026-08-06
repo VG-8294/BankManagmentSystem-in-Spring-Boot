@@ -100,15 +100,15 @@ public class AdminService {
                 .sum();
     }
 
-    public User getUserWithMaxBal() {
-        List<BankAccount> accounts = bankAccountRepository.findAll();
-        return accounts
-                .stream()
-                .max(Comparator.comparing(BankAccount::getBalance))
-                .map(BankAccount::getUser)
-                .stream().findFirst()
-                .orElse(null);
-    }
+//    public User getUserWithMaxBal() {
+//        List<BankAccount> accounts = bankAccountRepository.findAll();
+//        return accounts
+//                .stream()
+//                .max(Comparator.comparing(BankAccount::getBalance))
+//                .map(BankAccount::getUser)
+//                .stream().findFirst()
+//                .orElse(null);
+//    }
 
     public List<User> getUserOverSpecificBal(Double amt) {
         List<BankAccount> accounts = bankAccountRepository.findAll();
@@ -140,5 +140,9 @@ public class AdminService {
                 .stream()
                 .filter(x -> x.getAge() > ageReqDto.getAge1() && x.getAge() <ageReqDto.getAge2())
                 .collect(Collectors.toList());
+    }
+
+    public Long getTotalNoAccV1() {
+        return bankAccountRepository.count();
     }
 }

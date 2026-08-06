@@ -1,8 +1,9 @@
 package com.sevabank.SevaBank.entity;
 
 import com.sevabank.SevaBank.Enum.TransactionType;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
+import javax.persistence.Entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

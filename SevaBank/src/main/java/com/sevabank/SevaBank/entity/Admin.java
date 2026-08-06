@@ -1,6 +1,6 @@
 package com.sevabank.SevaBank.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name ="admin", schema = "admin_schema")
