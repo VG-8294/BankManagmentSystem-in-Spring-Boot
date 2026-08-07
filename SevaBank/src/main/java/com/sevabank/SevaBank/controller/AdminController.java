@@ -1,11 +1,9 @@
 package com.sevabank.SevaBank.controller;
 
-import com.sevabank.SevaBank.dto.AgeReqDto;
-import com.sevabank.SevaBank.dto.UserResponseDto;
-import com.sevabank.SevaBank.entity.User;
-import com.sevabank.SevaBank.service.AdminService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.sevabank.SevaBank.dto.request.AgeReqDto;
+import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
+import com.sevabank.SevaBank.dto.response.UserResponseDto;
+import com.sevabank.SevaBank.service.AdminServices;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,9 +11,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
-    private AdminService adminService;
+    private final AdminServices adminService;
 
-    public AdminController(AdminService adminService) {
+    public AdminController(AdminServices adminService) {
         this.adminService = adminService;
     }
 
@@ -74,13 +72,10 @@ public class AdminController {
         return adminService.getTotalMoneyInBank();
     }
 
-//    @GetMapping("/getUserWithMaxBal")
-//    public ResponseEntity<User> getUserWithMaxBal(){
-//        User user = adminService.getUserWithMaxBal();
-//        return ResponseEntity
-//                .status(HttpStatus.OK)
-//                .body(user);
-//    }
+    @GetMapping("/getUserWithMaxBal")
+    public UserResponseDto getUserWithMaxBal(){
+        return adminService.getUserWithMaxBal();
+    }
 
     @GetMapping("/getUsersOverCertainBal/{amt}")
     public List<UserResponseDto> getUserWithSpecificBal(@PathVariable Double amt){
@@ -119,6 +114,20 @@ public class AdminController {
     @GetMapping("/getUsersBwAge")
     public List<UserResponseDto> getUserBwAge(@RequestBody AgeReqDto ageReqDto){
         return adminService.getUserBwAge(ageReqDto);
+    }
+
+    @GetMapping("/getAllBankAccounts")
+    public List<BankAccountResponseDto> getAllBankAccounts(){
+        return adminService.getAllBankAccounts();
+    }
+
+    @GetMapping("/deleteAccount/{id}")
+    public String deleteAccount(@PathVariable Long id){
+        Boolean isDeleted = adminService.deleteAccountById(id);
+        if(!isDeleted){
+            return "Account not found!";
+        }
+        return "Account deleted";
     }
 
 
