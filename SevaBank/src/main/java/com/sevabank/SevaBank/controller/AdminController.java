@@ -47,6 +47,11 @@ public class AdminController {
         return adminService.getOldAgeUsers();
     }
 
+    @GetMapping("/v1/getOldAgeUsers")
+    public List<UserResponseDto> getOldAgeUsersV1(){
+        return adminService.getOldAgeUsersV1();
+    }
+
     @GetMapping("/getUsersByEmail/{email}")
     public UserResponseDto getUsersByEmail(@PathVariable String email){
         return adminService.getUsersByEmail(email);

@@ -7,7 +7,20 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "bankaccount", schema = "account_schema")
+@Table(
+        name = "bankaccount",
+        schema = "account_schema",
+        indexes = {
+                @Index(
+                        name = "idx_bankaccount_balance",
+                        columnList = "balance"
+                ),
+                @Index(
+                        name = "idx_bankaccount_user_id",
+                        columnList = "user_id"
+                )
+        }
+)
 @Getter
 @Setter
 public class BankAccount {

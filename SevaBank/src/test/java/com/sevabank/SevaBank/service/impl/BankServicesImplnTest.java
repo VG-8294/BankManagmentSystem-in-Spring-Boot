@@ -65,21 +65,29 @@ class BankServicesImplnTest {
     @Test
     void shouldCreateBankAccountSuccessfully() {
 
+        // Arrange
         when(userRepository.findById(1L))
                 .thenReturn(Optional.of(user));
 
         when(bankAccountRepository.save(any(BankAccount.class)))
-                .thenAnswer(invocation -> invocation.getArgument(0));
+                .thenAnswer(invocation -> {
+                    BankAccount account = invocation.getArgument(0);
+                    account.setAccNo(1001L);      // Simulate DB-generated ID
+                    return account;
+                });
 
+        // Act
         BankAccountResponseDto response = bankServices.createBankAccount(request);
 
+        // Assert
         assertNotNull(response);
-        assertEquals(1001, response.getAccNo());
+        assertEquals(1001L, response.getAccNo());
         assertEquals("Vishal", response.getUser_name());
         assertEquals("vishal@gmail.com", response.getEmail());
+        assertEquals(AccountType.SAVING, response.getAccountType());
 
-        verify(userRepository).findById(1L);
-        verify(bankAccountRepository).save(any(BankAccount.class));
+        verify(userRepository, times(1)).findById(1L);
+        verify(bankAccountRepository, times(1)).save(any(BankAccount.class));
     }
 
     @Test

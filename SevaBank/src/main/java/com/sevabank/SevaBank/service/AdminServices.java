@@ -17,6 +17,8 @@ public interface AdminServices {
 
     List<UserResponseDto> getOldAgeUsers();
 
+    List<UserResponseDto> getOldAgeUsersV1();
+
     UserResponseDto getUsersByEmail(String email);
 
     List<String> getAllUsersEmail();

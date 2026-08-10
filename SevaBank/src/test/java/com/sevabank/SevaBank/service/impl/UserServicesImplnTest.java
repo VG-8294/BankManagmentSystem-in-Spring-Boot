@@ -151,7 +151,7 @@ class UserServicesImplnTest {
     void shouldFailLoginV1() {
 
         when(bankAccountRepository.existsByAccNoAndUserEmailAndUserPassword(
-                (long) anyInt(),
+                (long) anyLong(),
                 anyString(),
                 anyString()))
                 .thenReturn(false);
