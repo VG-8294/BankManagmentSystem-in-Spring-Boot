@@ -320,6 +320,7 @@ public class AdminServicesImpln implements AdminServices {
     public List<BankAccountResponseDto> getAllBankAccounts(){
         return bankAccountRepository.findAll()
                 .stream()
+                .filter(x -> x.getIsDeleted() == false)
                 .map(x -> {
                     BankAccountResponseDto dto = new BankAccountResponseDto();
                     dto.setAccNo(x.getAccNo());

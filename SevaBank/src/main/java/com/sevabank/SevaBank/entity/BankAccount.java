@@ -52,9 +52,9 @@ public class BankAccount {
     public BankAccount() {
     }
 
-    public BankAccount(double balance, String accountType, Double interestRate, Double overdraftLimit) {
+    public BankAccount(double balance, AccountType accountType, Double interestRate, Double overdraftLimit) {
         this.balance = balance;
-        this.accountType = AccountType.valueOf(accountType);
+        this.accountType = accountType;
         this.interestRate = interestRate;
         this.overdraftLimit = overdraftLimit;
         this.isDeleted = false;
@@ -81,7 +81,7 @@ public class BankAccount {
     }
 
     public double calculateInt(){
-        return balance*interestRate/100;
+        return (balance*this.interestRate)/100;
     }
 
     @Override

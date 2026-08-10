@@ -48,11 +48,11 @@ public class BankServicesImpln implements BankServices {
         User user = userRepository.findById(bankReq.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        String type;
-        if (bankReq.getAccountType() == AccountType.SAVING) {
-            type = "SAVING";
+        AccountType type;
+        if (bankReq.getAccountType().equals("SAVING")) {
+            type = AccountType.SAVING;
         } else {
-            type = "CURRENT";
+            type = AccountType.CURRENT;
         }
 
         System.out.println(bankReq.getInterestRate());
@@ -103,6 +103,9 @@ public class BankServicesImpln implements BankServices {
         }
         Optional<BankAccount> account = bankAccountRepository.findById(id);
         BankAccount accountInDep = account.get();
+        if(accountInDep.getBalance() < balance){
+            return false;
+        }
         accountInDep.withdraw(balance);
         bankAccountRepository.save(accountInDep);
         saveTransaction(accountInDep, TransactionType.WITHDRAW, balance, accountInDep.getBalance());
