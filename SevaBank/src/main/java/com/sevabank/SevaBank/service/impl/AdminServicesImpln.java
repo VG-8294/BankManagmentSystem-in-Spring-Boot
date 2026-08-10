@@ -105,20 +105,35 @@ public class AdminServicesImpln implements AdminServices {
     }
 
     @Override
-    public UserResponseDto getUsersByEmail(String email) {
-           return userRepository.findAll()
+    public List<UserResponseDto> getOldAgeUsersV1() {
+        return userRepository.findByAgeGreaterThanEqual(60)
                 .stream()
-                .filter(x -> x.getEmail().equals(email))
-                            .map(user -> {
-                                UserResponseDto dto = new UserResponseDto();
-                                dto.setId(user.getId());
-                                dto.setName(user.getName());
-                                dto.setEmail(user.getEmail());
-                                return dto;
-                            })
-                        .findFirst()
-                   .orElse(null);
+                .map(user -> {
+                    UserResponseDto dto = new UserResponseDto();
+                    dto.setId(user.getId());
+                    dto.setName(user.getName());
+                    dto.setEmail(user.getEmail());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
 
+    @Override
+    public UserResponseDto getUsersByEmail(String email) {
+
+        User user = userRepository.findByEmail(email)
+                .orElse(null);
+
+        if (user == null) {
+            return null;
+        }
+
+        UserResponseDto dto = new UserResponseDto();
+        dto.setId(user.getId());
+        dto.setName(user.getName());
+        dto.setEmail(user.getEmail());
+
+        return dto;
     }
 
 
@@ -238,7 +253,20 @@ public class AdminServicesImpln implements AdminServices {
 
     @Override
     public List<UserResponseDto> getUserAboveAgeV1(Integer age) {
-        return userRepository.findByAgeGreaterThan(age);
+
+        List<User> users = userRepository.findByAgeGreaterThan(age);
+
+        return users.stream()
+                .map(user -> {
+                    UserResponseDto dto = new UserResponseDto();
+
+                    dto.setId(user.getId());
+                    dto.setName(user.getName());
+                    dto.setEmail(user.getEmail());
+
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 
     @Override
