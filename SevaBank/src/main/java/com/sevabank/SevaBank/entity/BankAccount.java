@@ -52,11 +52,17 @@ public class BankAccount {
     public BankAccount() {
     }
 
-    public BankAccount(double balance, AccountType accountType, Double interestRate, Double overdraftLimit) {
+    public BankAccount(double balance, AccountType accountType) {
         this.balance = balance;
         this.accountType = accountType;
-        this.interestRate = interestRate;
-        this.overdraftLimit = overdraftLimit;
+        if(accountType == AccountType.SAVING){
+            this.interestRate = 4.5;
+            this.overdraftLimit = null;
+        }
+        else{
+            this.interestRate = null;
+            this.overdraftLimit = 10000.0;
+        }
         this.isDeleted = false;
     }
 

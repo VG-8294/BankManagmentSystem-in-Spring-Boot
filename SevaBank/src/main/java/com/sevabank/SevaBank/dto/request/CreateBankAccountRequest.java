@@ -11,6 +11,4 @@ public class CreateBankAccountRequest {
     private Long userId;
     private double balance;
     private String accountType;
-    private Double interestRate;
-    private Double overdraftLimit;
 }

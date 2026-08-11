@@ -159,6 +159,7 @@ public class AdminServicesImpln implements AdminServices {
         List<BankAccount> accounts = bankAccountRepository.findAll();
         return accounts
                 .stream()
+                .filter(x -> x.getIsDeleted() == false)
                 .mapToDouble(BankAccount::getBalance)
                 .sum();
     }

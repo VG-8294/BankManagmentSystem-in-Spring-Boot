@@ -54,11 +54,7 @@ public class BankServicesImpln implements BankServices {
         } else {
             type = AccountType.CURRENT;
         }
-
-        System.out.println(bankReq.getInterestRate());
-        System.out.println(bankReq.getOverdraftLimit());
-
-        BankAccount createdBankAccount = new BankAccount(bankReq.getBalance(), type, bankReq.getInterestRate(), bankReq.getOverdraftLimit());
+        BankAccount createdBankAccount = new BankAccount(bankReq.getBalance(), type);
         createdBankAccount.setUser(user);
         bankAccountRepository.save(createdBankAccount);
         BankAccountResponseDto dto = new BankAccountResponseDto();
@@ -66,6 +62,7 @@ public class BankServicesImpln implements BankServices {
         dto.setUser_name(createdBankAccount.getUser().getName());
         dto.setEmail(createdBankAccount.getUser().getEmail());
         dto.setAccountType(createdBankAccount.getAccountType());
+        dto.setBalance(createdBankAccount.getBalance());
         return dto;
     }
 
