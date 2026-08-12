@@ -50,16 +50,14 @@ class BankServicesImplnTest {
 
         user.setId(1L);
 
-        account = new BankAccount(10000, "SAVING", 4.5, null);
+        account = new BankAccount(10000, AccountType.SAVING);
         account.setAccNo(1001L);
         account.setUser(user);
 
         request = new CreateBankAccountRequest();
         request.setUserId(1L);
         request.setBalance(10000);
-        request.setAccountType(AccountType.SAVING);
-        request.setInterestRate(4.5);
-        request.setOverdraftLimit(null);
+        request.setAccountType("SAVING");
     }
 
     @Test

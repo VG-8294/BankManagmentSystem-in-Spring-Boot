@@ -4,6 +4,10 @@ SevaBank is a Spring Boot based Banking Management System that provides REST API
 
 ---
 
+## Architecture
+
+![SevaBank Architecture](images/architecture.png)
+
 ## 🚀 Features
 
 ### User Features

@@ -1,5 +1,6 @@
 package com.sevabank.SevaBank.repository;
 
+import com.sevabank.SevaBank.Enum.AccountType;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.entity.User;
 import org.junit.jupiter.api.Test;
@@ -40,14 +41,12 @@ class BankAccountRepositoryTest {
     private BankAccount createAccount(
             User user,
             double balance,
-            String accountType
+            AccountType accountType
     ) {
 
         BankAccount account = new BankAccount(
                 balance,
-                accountType,
-                5.0,
-                1000.0
+                accountType
         );
 
         account.setUser(user);
@@ -66,7 +65,7 @@ class BankAccountRepositoryTest {
         User user = createUser();
 
         BankAccount account =
-                createAccount(user, 1000.0, "SAVING");
+                createAccount(user, 1000.0, AccountType.SAVING);
 
         BankAccount savedAccount =
                 bankAccountRepository.save(account);
@@ -89,7 +88,7 @@ class BankAccountRepositoryTest {
         User user = createUser();
 
         BankAccount account =
-                createAccount(user, 1000.0, "SAVING");
+                createAccount(user, 1000.0, AccountType.SAVING);
 
         BankAccount savedAccount =
                 bankAccountRepository.save(account);
@@ -112,7 +111,7 @@ class BankAccountRepositoryTest {
         User user = createUser();
 
         BankAccount account =
-                createAccount(user, 1000.0, "SAVING");
+                createAccount(user, 1000.0, AccountType.SAVING);
 
         BankAccount savedAccount =
                 bankAccountRepository.save(account);
@@ -139,7 +138,7 @@ class BankAccountRepositoryTest {
         User user = createUser();
 
         BankAccount account =
-                createAccount(user, 1000.0, "SAVING");
+                createAccount(user, 1000.0, AccountType.SAVING);
 
         BankAccount savedAccount =
                 bankAccountRepository.save(account);
@@ -184,13 +183,13 @@ class BankAccountRepositoryTest {
         User user = createUser();
 
         BankAccount account1 =
-                createAccount(user, 1000.0, "SAVING");
+                createAccount(user, 1000.0, AccountType.SAVING);
 
         BankAccount account2 =
-                createAccount(user, 5000.0, "SAVING");
+                createAccount(user, 5000.0, AccountType.SAVING);
 
         BankAccount account3 =
-                createAccount(user, 10000.0, "CURRENT");
+                createAccount(user, 10000.0, AccountType.SAVING);
 
         bankAccountRepository.save(account1);
         bankAccountRepository.save(account2);
@@ -223,11 +222,11 @@ class BankAccountRepositoryTest {
         User user = createUser();
 
         bankAccountRepository.save(
-                createAccount(user, 1000.0, "SAVING")
+                createAccount(user, 1000.0, AccountType.SAVING)
         );
 
         bankAccountRepository.save(
-                createAccount(user, 2000.0, "SAVING")
+                createAccount(user, 2000.0, AccountType.SAVING)
         );
 
         List<BankAccount> result =
@@ -248,15 +247,15 @@ class BankAccountRepositoryTest {
         User user = createUser();
 
         bankAccountRepository.save(
-                createAccount(user, 1000.0, "SAVING")
+                createAccount(user, 1000.0, AccountType.SAVING)
         );
 
         bankAccountRepository.save(
-                createAccount(user, 5000.0, "SAVING")
+                createAccount(user, 5000.0, AccountType.SAVING)
         );
 
         bankAccountRepository.save(
-                createAccount(user, 10000.0, "CURRENT")
+                createAccount(user, 10000.0, AccountType.CURRENT)
         );
 
         List<BankAccount> result =
@@ -277,11 +276,11 @@ class BankAccountRepositoryTest {
         User user = createUser();
 
         bankAccountRepository.save(
-                createAccount(user, 5000.0, "SAVING")
+                createAccount(user, 5000.0, AccountType.SAVING)
         );
 
         bankAccountRepository.save(
-                createAccount(user, 7000.0, "CURRENT")
+                createAccount(user, 7000.0, AccountType.CURRENT)
         );
 
         List<BankAccount> result =

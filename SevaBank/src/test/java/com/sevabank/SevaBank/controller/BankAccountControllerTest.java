@@ -44,9 +44,7 @@ class BankAccountControllerTest {
 
         request.setUserId(1L);
         request.setBalance(50000);
-        request.setAccountType(AccountType.SAVING);
-        request.setInterestRate(4.5);
-        request.setOverdraftLimit(null);
+        request.setAccountType("SAVING");
 
         BankAccountResponseDto response =
                 new BankAccountResponseDto();
