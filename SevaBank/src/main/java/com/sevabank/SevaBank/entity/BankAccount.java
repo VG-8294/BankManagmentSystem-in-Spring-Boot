@@ -87,7 +87,7 @@ public class BankAccount {
     }
 
     public double calculateInt(){
-        return (balance*this.interestRate)/100;
+        return (balance*interestRate)/100;
     }
 
     @Override
