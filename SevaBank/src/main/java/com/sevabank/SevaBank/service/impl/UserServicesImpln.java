@@ -23,33 +23,40 @@ public class UserServicesImpln implements UserServices {
         this.bankAccountRepository = bankAccountRepository;
     }
 
+    private UserResponseDto mapToDto(User user){
+        UserResponseDto dto = new UserResponseDto();
+        dto.setId(user.getId());
+        dto.setName(user.getName());
+        dto.setEmail(user.getEmail());
+        dto.setAge(user.getAge());
+        return dto;
+    }
+
+
     @Override
     public UserResponseDto createUser(RegisterReqDto dto){
         User newUser = new User(dto.getName(),dto.getEmail(), dto.getPassword(), dto.getAge());
         userRepo.save(newUser);
-        UserResponseDto createdDto = new UserResponseDto();
-        createdDto.setId(newUser.getId());
-        createdDto.setName(newUser.getName());
-        createdDto.setEmail(newUser.getEmail());
-        return createdDto;
+        return mapToDto(newUser);
     }
 
     @Override
-    public Boolean login(LoginReqDto loginReqDto) {
+    public UserResponseDto login(LoginReqDto loginReqDto) {
         Optional<BankAccount> account = bankAccountRepository.findById(loginReqDto.getAccNo());
         if(!account.isPresent()){
-            return false;
+            return null;
         }
-        User user = account.get().getUser();
-        return user.getEmail().equals(loginReqDto.getEmail()) && user.getPassword().equals(loginReqDto.getPassword());
+            User user = account.get().getUser();
+            return mapToDto(user);
     }
 
     @Override
-    public Boolean loginV1(LoginReqDto loginReqDto) {
-        return bankAccountRepository.existsByAccNoAndUserEmailAndUserPassword(
-                loginReqDto.getAccNo(),
-                loginReqDto.getEmail(),
-                loginReqDto.getPassword()
+    public UserResponseDto loginV1(LoginReqDto loginReqDto) {
+        User user =  bankAccountRepository.findByAccNoAndUserEmailAndUserPassword(
+                    loginReqDto.getAccNo(),
+                    loginReqDto.getEmail(),
+                    loginReqDto.getPassword()
         );
+        return mapToDto(user);
     }
 }

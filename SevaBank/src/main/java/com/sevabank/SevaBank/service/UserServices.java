@@ -8,7 +8,7 @@ import com.sevabank.SevaBank.entity.User;
 public interface UserServices {
     UserResponseDto createUser(RegisterReqDto dto);
 
-    Boolean login(LoginReqDto loginReqDto);
+    UserResponseDto login(LoginReqDto loginReqDto);
 
-    Boolean loginV1(LoginReqDto loginReqDto);
+    UserResponseDto loginV1(LoginReqDto loginReqDto);
 }

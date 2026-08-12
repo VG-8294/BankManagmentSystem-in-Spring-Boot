@@ -17,4 +17,6 @@ public interface BankAccountRepository extends JpaRepository<BankAccount, Long> 
     List<BankAccount> findByBalanceGreaterThan(Double amt);
 
     List<BankAccount> findByBalanceLessThan(Double amount);
+
+    User findByAccNoAndUserEmailAndUserPassword(Long accNo, String email, String password);
 }
