@@ -1,14 +1,12 @@
 package com.sevabank.SevaBank.dto.request;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class LoginReqDto {
     private Long accNo;
     private String email;

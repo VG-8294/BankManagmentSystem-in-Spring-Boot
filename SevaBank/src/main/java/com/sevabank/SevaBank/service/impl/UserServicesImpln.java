@@ -5,6 +5,9 @@ import com.sevabank.SevaBank.dto.request.RegisterReqDto;
 import com.sevabank.SevaBank.dto.response.UserResponseDto;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.entity.User;
+import com.sevabank.SevaBank.exception.InvalidCredentialsException;
+import com.sevabank.SevaBank.exception.ResourceNotFoundException;
+import com.sevabank.SevaBank.exception.UserAlreadyExistsException;
 import com.sevabank.SevaBank.repository.BankAccountRepository;
 import com.sevabank.SevaBank.repository.UserRepository;
 import com.sevabank.SevaBank.service.UserServices;
@@ -23,33 +26,56 @@ public class UserServicesImpln implements UserServices {
         this.bankAccountRepository = bankAccountRepository;
     }
 
+    private UserResponseDto mapToDto(User user){
+        UserResponseDto dto = new UserResponseDto();
+        dto.setId(user.getId());
+        dto.setName(user.getName());
+        dto.setEmail(user.getEmail());
+        dto.setAge(user.getAge());
+        return dto;
+    }
+
+
     @Override
     public UserResponseDto createUser(RegisterReqDto dto){
         User newUser = new User(dto.getName(),dto.getEmail(), dto.getPassword(), dto.getAge());
+        if(userRepo.existsByEmail(newUser.getEmail())){
+            throw new UserAlreadyExistsException("User Already exists!");
+        }
         userRepo.save(newUser);
-        UserResponseDto createdDto = new UserResponseDto();
-        createdDto.setId(newUser.getId());
-        createdDto.setName(newUser.getName());
-        createdDto.setEmail(newUser.getEmail());
-        return createdDto;
+        return mapToDto(newUser);
     }
 
     @Override
-    public Boolean login(LoginReqDto loginReqDto) {
+    public UserResponseDto login(LoginReqDto loginReqDto) {
         Optional<BankAccount> account = bankAccountRepository.findById(loginReqDto.getAccNo());
         if(!account.isPresent()){
-            return false;
+            throw new ResourceNotFoundException("Invalid account number!");
         }
-        User user = account.get().getUser();
-        return user.getEmail().equals(loginReqDto.getEmail()) && user.getPassword().equals(loginReqDto.getPassword());
+            User user = account.get().getUser();
+        if(!user.getEmail().equals(loginReqDto.getEmail()) || !user.getPassword().equals(loginReqDto.getPassword())){
+            throw new InvalidCredentialsException("Invalid credentials!");
+        }
+            return mapToDto(user);
     }
 
     @Override
-    public Boolean loginV1(LoginReqDto loginReqDto) {
-        return bankAccountRepository.existsByAccNoAndUserEmailAndUserPassword(
-                loginReqDto.getAccNo(),
-                loginReqDto.getEmail(),
-                loginReqDto.getPassword()
+    public UserResponseDto loginV1(LoginReqDto loginReqDto) {
+        System.out.println("In UserService");
+        System.out.println(loginReqDto);
+        BankAccount account =  bankAccountRepository.findByAccNoAndUserEmailAndUserPassword(
+                    loginReqDto.getAccNo(),
+                    loginReqDto.getEmail(),
+                    loginReqDto.getPassword()
         );
+        if(account == null){
+            throw new ResourceNotFoundException("Invalid credentials!");
+        }
+        UserResponseDto user = new UserResponseDto();
+        user.setId(account.getUser().getId());
+        user.setName(account.getUser().getName());
+        user.setEmail(account.getUser().getEmail());
+        user.setAge(account.getUser().getAge());
+        return user;
     }
 }

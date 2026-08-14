@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(
@@ -49,6 +50,12 @@ public class BankAccount {
     @Column(name = "isDeleted")
     private Boolean isDeleted;
 
+    @Column(name = "createdAt")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updatedAt")
+    private LocalDateTime updatedAt;
+
     public BankAccount() {
     }
 
@@ -64,6 +71,7 @@ public class BankAccount {
             this.overdraftLimit = 10000.0;
         }
         this.isDeleted = false;
+        this.createdAt = LocalDateTime.now();
     }
 
     public void deposit(double amt) {
@@ -87,7 +95,7 @@ public class BankAccount {
     }
 
     public double calculateInt(){
-        return (balance*this.interestRate)/100;
+        return (balance*interestRate)/100;
     }
 
     @Override
