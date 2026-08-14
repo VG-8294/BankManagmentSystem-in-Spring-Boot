@@ -9,6 +9,10 @@ import com.sevabank.SevaBank.dto.response.InterestResponseDto;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.entity.Transaction;
 import com.sevabank.SevaBank.entity.User;
+import com.sevabank.SevaBank.exception.BalanceException;
+import com.sevabank.SevaBank.exception.InvalidAccountTypeException;
+import com.sevabank.SevaBank.exception.InvalidAmountException;
+import com.sevabank.SevaBank.exception.ResourceNotFoundException;
 import com.sevabank.SevaBank.repository.BankAccountRepository;
 import com.sevabank.SevaBank.repository.TransactionRepository;
 import com.sevabank.SevaBank.repository.UserRepository;
@@ -61,14 +65,17 @@ public class BankServicesImpln implements BankServices {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         if(user == null){
-            return null;
+            throw new ResourceNotFoundException("User doesn't exist!");
         }
 
         AccountType type;
         if (bankReq.getAccountType().equals("SAVING")) {
             type = AccountType.SAVING;
-        } else {
+        } else if(bankReq.getAccountType().equals("CURRENT")){
             type = AccountType.CURRENT;
+        }
+        else{
+            throw new InvalidAccountTypeException("This type of account doesn't exist!");
         }
         BankAccount createdBankAccount = new BankAccount(bankReq.getBalance(), type);
         createdBankAccount.setUser(user);
@@ -81,16 +88,19 @@ public class BankServicesImpln implements BankServices {
         Optional<BankAccount> bankAccount = bankAccountRepository.findById(id);
         
         if(!bankAccount.isPresent()){
-            return null;
+            throw new ResourceNotFoundException("Account not found!");
         }
         return bankAccount;
     }
 
     @Override
     public BankAccountResponseDto depositInAccount(Long id, double balance) {
+        if(balance < 0){
+            throw new InvalidAmountException("Amount is less then 0");
+        }
         Boolean isAmountDep = bankAccountRepository.existsById(id);
         if(!isAmountDep){
-            return null;
+            throw new ResourceNotFoundException("Account not found!");
         }
         Optional<BankAccount> account = bankAccountRepository.findById(id);
         BankAccount accountInDep = account.get();
@@ -104,14 +114,17 @@ public class BankServicesImpln implements BankServices {
 
     @Override
     public BankAccountResponseDto withdrawInAccount(Long id, double balance) {
+        if(balance < 0){
+            throw new InvalidAmountException("Amount is less then 0");
+        }
         Boolean isAmountDep = bankAccountRepository.existsById(id);
         if(!isAmountDep){
-            return null;
+            throw new ResourceNotFoundException("Account not found!");
         }
         Optional<BankAccount> account = bankAccountRepository.findById(id);
         BankAccount accountInDep = account.get();
         if(accountInDep.getBalance() < balance){
-            return null;
+            throw new BalanceException("Balance less then " + balance);
         }
         accountInDep.withdraw(balance);
         bankAccountRepository.save(accountInDep);
@@ -124,7 +137,7 @@ public class BankServicesImpln implements BankServices {
     public BalanceResDto checkBalance(Long id) {
         Optional<BankAccount> accountExist = bankAccountRepository.findById(id);
         if(!accountExist.isPresent()){
-            return null;
+            throw new ResourceNotFoundException("Account not found!");
         }
         BankAccount accountToExist = accountExist.get();
         BalanceResDto balanceDto = new BalanceResDto();
@@ -136,7 +149,7 @@ public class BankServicesImpln implements BankServices {
     public InterestResponseDto calculateInterest(Long id) {
         Optional<BankAccount> accountExist = bankAccountRepository.findById(id);
         if(!accountExist.isPresent()){
-            return null;
+            throw new ResourceNotFoundException("Account not found!");
         }
         BankAccount accountToExist = accountExist.get();
         saveTransaction(accountToExist, TransactionType.INTEREST, accountToExist.calculateInt(), accountToExist.getBalance());

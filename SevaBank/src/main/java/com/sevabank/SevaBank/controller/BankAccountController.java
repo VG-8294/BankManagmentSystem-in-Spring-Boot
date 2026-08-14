@@ -23,9 +23,6 @@ public class BankAccountController {
     @PostMapping
     public GenericDto<BankAccountResponseDto> createBankAccount(@RequestBody CreateBankAccountRequest bankReq){
         BankAccountResponseDto bankDto =  bankAccountService.createBankAccount(bankReq);
-        if(bankDto == null){
-            return new GenericDto<BankAccountResponseDto>(HttpStatus.BAD_REQUEST, "Some error");
-        }
         return new GenericDto<BankAccountResponseDto>(HttpStatus.CREATED, "Account created", bankDto);
 
     }
@@ -33,9 +30,6 @@ public class BankAccountController {
     @PostMapping("/deposit/{id}")
     public GenericDto<BankAccountResponseDto> deposit(@PathVariable Long id, @RequestBody BalanceReq balanceReq){
         BankAccountResponseDto depositedAccount = bankAccountService.depositInAccount(id, balanceReq.getBalance());
-        if(depositedAccount == null){
-            return new GenericDto<BankAccountResponseDto>(HttpStatus.BAD_REQUEST, "Amount not deposited!");
-        }
 
         return new GenericDto<BankAccountResponseDto>(HttpStatus.ACCEPTED, "Amount deposited!", depositedAccount);
     }
@@ -43,9 +37,6 @@ public class BankAccountController {
     @PostMapping("/withdraw/{id}")
     public GenericDto<BankAccountResponseDto> withdraw(@PathVariable Long id, @RequestBody BalanceReq balanceReq){
         BankAccountResponseDto withdrawnInAccount = bankAccountService.withdrawInAccount(id, balanceReq.getBalance());
-        if(withdrawnInAccount == null){
-            return new GenericDto<BankAccountResponseDto>(HttpStatus.BAD_REQUEST, "withdrawal not possible!");
-        }
 
         return new GenericDto<BankAccountResponseDto>(HttpStatus.ACCEPTED, "Amount withdrawn", withdrawnInAccount);
     }
@@ -53,9 +44,6 @@ public class BankAccountController {
     @GetMapping("/balance/{id}")
     public GenericDto<BalanceResDto> checkBalance(@PathVariable Long id){
         BalanceResDto balance =  bankAccountService.checkBalance(id);
-        if(balance == null){
-            return new GenericDto<BalanceResDto>(HttpStatus.NOT_FOUND, "account not found");
-        }
         return new GenericDto<BalanceResDto>(HttpStatus.ACCEPTED, "" ,  balance);
     }
 

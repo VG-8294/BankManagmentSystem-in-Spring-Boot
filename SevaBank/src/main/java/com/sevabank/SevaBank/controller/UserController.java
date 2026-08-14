@@ -29,19 +29,14 @@ public class UserController {
 
     @PostMapping("/login")
     public GenericDto<UserResponseDto> loginUser(@RequestBody LoginReqDto loginReqDto){
-            UserResponseDto loggedInUser = userService.login(loginReqDto);
-        if(loggedInUser == null){
-            return new GenericDto<UserResponseDto>(HttpStatus.NOT_FOUND, "invalid credentials");
-        }
+        UserResponseDto loggedInUser = userService.login(loginReqDto);
         return new GenericDto<UserResponseDto>(HttpStatus.ACCEPTED, "Login successfull", loggedInUser);
     }
 
     @PostMapping("/v1/login")
     public GenericDto<UserResponseDto> loginV1User(@RequestBody LoginReqDto loginReqDto){
+        System.out.println("In User controller");
         UserResponseDto loggedInUser = userService.loginV1(loginReqDto);
-        if(loggedInUser == null){
-            return new GenericDto<UserResponseDto>(HttpStatus.NOT_FOUND, "invalid credentials");
-        }
         return new GenericDto<UserResponseDto>(HttpStatus.ACCEPTED, "Login successfull", loggedInUser);
     }
 

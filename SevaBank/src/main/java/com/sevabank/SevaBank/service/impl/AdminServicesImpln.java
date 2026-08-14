@@ -6,6 +6,7 @@ import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
 import com.sevabank.SevaBank.dto.response.UserResponseDto;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.entity.User;
+import com.sevabank.SevaBank.exception.ResourceNotFoundException;
 import com.sevabank.SevaBank.repository.BankAccountRepository;
 import com.sevabank.SevaBank.repository.UserRepository;
 import com.sevabank.SevaBank.service.AdminServices;
@@ -25,33 +26,39 @@ public class AdminServicesImpln implements AdminServices {
         this.bankAccountRepository = bankAccountRepository;
     }
 
+    private UserResponseDto mapToDto(User user){
+        UserResponseDto dto = new UserResponseDto();
+        dto.setId(user.getId());
+        dto.setName(user.getName());
+        dto.setEmail(user.getEmail());
+        dto.setAge(user.getAge());
+        return dto;
+    }
+
     @Override
     public List<UserResponseDto> getAllUsers() {
-        return userRepository.findAll()
+        List<User> users = new ArrayList<>(userRepository.findAll());
+        if(users == null){
+            throw new ResourceNotFoundException("Users not found!");
+        }
+        return users
                 .stream()
-                .map(user -> {
-                    UserResponseDto dto = new UserResponseDto();
-                    dto.setId(user.getId());
-                    dto.setName(user.getName());
-                    dto.setEmail(user.getEmail());
-                    return dto;
-                })
+                .map(this::mapToDto)
                 .collect(Collectors.toList());
+
     }
 
     @Override
     public List<UserResponseDto> getUsersLessThanBal(Double balance){
         List<BankAccount> accounts = bankAccountRepository.findAll();
+        if(accounts.isEmpty()){
+
+            throw new ResourceNotFoundException("Users not found!");
+        }
         return accounts.stream()
-                .filter(x -> x.getBalance() < balance)
+                .filter(x -> x.getBalance() < balance && x.getIsDeleted() == false)
                 .map(BankAccount::getUser)
-                .map(x -> {
-                    UserResponseDto dto = new UserResponseDto();
-                    dto.setId(x.getId());
-                    dto.setName(x.getName());
-                    dto.setEmail(x.getEmail());
-                    return dto;
-                })
+                .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
 
@@ -122,18 +129,8 @@ public class AdminServicesImpln implements AdminServices {
     public UserResponseDto getUsersByEmail(String email) {
 
         User user = userRepository.findByEmail(email)
-                .orElse(null);
-
-        if (user == null) {
-            return null;
-        }
-
-        UserResponseDto dto = new UserResponseDto();
-        dto.setId(user.getId());
-        dto.setName(user.getName());
-        dto.setEmail(user.getEmail());
-
-        return dto;
+                .orElseThrow(() -> new ResourceNotFoundException("user not found with this email!"));
+        return mapToDto(user);
     }
 
 
@@ -217,19 +214,14 @@ public class AdminServicesImpln implements AdminServices {
 
     @Override
     public UserResponseDto getUserByAccNo(Long accNo) {
-        return bankAccountRepository.findAll()
+        User user =  bankAccountRepository.findAll()
                 .stream()
                 .filter(x -> x.getAccNo() == accNo)
                 .map(BankAccount::getUser)
-                .map(user -> {
-                    UserResponseDto dto = new UserResponseDto();
-                    dto.setId(user.getId());
-                    dto.setName(user.getName());
-                    dto.setEmail(user.getEmail());
-                    return dto;
-                })
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found with account number " + accNo));
+
+        return mapToDto(user);
     }
 
     @Override
@@ -258,15 +250,7 @@ public class AdminServicesImpln implements AdminServices {
         List<User> users = userRepository.findByAgeGreaterThan(age);
 
         return users.stream()
-                .map(user -> {
-                    UserResponseDto dto = new UserResponseDto();
-
-                    dto.setId(user.getId());
-                    dto.setName(user.getName());
-                    dto.setEmail(user.getEmail());
-
-                    return dto;
-                })
+                .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
 
@@ -274,16 +258,8 @@ public class AdminServicesImpln implements AdminServices {
     public UserResponseDto getUserByAccNoV1(Long accNo) {
         User user =  bankAccountRepository.findByAccNo(accNo)
                 .map(BankAccount::getUser)
-                .orElse(null);
-
-        if(user == null){
-            return null;
-        }
-        UserResponseDto userResponseDto = new UserResponseDto();
-        userResponseDto.setId(user.getId());
-        userResponseDto.setName(user.getName());
-        userResponseDto.setEmail(user.getEmail());
-        return userResponseDto;
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found with account number " + accNo));
+        return mapToDto(user);
     }
 
     @Override
@@ -338,7 +314,7 @@ public class AdminServicesImpln implements AdminServices {
     public Boolean deleteAccountById(Long id) {
         Optional<BankAccount> account = bankAccountRepository.findById(id);
         if(!account.isPresent()){
-            return false;
+            throw new ResourceNotFoundException("Account doesn't exist!");
         }
         BankAccount accountToDel = account.get();
         accountToDel.setDeleted(true);

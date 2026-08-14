@@ -5,6 +5,9 @@ import com.sevabank.SevaBank.dto.request.RegisterReqDto;
 import com.sevabank.SevaBank.dto.response.UserResponseDto;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.entity.User;
+import com.sevabank.SevaBank.exception.InvalidCredentialsException;
+import com.sevabank.SevaBank.exception.ResourceNotFoundException;
+import com.sevabank.SevaBank.exception.UserAlreadyExistsException;
 import com.sevabank.SevaBank.repository.BankAccountRepository;
 import com.sevabank.SevaBank.repository.UserRepository;
 import com.sevabank.SevaBank.service.UserServices;
@@ -36,6 +39,9 @@ public class UserServicesImpln implements UserServices {
     @Override
     public UserResponseDto createUser(RegisterReqDto dto){
         User newUser = new User(dto.getName(),dto.getEmail(), dto.getPassword(), dto.getAge());
+        if(userRepo.existsByEmail(newUser.getEmail())){
+            throw new UserAlreadyExistsException("User Already exists!");
+        }
         userRepo.save(newUser);
         return mapToDto(newUser);
     }
@@ -44,19 +50,32 @@ public class UserServicesImpln implements UserServices {
     public UserResponseDto login(LoginReqDto loginReqDto) {
         Optional<BankAccount> account = bankAccountRepository.findById(loginReqDto.getAccNo());
         if(!account.isPresent()){
-            return null;
+            throw new ResourceNotFoundException("Invalid account number!");
         }
             User user = account.get().getUser();
+        if(!user.getEmail().equals(loginReqDto.getEmail()) || !user.getPassword().equals(loginReqDto.getPassword())){
+            throw new InvalidCredentialsException("Invalid credentials!");
+        }
             return mapToDto(user);
     }
 
     @Override
     public UserResponseDto loginV1(LoginReqDto loginReqDto) {
-        User user =  bankAccountRepository.findByAccNoAndUserEmailAndUserPassword(
+        System.out.println("In UserService");
+        System.out.println(loginReqDto);
+        BankAccount account =  bankAccountRepository.findByAccNoAndUserEmailAndUserPassword(
                     loginReqDto.getAccNo(),
                     loginReqDto.getEmail(),
                     loginReqDto.getPassword()
         );
-        return mapToDto(user);
+        if(account == null){
+            throw new ResourceNotFoundException("Invalid credentials!");
+        }
+        UserResponseDto user = new UserResponseDto();
+        user.setId(account.getUser().getId());
+        user.setName(account.getUser().getName());
+        user.setEmail(account.getUser().getEmail());
+        user.setAge(account.getUser().getAge());
+        return user;
     }
 }
