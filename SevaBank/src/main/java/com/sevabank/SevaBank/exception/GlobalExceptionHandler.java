@@ -51,4 +51,10 @@ public class GlobalExceptionHandler {
         return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidAgeException.class)
+    private GenericDto<String> invalidAgeException(InvalidAgeException e){
+        return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+
 }
