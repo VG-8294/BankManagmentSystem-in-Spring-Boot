@@ -13,12 +13,14 @@ import com.sevabank.SevaBank.exception.UserAlreadyExistsException;
 import com.sevabank.SevaBank.repository.BankAccountRepository;
 import com.sevabank.SevaBank.repository.UserRepository;
 import com.sevabank.SevaBank.service.UserServices;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class UserServicesImpln implements UserServices {
 
     private final UserRepository userRepo;
@@ -43,12 +45,15 @@ public class UserServicesImpln implements UserServices {
     public UserResponseDto createUser(RegisterReqDto dto){
         User newUser = new User(dto.getName(),dto.getEmail(), dto.getPassword(), dto.getAge());
         if(userRepo.existsByEmail(newUser.getEmail())){
+            log.error("user email already exists in db");
             throw new UserAlreadyExistsException("User Already exists!");
         }
         if(newUser.getAge() < 0){
+            log.error("age is negative");
             throw new InvalidAgeException("Age cannot be negative!");
         }
         userRepo.save(newUser);
+        log.info("User created with id-{}", newUser.getId());
         return mapToDto(newUser);
     }
 
@@ -56,12 +61,15 @@ public class UserServicesImpln implements UserServices {
     public UserResponseDto login(LoginReqDto loginReqDto) {
         Optional<BankAccount> account = bankAccountRepository.findById(loginReqDto.getAccNo());
         if(!account.isPresent()){
+            log.error("Account number doesn't exist in db");
             throw new ResourceNotFoundException("Invalid account number!");
         }
             User user = account.get().getUser();
         if(!user.getEmail().equals(loginReqDto.getEmail()) || !user.getPassword().equals(loginReqDto.getPassword())){
+            log.error("email or password is incorrect");
             throw new InvalidCredentialsException("Invalid credentials!");
         }
+        log.info("User logged in successfully!");
             return mapToDto(user);
     }
 
@@ -75,6 +83,7 @@ public class UserServicesImpln implements UserServices {
                     loginReqDto.getPassword()
         );
         if(account == null){
+            log.error("email or password is incorrect");
             throw new ResourceNotFoundException("Invalid credentials!");
         }
         UserResponseDto user = new UserResponseDto();
@@ -82,6 +91,7 @@ public class UserServicesImpln implements UserServices {
         user.setName(account.getUser().getName());
         user.setEmail(account.getUser().getEmail());
         user.setAge(account.getUser().getAge());
+        log.info("User logged in successfully!");
         return user;
     }
 
@@ -89,6 +99,7 @@ public class UserServicesImpln implements UserServices {
     public UserResponseDto updateUser(Long id, UpdateUserReq updateReqUser) {
         Optional<User> user = userRepo.findById(id);
         if(!user.isPresent()){
+            log.error("user doesn't exist with this id- {}", id);
             throw new ResourceNotFoundException("User not found!");
         }
         user.get().setName(updateReqUser.getName());
@@ -97,6 +108,7 @@ public class UserServicesImpln implements UserServices {
         user.get().setAge(updateReqUser.getAge());
         user.get().setUpdatedAt(LocalDateTime.now());
         userRepo.save(user.get());
+        log.info("User updated successfully!");
         return mapToDto(user.get());
     }
 
@@ -104,9 +116,11 @@ public class UserServicesImpln implements UserServices {
     public UserResponseDto updateDetailsUser(Long id, UpdateUserReq updateReqUser) {
         Optional<User> user = userRepo.findById(id);
         if(!user.isPresent()){
+            log.error("user doesn't exist with this id- {}", id);
             throw new ResourceNotFoundException("User not found!");
         }
         if(updateReqUser.getAge() < 0){
+            log.error("age is negative");
             throw new InvalidAgeException("Age cannot be negative!");
         }
         if(updateReqUser.getName()!= null){
@@ -123,6 +137,7 @@ public class UserServicesImpln implements UserServices {
         }
         user.get().setUpdatedAt(LocalDateTime.now());
         userRepo.save(user.get());
+        log.info("User updated successfully!");
         return mapToDto(user.get());
     }
 }

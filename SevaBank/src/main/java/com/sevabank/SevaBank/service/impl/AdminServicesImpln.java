@@ -10,12 +10,14 @@ import com.sevabank.SevaBank.exception.ResourceNotFoundException;
 import com.sevabank.SevaBank.repository.BankAccountRepository;
 import com.sevabank.SevaBank.repository.UserRepository;
 import com.sevabank.SevaBank.service.AdminServices;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class AdminServicesImpln implements AdminServices {
 
     private final UserRepository userRepository;
@@ -32,6 +34,7 @@ public class AdminServicesImpln implements AdminServices {
         dto.setName(user.getName());
         dto.setEmail(user.getEmail());
         dto.setAge(user.getAge());
+        log.info("user mapped to userDto");
         return dto;
     }
 
@@ -39,8 +42,10 @@ public class AdminServicesImpln implements AdminServices {
     public List<UserResponseDto> getAllUsers() {
         List<User> users = new ArrayList<>(userRepository.findAll());
         if(users == null){
+            log.error("Users not present in db");
             throw new ResourceNotFoundException("Users not found!");
         }
+        log.error("users list returned!");
         return users
                 .stream()
                 .map(this::mapToDto)
@@ -52,9 +57,10 @@ public class AdminServicesImpln implements AdminServices {
     public List<UserResponseDto> getUsersLessThanBal(Double balance){
         List<BankAccount> accounts = bankAccountRepository.findAll();
         if(accounts.isEmpty()){
-
+            log.error("Nothing present in bank db having balance less than {}", balance);
             throw new ResourceNotFoundException("Users not found!");
         }
+        log.error("All bank accounts having balance less than {}", balance);
         return accounts.stream()
                 .filter(x -> x.getBalance() < balance && x.getIsDeleted() == false)
                 .map(BankAccount::getUser)
@@ -65,54 +71,53 @@ public class AdminServicesImpln implements AdminServices {
     @Override
     public List<UserResponseDto> getUsersHavingSaving(){
         List<BankAccount> accounts = bankAccountRepository.findAll();
+        if(accounts.isEmpty()){
+            log.error("Nothing present in bank db having savings account");
+            throw new ResourceNotFoundException("Users not found!");
+        }
+        log.info("returned users having savings account");
         return accounts
                 .stream()
                 .filter(x -> x.getAccountType() == AccountType.SAVING)
                 .map(BankAccount::getUser)
-                .map(user -> {
-                    UserResponseDto dto = new UserResponseDto();
-                    dto.setId(user.getId());
-                    dto.setName(user.getName());
-                    dto.setEmail(user.getEmail());
-                    return dto;
-                })
+                .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<UserResponseDto> getUsersHavingCurrent() {
         List<BankAccount> accounts = bankAccountRepository.findAll();
+        if(accounts.isEmpty()){
+            log.error("Nothing present in bank db having current account");
+            throw new ResourceNotFoundException("Users not found!");
+        }
+        log.info("returned users with current account!");
         return accounts
                 .stream()
                 .filter(x -> x.getAccountType() == AccountType.CURRENT)
                 .map(BankAccount::getUser)
-                .map(user -> {
-                    UserResponseDto dto = new UserResponseDto();
-                    dto.setId(user.getId());
-                    dto.setName(user.getName());
-                    dto.setEmail(user.getEmail());
-                    return dto;
-                })
+                .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<UserResponseDto> getOldAgeUsers() {
-        return userRepository.findAll()
+        List<User> users = userRepository.findAll();
+        if(users.isEmpty()){
+            log.error("Nothing present in bank db of old age users");
+            throw new ResourceNotFoundException("Users not found!");
+        }
+        log.info("returned users of old age");
+        return users
                 .stream()
                 .filter(x -> x.getAge() >= 60)
-                .map(user -> {
-                    UserResponseDto dto = new UserResponseDto();
-                    dto.setId(user.getId());
-                    dto.setName(user.getName());
-                    dto.setEmail(user.getEmail());
-                    return dto;
-                })
+                .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<UserResponseDto> getOldAgeUsersV1() {
+        log.info("returned users of old age by v1");
         return userRepository.findByAgeGreaterThanEqual(60)
                 .stream()
                 .map(user -> {
@@ -129,7 +134,9 @@ public class AdminServicesImpln implements AdminServices {
     public UserResponseDto getUsersByEmail(String email) {
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("user not found with this email!"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("user not found with this email!"));
+        log.info("User found by email!");
         return mapToDto(user);
     }
 
@@ -145,6 +152,11 @@ public class AdminServicesImpln implements AdminServices {
     @Override
     public Integer getTotalNoAcc() {
         List<BankAccount> accounts = bankAccountRepository.findAll();
+        if(accounts.isEmpty()){
+            log.error("accounts not present in bank db");
+            throw new ResourceNotFoundException("accounts not found!");
+        }
+        log.info("returned the total number of accounts");
         return Math.toIntExact(accounts
                 .stream()
                 .count());
@@ -154,6 +166,11 @@ public class AdminServicesImpln implements AdminServices {
     @Override
     public Double getTotalMoneyInBank() {
         List<BankAccount> accounts = bankAccountRepository.findAll();
+        if(accounts.isEmpty()){
+            log.error("accounts not present in bank db for total money");
+            throw new ResourceNotFoundException("accounts not found!");
+        }
+        log.info("returned the total money");
         return accounts
                 .stream()
                 .filter(x -> x.getIsDeleted() == false)
@@ -164,6 +181,11 @@ public class AdminServicesImpln implements AdminServices {
     @Override
     public UserResponseDto getUserWithMaxBal() {
         List<BankAccount> accounts = bankAccountRepository.findAll();
+        if(accounts.isEmpty()){
+            log.error("accounts not present in bank db for maximum balance");
+            throw new ResourceNotFoundException("account not found!");
+        }
+        log.info("User returned with maximum balance");
         return accounts
                 .stream()
                 .max(Comparator.comparing(BankAccount::getBalance))
@@ -181,6 +203,10 @@ public class AdminServicesImpln implements AdminServices {
     @Override
     public List<UserResponseDto> getUserOverSpecificBal(Double amt) {
         List<BankAccount> accounts = bankAccountRepository.findAll();
+        if(accounts.isEmpty()){
+            log.error("accounts not present in bank db above this balance");
+            throw new ResourceNotFoundException("account not found!");
+        }
         return accounts
                 .stream()
                 .filter(x -> x.getBalance() > amt)
@@ -314,11 +340,13 @@ public class AdminServicesImpln implements AdminServices {
     public Boolean deleteAccountById(Long id) {
         Optional<BankAccount> account = bankAccountRepository.findById(id);
         if(!account.isPresent()){
+            log.error("Account not found with id-{} for deletion", id);
             throw new ResourceNotFoundException("Account doesn't exist!");
         }
         BankAccount accountToDel = account.get();
         accountToDel.setDeleted(true);
         bankAccountRepository.save(accountToDel);
+        log.info("bank account deleted with id-{}", id);
         return accountToDel.getDeleted();
     }
 }
