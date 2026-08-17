@@ -207,6 +207,7 @@ public class AdminServicesImpln implements AdminServices {
             log.error("accounts not present in bank db above this balance");
             throw new ResourceNotFoundException("account not found!");
         }
+        log.info("retuned users having balance more than {}", amt);
         return accounts
                 .stream()
                 .filter(x -> x.getBalance() > amt)
@@ -223,6 +224,7 @@ public class AdminServicesImpln implements AdminServices {
 
     @Override
     public List<UserResponseDto> getUserAboveAge(Integer age) {
+        log.info("returned users b/w particular ages");
         return userRepository.findAll()
                 .stream()
                 .filter(x -> x.getAge() > age)
@@ -246,12 +248,13 @@ public class AdminServicesImpln implements AdminServices {
                 .map(BankAccount::getUser)
                 .findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with account number " + accNo));
-
+        log.info("returned user having account number {}", accNo);
         return mapToDto(user);
     }
 
     @Override
     public List<UserResponseDto> getUserBwAge(AgeReqDto ageReqDto) {
+        log.info("returned users b/w two ages");
         return userRepository.findAll()
                 .stream()
                 .filter(x -> x.getAge() > ageReqDto.getAge1() && x.getAge() <ageReqDto.getAge2())
@@ -267,14 +270,15 @@ public class AdminServicesImpln implements AdminServices {
 
     @Override
     public Long getTotalNoAccV1() {
+        log.info("returned the total number of accounts by v1");
         return bankAccountRepository.count();
     }
 
     @Override
     public List<UserResponseDto> getUserAboveAgeV1(Integer age) {
-
+        log.info("returned users b/w two ages by v1");
         List<User> users = userRepository.findByAgeGreaterThan(age);
-
+        log.info("");
         return users.stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
@@ -282,14 +286,17 @@ public class AdminServicesImpln implements AdminServices {
 
     @Override
     public UserResponseDto getUserByAccNoV1(Long accNo) {
+
         User user =  bankAccountRepository.findByAccNo(accNo)
                 .map(BankAccount::getUser)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with account number " + accNo));
+        log.info("returned user having account number {} by v1", accNo);
         return mapToDto(user);
     }
 
     @Override
     public List<UserResponseDto> getUserOverSpecificBalV1(Double amt) {
+        log.error("accounts not present in bank db above this balance by v1");
         return bankAccountRepository.findByBalanceGreaterThan(amt)
                 .stream().map(BankAccount::getUser)
                 .map(user -> {
@@ -306,6 +313,7 @@ public class AdminServicesImpln implements AdminServices {
 
     @Override
     public List<UserResponseDto> getUsersLessThanBalV1(Double amount) {
+        log.error("All bank accounts having balance less than {} by v1", amount);
         return bankAccountRepository.findByBalanceLessThan(amount)
                 .stream().map(BankAccount::getUser)
                 .map(x -> {
@@ -321,6 +329,7 @@ public class AdminServicesImpln implements AdminServices {
 
     @Override
     public List<BankAccountResponseDto> getAllBankAccounts(){
+        log.info("returned all the bank accounts");
         return bankAccountRepository.findAll()
                 .stream()
                 .filter(x -> x.getIsDeleted() == false)
