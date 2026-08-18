@@ -17,7 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -140,4 +142,5 @@ public class UserServicesImpln implements UserServices {
         log.info("User updated successfully!");
         return mapToDto(user.get());
     }
+
 }

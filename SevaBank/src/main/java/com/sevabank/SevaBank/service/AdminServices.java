@@ -1,6 +1,7 @@
 package com.sevabank.SevaBank.service;
 
 import com.sevabank.SevaBank.dto.request.AgeReqDto;
+import com.sevabank.SevaBank.dto.response.BalanceResDto;
 import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
 import com.sevabank.SevaBank.dto.response.UserResponseDto;
 
@@ -50,4 +51,12 @@ public interface AdminServices {
     List<BankAccountResponseDto> getAllBankAccounts();
 
     Boolean deleteAccountById(Long id);
+
+    List<UserResponseDto> getUsersWithMulAcc();
+
+    List<UserResponseDto> getUsersHavingTotalBalGreaterThan100000();
+
+    BalanceResDto getAvgBalOfAcc();
+
+    List<BankAccountResponseDto> getUsersWithBalGreaterThanAvgBal();
 }

@@ -1,0 +1,9 @@
+11:34:22.494 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+11:34:22.495 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+11:34:22.495 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 0 ms
+11:34:22.519 [http-nio-8080-exec-1] WARN  o.h.e.jdbc.spi.SqlExceptionHelper -SQL Error: 0, SQLState: 42803
+11:34:22.519 [http-nio-8080-exec-1] ERROR o.h.e.jdbc.spi.SqlExceptionHelper -ERROR: column "user1_.id" must appear in the GROUP BY clause or be used in an aggregate function
+  Position: 8
+11:34:46.561 [http-nio-8080-exec-2] WARN  o.h.e.jdbc.spi.SqlExceptionHelper -SQL Error: 0, SQLState: 42803
+11:34:46.561 [http-nio-8080-exec-2] ERROR o.h.e.jdbc.spi.SqlExceptionHelper -ERROR: column "user1_.id" must appear in the GROUP BY clause or be used in an aggregate function
+  Position: 8

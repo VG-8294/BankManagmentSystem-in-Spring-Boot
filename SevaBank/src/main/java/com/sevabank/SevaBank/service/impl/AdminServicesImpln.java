@@ -2,6 +2,7 @@ package com.sevabank.SevaBank.service.impl;
 
 import com.sevabank.SevaBank.Enum.AccountType;
 import com.sevabank.SevaBank.dto.request.AgeReqDto;
+import com.sevabank.SevaBank.dto.response.BalanceResDto;
 import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
 import com.sevabank.SevaBank.dto.response.UserResponseDto;
 import com.sevabank.SevaBank.entity.BankAccount;
@@ -35,6 +36,16 @@ public class AdminServicesImpln implements AdminServices {
         dto.setEmail(user.getEmail());
         dto.setAge(user.getAge());
         log.info("user mapped to userDto");
+        return dto;
+    }
+
+    private BankAccountResponseDto mapToBankDto(BankAccount bankAccount){
+        BankAccountResponseDto dto = new BankAccountResponseDto();
+        dto.setAccNo(bankAccount.getAccNo());
+        dto.setUser_name(bankAccount.getUser().getName());
+        dto.setEmail(bankAccount.getUser().getEmail());
+        dto.setAccountType(bankAccount.getAccountType());
+        dto.setBalance(bankAccount.getBalance());
         return dto;
     }
 
@@ -358,4 +369,38 @@ public class AdminServicesImpln implements AdminServices {
         log.info("bank account deleted with id-{}", id);
         return accountToDel.getDeleted();
     }
+
+    @Override
+    public List<UserResponseDto> getUsersWithMulAcc(){
+        return userRepository.findUsersWithMultipleAccounts()
+                .stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserResponseDto> getUsersHavingTotalBalGreaterThan100000(){
+        return userRepository.findUsersWithTotalBalanceGreaterThan100000()
+                .stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public BalanceResDto getAvgBalOfAcc(){
+        Double avgBal = bankAccountRepository.getAverageOfBalance();
+        BalanceResDto dto = new BalanceResDto();
+        dto.setBalance(avgBal);
+        return dto;
+    }
+
+    @Override
+    public List<BankAccountResponseDto> getUsersWithBalGreaterThanAvgBal(){
+        List<BankAccount> bk = bankAccountRepository.findAccountsHavingBalanceGreaterThanAvgBal();
+        return bk
+                .stream()
+                .map(this::mapToBankDto)
+                .collect(Collectors.toList());
+    }
+
 }

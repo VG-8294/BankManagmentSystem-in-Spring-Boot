@@ -2,8 +2,10 @@ package com.sevabank.SevaBank.controller;
 
 import com.sevabank.SevaBank.dto.generic.GenericDto;
 import com.sevabank.SevaBank.dto.request.AgeReqDto;
+import com.sevabank.SevaBank.dto.response.BalanceResDto;
 import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
 import com.sevabank.SevaBank.dto.response.UserResponseDto;
+import com.sevabank.SevaBank.entity.User;
 import com.sevabank.SevaBank.service.AdminServices;
 import com.sevabank.SevaBank.service.UserServices;
 import org.springframework.http.HttpStatus;
@@ -151,7 +153,30 @@ public class AdminController {
         return new GenericDto<BankAccountResponseDto>(HttpStatus.OK, "Account deleted!");
     }
 
+    @GetMapping("/getUsersWithMulAcc")
+    public GenericDto<List<UserResponseDto>> usersWithMulAcc(){
+        List<UserResponseDto> usersWithMulAcc = adminService.getUsersWithMulAcc();
+        return new GenericDto<List<UserResponseDto>>(HttpStatus.ACCEPTED, "users with multiple accounts", usersWithMulAcc);
+    }
 
+    @GetMapping("/getUsersHavingMoreThan100000")
+    public GenericDto<List<UserResponseDto>> usersHavingBalanceGreaterThan100000(){
+        List<UserResponseDto> users = adminService.getUsersHavingTotalBalGreaterThan100000();
+        return new GenericDto<List<UserResponseDto>>(HttpStatus.ACCEPTED, "users with balance greater than 100000", users);
+
+    }
+
+    @GetMapping("/getAvgBalOfAllAcc")
+    public GenericDto<BalanceResDto> avgBalOfAllAcc(){
+        BalanceResDto dto = adminService.getAvgBalOfAcc();
+        return new GenericDto<BalanceResDto>(HttpStatus.OK, "Average of balance of all accounts", dto);
+    }
+
+    @GetMapping("/getUsersWithBalGreaterThanAvgBal")
+    public GenericDto<List<BankAccountResponseDto>> getUsersWithBalGreaterThanAvgBal(){
+        List<BankAccountResponseDto> listOfAcc = adminService.getUsersWithBalGreaterThanAvgBal();
+        return new GenericDto<List<BankAccountResponseDto>>(HttpStatus.OK, "Users with balance greater than average of balance of all accounts", listOfAcc);
+    }
 
 
  }
