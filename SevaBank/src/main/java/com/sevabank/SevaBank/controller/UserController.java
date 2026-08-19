@@ -6,6 +6,7 @@ import com.sevabank.SevaBank.dto.request.RegisterReqDto;
 import com.sevabank.SevaBank.dto.request.UpdateUserReq;
 import com.sevabank.SevaBank.dto.response.UserResponseDto;
 import com.sevabank.SevaBank.service.UserServices;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
+@Tag(name="User APIs", description = "register, login, update")
 public class UserController {
 
     private final UserServices userService;

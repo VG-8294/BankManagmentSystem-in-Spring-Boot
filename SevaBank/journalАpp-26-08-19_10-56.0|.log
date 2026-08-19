@@ -1,0 +1,5 @@
+10:56:28.634 [http-nio-8080-exec-4] ERROR c.s.S.s.impl.AdminServicesImpln -users list returned!
+10:56:28.635 [http-nio-8080-exec-4] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+10:56:28.635 [http-nio-8080-exec-4] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+10:56:28.635 [http-nio-8080-exec-4] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+10:56:28.635 [http-nio-8080-exec-4] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
