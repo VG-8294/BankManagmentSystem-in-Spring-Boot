@@ -8,6 +8,7 @@ import com.sevabank.SevaBank.dto.response.UserResponseDto;
 import com.sevabank.SevaBank.entity.User;
 import com.sevabank.SevaBank.service.AdminServices;
 import com.sevabank.SevaBank.service.UserServices;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
+@Tag(name="Admin APIs")
 public class AdminController {
     private final AdminServices adminService;
 

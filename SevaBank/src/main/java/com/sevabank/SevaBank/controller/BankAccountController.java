@@ -7,11 +7,13 @@ import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
 import com.sevabank.SevaBank.dto.request.CreateBankAccountRequest;
 import com.sevabank.SevaBank.dto.response.InterestResponseDto;
 import com.sevabank.SevaBank.service.BankServices;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/bankAccount")
+@Tag(name="Bank APIs", description = "create, deposit, withdraw, balance, check balance, interest")
 public class BankAccountController {
 
     BankServices bankAccountService;
