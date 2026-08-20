@@ -1,0 +1,4 @@
+12:13:13.980 [http-nio-8080-exec-9] INFO  c.s.S.service.impl.BankServicesImpln -transaction saved!
+12:13:13.984 [http-nio-8080-exec-9] INFO  c.s.S.service.impl.BankServicesImpln -Amount deposited successfully!
+12:13:13.985 [http-nio-8080-exec-9] INFO  c.s.S.service.impl.BankServicesImpln -normal bank class to dto converted
+12:13:34.556 [http-nio-8080-exec-10] INFO  c.s.S.service.impl.BankServicesImpln -balance checked!
