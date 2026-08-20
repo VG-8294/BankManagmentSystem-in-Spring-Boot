@@ -1,43 +1,69 @@
 package com.sevabank.SevaBank.repository;
 
-import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
-import com.sevabank.SevaBank.dto.response.UserResponseDto;
+import com.sevabank.SevaBank.Enum.AccountType;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.entity.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
-    Boolean existsByAccNoAndUserEmailAndUserPassword(Long accNo, String email, String password);
+public class BankAccountRepository {
 
-    Optional<BankAccount> findByAccNo(Long accNo);
+    private final JdbcTemplate jdbcTemplate;
 
-    List<BankAccount> findByBalanceGreaterThan(Double amt);
+    public BankAccountRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
-    List<BankAccount> findByBalanceLessThan(Double amount);
+    public void createAccount(BankAccount createdBankAccount) {
+        String sql = "INSERT INTO account_schema.bankaccount " +
+                "(type, balance, interest_rate, overdraft_limit, user_id, is_deleted, created_at, updated_at) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-    BankAccount findByAccNoAndUserEmailAndUserPassword(Long accNo, String email, String password);
+        int rows = jdbcTemplate.update(sql,
+                                createdBankAccount.getAccountType().name(),
+                                createdBankAccount.getBalance(),
+                                createdBankAccount.getInterestRate(),
+                                createdBankAccount.getOverdraftLimit(),
+                                createdBankAccount.getUser().getId(),
+                                createdBankAccount.getIsDeleted(),
+                                createdBankAccount.getCreatedAt(),
+                                createdBankAccount.getUpdatedAt()
+                                );
 
-    @Query(value = "SELECT b\n" +
-            "    FROM BankAccount b\n" +
-            "    WHERE b.balance = (\n" +
-            "        SELECT MAX(b2.balance)\n" +
-            "        FROM BankAccount b2\n" +
-            "    )" )
-    List<BankAccount> findAccountsWithHighestBalance();
+        if(rows == 1){
+            System.out.println("Bank Account created!");
+        }
+        else{
+            System.out.println("Account creation failed");
+        }
+    }
 
-    @Query(value="SELECT AVG(b.balance) from BankAccount b")
-    Double getAverageOfBalance();
+    public List<BankAccount> findById(Long accNo) {
+        String sql = "SELECT * FROM account_schema.bankaccount b "+
+                     "JOIN user_schema.users u "+
+                     "on u.id = b.user_id " +
+                      "WHERE b.acc_no = ?";
 
-    @Query("SELECT b\n" +
-            "FROM BankAccount b \n" +
-            "WHERE b.balance > \n" +
-            "(SELECT AVG(b1.balance) from BankAccount b1)\n" +
-            " ")
-    List<BankAccount> findAccountsHavingBalanceGreaterThanAvgBal();
+        return jdbcTemplate.query(sql, (rs, rowNum) ->{
+                        BankAccount account = new BankAccount();
+                        account.setAccNo(rs.getLong("acc_no"));;
+                        account.setAccountType(AccountType.valueOf(rs.getString("type")));
+                        account.setBalance(rs.getDouble("balance"));
+                        account.setInterestRate(rs.getDouble("interest_rate"));
+                        account.setOverdraftLimit(rs.getDouble("overdraft_limit"));
+
+                        User user = new User();
+                        user.setId(rs.getLong("user_id"));
+                        user.setName(rs.getString("name"));
+                        user.setEmail(rs.getString("email"));
+                        user.setPassword(rs.getString("password"));
+                        user.setAge(rs.getInt("age"));
+
+                        account.setUser(user);
+                        return account;
+        }, accNo);
+    }
 }

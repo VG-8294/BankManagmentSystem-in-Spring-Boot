@@ -1,0 +1,7 @@
+12:04:58.370 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean -Closing JPA EntityManagerFactory for persistence unit 'default'
+12:04:58.372 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Shutdown initiated...
+12:04:58.372 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Shutdown completed.
+12:04:59.781 [main] INFO  c.s.SevaBank.SevaBankApplication -Starting SevaBankApplication using Java 26.0.1 on 67s-MacBook-Pro.local with PID 11125 (/Users/vishalgautam/Downloads/BankManagementSys/SevaBank/target/classes started by vishalgautam in /Users/vishalgautam/Downloads/BankManagementSys/SevaBank)
+12:04:59.782 [main] INFO  c.s.SevaBank.SevaBankApplication -No active profile set, falling back to 1 default profile: "default"
+12:04:59.968 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate -Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+12:04:59.985 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate -Finished Spring Data repository scanning in 14 ms. Found 2 JPA repository interfaces.

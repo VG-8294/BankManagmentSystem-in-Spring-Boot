@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public GenericDto<String> handleException(Exception e){
-        return new GenericDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, "Some error occured");
+        return new GenericDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)

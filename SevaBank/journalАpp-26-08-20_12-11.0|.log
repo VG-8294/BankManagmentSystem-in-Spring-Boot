@@ -1,0 +1,4 @@
+12:11:38.168 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool -HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m7s645ms).
+12:11:44.302 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean -Closing JPA EntityManagerFactory for persistence unit 'default'
+12:11:44.304 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Shutdown initiated...
+12:11:44.305 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Shutdown completed.

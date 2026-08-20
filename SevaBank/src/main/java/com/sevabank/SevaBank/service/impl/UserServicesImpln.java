@@ -17,9 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -54,14 +52,16 @@ public class UserServicesImpln implements UserServices {
             log.error("age is negative");
             throw new InvalidAgeException("Age cannot be negative!");
         }
-        userRepo.save(newUser);
+        userRepo.createUser(newUser);
         log.info("User created with id-{}", newUser.getId());
         return mapToDto(newUser);
     }
 
     @Override
     public UserResponseDto login(LoginReqDto loginReqDto) {
-        Optional<BankAccount> account = bankAccountRepository.findById(loginReqDto.getAccNo());
+        Optional<BankAccount> account = bankAccountRepository.findById(loginReqDto.getAccNo())
+                .stream()
+                .findFirst();
         if(!account.isPresent()){
             log.error("Account number doesn't exist in db");
             throw new ResourceNotFoundException("Invalid account number!");
@@ -75,31 +75,33 @@ public class UserServicesImpln implements UserServices {
             return mapToDto(user);
     }
 
-    @Override
-    public UserResponseDto loginV1(LoginReqDto loginReqDto) {
-        System.out.println("In UserService");
-        System.out.println(loginReqDto);
-        BankAccount account =  bankAccountRepository.findByAccNoAndUserEmailAndUserPassword(
-                    loginReqDto.getAccNo(),
-                    loginReqDto.getEmail(),
-                    loginReqDto.getPassword()
-        );
-        if(account == null){
-            log.error("email or password is incorrect");
-            throw new ResourceNotFoundException("Invalid credentials!");
-        }
-        UserResponseDto user = new UserResponseDto();
-        user.setId(account.getUser().getId());
-        user.setName(account.getUser().getName());
-        user.setEmail(account.getUser().getEmail());
-        user.setAge(account.getUser().getAge());
-        log.info("User logged in successfully!");
-        return user;
-    }
-
+//    @Override
+//    public UserResponseDto loginV1(LoginReqDto loginReqDto) {
+//        System.out.println("In UserService");
+//        System.out.println(loginReqDto);
+//        BankAccount account =  bankAccountRepository.findByAccNoAndUserEmailAndUserPassword(
+//                    loginReqDto.getAccNo(),
+//                    loginReqDto.getEmail(),
+//                    loginReqDto.getPassword()
+//        );
+//        if(account == null){
+//            log.error("email or password is incorrect");
+//            throw new ResourceNotFoundException("Invalid credentials!");
+//        }
+//        UserResponseDto user = new UserResponseDto();
+//        user.setId(account.getUser().getId());
+//        user.setName(account.getUser().getName());
+//        user.setEmail(account.getUser().getEmail());
+//        user.setAge(account.getUser().getAge());
+//        log.info("User logged in successfully!");
+//        return user;
+//    }
+//
     @Override
     public UserResponseDto updateUser(Long id, UpdateUserReq updateReqUser) {
-        Optional<User> user = userRepo.findById(id);
+        Optional<User> user = userRepo.findById(id)
+                .stream()
+                .findFirst();
         if(!user.isPresent()){
             log.error("user doesn't exist with this id- {}", id);
             throw new ResourceNotFoundException("User not found!");
@@ -109,14 +111,19 @@ public class UserServicesImpln implements UserServices {
         user.get().setPassword(updateReqUser.getPassword());
         user.get().setAge(updateReqUser.getAge());
         user.get().setUpdatedAt(LocalDateTime.now());
-        userRepo.save(user.get());
-        log.info("User updated successfully!");
-        return mapToDto(user.get());
+        if(userRepo.updateUser(user.get())){
+            log.info("User updated successfully!");
+            return mapToDto(user.get());
+        }
+        log.error("Some error in updating user");
+        throw new RuntimeException("Some error in updating the user");
     }
 
     @Override
     public UserResponseDto updateDetailsUser(Long id, UpdateUserReq updateReqUser) {
-        Optional<User> user = userRepo.findById(id);
+        Optional<User> user = userRepo.findById(id)
+                .stream()
+                .findFirst();
         if(!user.isPresent()){
             log.error("user doesn't exist with this id- {}", id);
             throw new ResourceNotFoundException("User not found!");
@@ -138,9 +145,12 @@ public class UserServicesImpln implements UserServices {
             user.get().setAge(updateReqUser.getAge());
         }
         user.get().setUpdatedAt(LocalDateTime.now());
-        userRepo.save(user.get());
-        log.info("User updated successfully!");
-        return mapToDto(user.get());
+        if(userRepo.updateUser(user.get())){
+            log.info("User updated successfully!");
+            return mapToDto(user.get());
+        }
+        log.error("Some error in updating user");
+        throw new RuntimeException("Some error in updating the user");
     }
 
 }

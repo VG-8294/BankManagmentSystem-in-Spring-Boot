@@ -14,13 +14,13 @@ public interface BankServices {
 
     BankAccountResponseDto createBankAccount(CreateBankAccountRequest bankReq);
 
-    Optional<BankAccount> getBankAccountById(Long id);
-
-    BankAccountResponseDto depositInAccount(Long id, double balance);
-
-    BankAccountResponseDto withdrawInAccount(Long id, double balance);
-
-    BalanceResDto checkBalance(Long id);
-
-    InterestResponseDto calculateInterest(Long id);
+//    Optional<BankAccount> getBankAccountById(Long id);
+//
+//    BankAccountResponseDto depositInAccount(Long id, double balance);
+//
+//    BankAccountResponseDto withdrawInAccount(Long id, double balance);
+//
+//    BalanceResDto checkBalance(Long id);
+//
+//    InterestResponseDto calculateInterest(Long id);
 }

@@ -1,0 +1,2 @@
+16:37:20.294 [http-nio-8080-exec-4] INFO  c.s.S.service.impl.UserServicesImpln -User updated successfully!
+16:37:40.318 [http-nio-8080-exec-5] ERROR c.s.S.service.impl.UserServicesImpln -user doesn't exist with this id- 72
