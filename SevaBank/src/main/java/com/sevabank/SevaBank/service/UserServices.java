@@ -9,11 +9,11 @@ public interface UserServices {
     UserResponseDto createUser(RegisterReqDto dto);
 
     UserResponseDto login(LoginReqDto loginReqDto);
-
-    UserResponseDto loginV1(LoginReqDto loginReqDto);
-
-
+//
+//    UserResponseDto loginV1(LoginReqDto loginReqDto);
+//
+//
     UserResponseDto updateUser(Long id, UpdateUserReq updateReqUser);
-
+//
     UserResponseDto updateDetailsUser(Long id, UpdateUserReq updateReqUser);
 }
