@@ -74,8 +74,8 @@ public class BankAccount {
         this.createdAt = LocalDateTime.now();
     }
 
-    public void deposit(double amt) {
-        balance += amt;
+    public double deposit(double amt) {
+        return balance += amt;
     }
 
     public void withdraw(double amt) {

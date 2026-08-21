@@ -27,33 +27,33 @@ public class BankAccountController {
 
     }
 
-//    @PostMapping("/deposit/{id}")
-//    public GenericDto<BankAccountResponseDto> deposit(@PathVariable Long id, @RequestBody BalanceReq balanceReq){
-//        BankAccountResponseDto depositedAccount = bankAccountService.depositInAccount(id, balanceReq.getBalance());
+    @PostMapping("/deposit/{id}")
+    public GenericDto<BankAccountResponseDto> deposit(@PathVariable Long id, @RequestBody BalanceReq balanceReq){
+        BankAccountResponseDto depositedAccount = bankAccountService.depositInAccount(id, balanceReq.getBalance());
+
+        return new GenericDto<BankAccountResponseDto>(HttpStatus.ACCEPTED, "Amount deposited!", depositedAccount);
+    }
+
+    @PostMapping("/withdraw/{id}")
+    public GenericDto<BankAccountResponseDto> withdraw(@PathVariable Long id, @RequestBody BalanceReq balanceReq){
+        BankAccountResponseDto withdrawnInAccount = bankAccountService.withdrawInAccount(id, balanceReq.getBalance());
+
+        return new GenericDto<BankAccountResponseDto>(HttpStatus.ACCEPTED, "Amount withdrawn", withdrawnInAccount);
+    }
+
+    @GetMapping("/balance/{id}")
+    public GenericDto<BalanceResDto> checkBalance(@PathVariable Long id){
+        BalanceResDto balance =  bankAccountService.checkBalance(id);
+        return new GenericDto<BalanceResDto>(HttpStatus.ACCEPTED, "" ,  balance);
+    }
 //
-//        return new GenericDto<BankAccountResponseDto>(HttpStatus.ACCEPTED, "Amount deposited!", depositedAccount);
-//    }
-//
-//    @PostMapping("/withdraw/{id}")
-//    public GenericDto<BankAccountResponseDto> withdraw(@PathVariable Long id, @RequestBody BalanceReq balanceReq){
-//        BankAccountResponseDto withdrawnInAccount = bankAccountService.withdrawInAccount(id, balanceReq.getBalance());
-//
-//        return new GenericDto<BankAccountResponseDto>(HttpStatus.ACCEPTED, "Amount withdrawn", withdrawnInAccount);
-//    }
-//
-//    @GetMapping("/balance/{id}")
-//    public GenericDto<BalanceResDto> checkBalance(@PathVariable Long id){
-//        BalanceResDto balance =  bankAccountService.checkBalance(id);
-//        return new GenericDto<BalanceResDto>(HttpStatus.ACCEPTED, "" ,  balance);
-//    }
-//
-//    @GetMapping("/interest/{id}")
-//        public GenericDto<InterestResponseDto> checkInterest(@PathVariable Long id){
-//        InterestResponseDto interest =  bankAccountService.calculateInterest(id);
-//        if(interest == null){
-//            return new GenericDto<InterestResponseDto>(HttpStatus.NOT_FOUND, "account not found");
-//        }
-//        return new GenericDto<InterestResponseDto>(HttpStatus.ACCEPTED, "" ,  interest);
-//    }
+    @GetMapping("/interest/{id}")
+        public GenericDto<InterestResponseDto> checkInterest(@PathVariable Long id){
+        InterestResponseDto interest =  bankAccountService.calculateInterest(id);
+        if(interest == null){
+            return new GenericDto<InterestResponseDto>(HttpStatus.NOT_FOUND, "account not found");
+        }
+        return new GenericDto<InterestResponseDto>(HttpStatus.ACCEPTED, "" ,  interest);
+    }
 
 }

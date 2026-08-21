@@ -16,11 +16,11 @@ public interface BankServices {
 
 //    Optional<BankAccount> getBankAccountById(Long id);
 //
-//    BankAccountResponseDto depositInAccount(Long id, double balance);
+    BankAccountResponseDto depositInAccount(Long id, double balance);
 //
-//    BankAccountResponseDto withdrawInAccount(Long id, double balance);
+    BankAccountResponseDto withdrawInAccount(Long id, double balance);
 //
-//    BalanceResDto checkBalance(Long id);
+    BalanceResDto checkBalance(Long id);
 //
-//    InterestResponseDto calculateInterest(Long id);
+    InterestResponseDto calculateInterest(Long id);
 }

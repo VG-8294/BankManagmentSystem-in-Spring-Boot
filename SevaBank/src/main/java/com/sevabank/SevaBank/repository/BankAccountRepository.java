@@ -66,4 +66,27 @@ public class BankAccountRepository {
                         return account;
         }, accNo);
     }
+
+    public Boolean existsById(Long id) {
+        String sql = "SELECT EXISTS( " +
+                     "SELECT 1 FROM account_schema.bankaccount " +
+                     "WHERE acc_no = ?" +
+                     ")";
+        return jdbcTemplate.queryForObject(sql, Boolean.class, id);
+    }
+
+    public void deposit(BankAccount accountInDep, double amt) {
+        String sql = "UPDATE account_schema.bankaccount " +
+                     "SET balance = balance + ? " +
+                     "WHERE acc_no = ?";
+
+        jdbcTemplate.update(sql, amt, accountInDep.getAccNo());
+    }
+
+    public void withdraw(BankAccount accountInDep, double amt) {
+        String sql = "UPDATE account_schema.bankaccount " +
+                     "SET balance = balance - ? " +
+                     "WHERE acc_no = ?";
+        jdbcTemplate.update(sql, amt, accountInDep.getAccNo());
+    }
 }
