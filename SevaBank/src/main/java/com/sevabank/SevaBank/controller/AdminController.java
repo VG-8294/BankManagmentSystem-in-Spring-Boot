@@ -166,11 +166,11 @@ public class AdminController {
 //
 //    }
 //
-//    @GetMapping("/getAvgBalOfAllAcc")
-//    public GenericDto<BalanceResDto> avgBalOfAllAcc(){
-//        BalanceResDto dto = adminService.getAvgBalOfAcc();
-//        return new GenericDto<BalanceResDto>(HttpStatus.OK, "Average of balance of all accounts", dto);
-//    }
+    @GetMapping("/getAvgBalOfAllAcc")
+    public GenericDto<BalanceResDto> avgBalOfAllAcc(){
+        BalanceResDto dto = adminService.getAvgBalOfAcc();
+        return new GenericDto<BalanceResDto>(HttpStatus.OK, "Average of balance of all accounts", dto);
+    }
 //
 //    @GetMapping("/getUsersWithBalGreaterThanAvgBal")
 //    public GenericDto<List<BankAccountResponseDto>> getUsersWithBalGreaterThanAvgBal(){

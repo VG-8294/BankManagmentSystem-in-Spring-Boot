@@ -234,6 +234,9 @@ public class AdminServicesImpln implements AdminServices {
 //
 //
 //
+    /*
+
+     */
     @Override
     public UserResponseDto getUserByAccNo(Long accNo) {
         User user =  bankAccountRepository.findAll()
@@ -350,13 +353,13 @@ public class AdminServicesImpln implements AdminServices {
 //                .collect(Collectors.toList());
 //    }
 //
-//    @Override
-//    public BalanceResDto getAvgBalOfAcc(){
-//        Double avgBal = bankAccountRepository.getAverageOfBalance();
-//        BalanceResDto dto = new BalanceResDto();
-//        dto.setBalance(avgBal);
-//        return dto;
-//    }
+    @Override
+    public BalanceResDto getAvgBalOfAcc(){
+        Double avgBal = bankAccountRepository.getAverageOfBalance();
+        BalanceResDto dto = new BalanceResDto();
+        dto.setBalance(avgBal);
+        return dto;
+    }
 //
 //    @Override
 //    public List<BankAccountResponseDto> getUsersWithBalGreaterThanAvgBal(){

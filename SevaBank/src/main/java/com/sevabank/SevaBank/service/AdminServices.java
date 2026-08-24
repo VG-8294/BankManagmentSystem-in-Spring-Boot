@@ -56,7 +56,7 @@ public interface AdminServices {
 //
 //    List<UserResponseDto> getUsersHavingTotalBalGreaterThan100000();
 //
-//    BalanceResDto getAvgBalOfAcc();
+    BalanceResDto getAvgBalOfAcc();
 //
 //    List<BankAccountResponseDto> getUsersWithBalGreaterThanAvgBal();
 }

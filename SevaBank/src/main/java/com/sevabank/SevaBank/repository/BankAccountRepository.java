@@ -145,4 +145,10 @@ public class BankAccountRepository {
             return account;
         }, amount);
     }
+
+    public Double getAverageOfBalance() {
+        String sql = "SELECT AVG(balance) FROM account_schema.bankaccount " +
+                     "WHERE is_deleted = false";
+        return jdbcTemplate.queryForObject(sql, Double.class);
+    }
 }
