@@ -1,42 +1,42 @@
-//package com.sevabank.SevaBank.service;
+package com.sevabank.SevaBank.service;
+
+import com.sevabank.SevaBank.dto.request.AgeReqDto;
+import com.sevabank.SevaBank.dto.response.BalanceResDto;
+import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
+import com.sevabank.SevaBank.dto.response.UserResponseDto;
+
+import java.util.List;
+
+public interface AdminServices {
+    List<UserResponseDto> getAllUsers();
+
+    List<UserResponseDto> getUsersLessThanBal(Double balance);
 //
-//import com.sevabank.SevaBank.dto.request.AgeReqDto;
-//import com.sevabank.SevaBank.dto.response.BalanceResDto;
-//import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
-//import com.sevabank.SevaBank.dto.response.UserResponseDto;
+    List<UserResponseDto> getUsersHavingSaving();
 //
-//import java.util.List;
+    List<UserResponseDto> getUsersHavingCurrent();
 //
-//public interface AdminServices {
-//    List<UserResponseDto> getAllUsers();
+    List<UserResponseDto> getOldAgeUsers();
 //
-//    List<UserResponseDto> getUsersLessThanBal(Double balance);
+    List<UserResponseDto> getOldAgeUsersV1();
 //
-//    List<UserResponseDto> getUsersHavingSaving();
+    UserResponseDto getUsersByEmail(String email);
 //
-//    List<UserResponseDto> getUsersHavingCurrent();
+    List<String> getAllUsersEmail();
 //
-//    List<UserResponseDto> getOldAgeUsers();
+    Integer getTotalNoAcc();
 //
-//    List<UserResponseDto> getOldAgeUsersV1();
+    Double getTotalMoneyInBank();
 //
-//    UserResponseDto getUsersByEmail(String email);
+    UserResponseDto getUserWithMaxBal();
 //
-//    List<String> getAllUsersEmail();
+    List<UserResponseDto> getUserOverSpecificBal(Double amt);
 //
-//    Integer getTotalNoAcc();
+    List<UserResponseDto> getUserAboveAge(Integer age);
 //
-//    Double getTotalMoneyInBank();
+    UserResponseDto getUserByAccNo(Long accNo);
 //
-//    UserResponseDto getUserWithMaxBal();
-//
-//    List<UserResponseDto> getUserOverSpecificBal(Double amt);
-//
-//    List<UserResponseDto> getUserAboveAge(Integer age);
-//
-//    UserResponseDto getUserByAccNo(Long accNo);
-//
-//    List<UserResponseDto> getUserBwAge(AgeReqDto ageReqDto);
+    List<UserResponseDto> getUserBwAge(AgeReqDto ageReqDto);
 //
 //    Long getTotalNoAccV1();
 //
@@ -46,17 +46,17 @@
 //
 //    List<UserResponseDto> getUserOverSpecificBalV1(Double amt);
 //
-//    List<UserResponseDto> getUsersLessThanBalV1(Double amount);
+    List<UserResponseDto> getUsersLessThanBalV1(Double amount);
 //
-//    List<BankAccountResponseDto> getAllBankAccounts();
+    List<BankAccountResponseDto> getAllBankAccounts();
 //
-//    Boolean deleteAccountById(Long id);
+    Boolean deleteAccountById(Long id);
 //
-//    List<UserResponseDto> getUsersWithMulAcc();
+    List<UserResponseDto> getUsersWithMulAcc();
 //
 //    List<UserResponseDto> getUsersHavingTotalBalGreaterThan100000();
 //
 //    BalanceResDto getAvgBalOfAcc();
 //
 //    List<BankAccountResponseDto> getUsersWithBalGreaterThanAvgBal();
-//}
+}

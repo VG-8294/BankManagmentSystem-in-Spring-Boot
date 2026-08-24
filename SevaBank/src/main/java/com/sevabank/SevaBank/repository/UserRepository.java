@@ -3,8 +3,8 @@ package com.sevabank.SevaBank.repository;
 import com.sevabank.SevaBank.entity.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,5 +75,64 @@ public class UserRepository {
         int rows = jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getPassword(), user.getAge(), LocalDateTime.now(), user.getId());
 
         return rows == 1;
+    }
+
+    public  List<User> findAll() {
+        String sql = "SELECT u.id, u.name, u.email, u.age " +
+                     "FROM user_schema.users u ";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+                    User user = new User();
+                    user.setId(rs.getLong("id"));
+                    user.setName(rs.getString("name"));
+                    user.setEmail(rs.getString("email"));
+                    user.setAge(rs.getInt("age"));
+                    return user;
+        });
+    }
+
+    public List<User> findByEmail(String email) {
+        String sql = "SELECT u.id, u.name, u.email, u.age "+
+                     "FROM user_schema.users u " +
+                     "WHERE email = ?";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) ->{
+                            User user = new User();
+                            user.setId(rs.getLong("id"));
+                            user.setName(rs.getString("name"));
+                            user.setEmail(rs.getString("email"));
+                            user.setAge(rs.getInt("age"));
+                            return user;
+        }, email);
+    }
+
+    public List<User> findUsersWithMultipleAccounts() {
+        String sql = "SELECT u.id, u.name, u.email, u.age " +
+                     "FROM user_schema.users u " +
+                     "JOIN account_schema.bankaccount b on u.id = b.user_id " +
+                     "GROUP BY u.id " +
+                     "HAVING COUNT(*) > 1";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) ->{
+                        User user = new User();
+                        user.setId(rs.getLong("id"));
+                        user.setName(rs.getString("name"));
+                        user.setEmail(rs.getString("email"));
+                        user.setAge(rs.getInt("age"));
+                        return user;
+        });
+    }
+
+    public List<User> findByAgeGreaterThanEqual(int i) {
+        String sql = "SELECT u.id, u.name, u.email, u.age FROM user-schema.users u" +
+                     "WHERE u.age >= 60";
+        return jdbcTemplate.query(sql, (rs, rowNum) ->{
+            User user = new User();
+            user.setId(rs.getLong("id"));
+            user.setName(rs.getString("name"));
+            user.setEmail(rs.getString("email"));
+            user.setAge(rs.getInt("age"));
+            return user;
+        });
     }
 }

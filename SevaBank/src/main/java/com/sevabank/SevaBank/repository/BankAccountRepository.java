@@ -6,6 +6,7 @@ import com.sevabank.SevaBank.entity.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -88,5 +89,60 @@ public class BankAccountRepository {
                      "SET balance = balance - ? " +
                      "WHERE acc_no = ?";
         jdbcTemplate.update(sql, amt, accountInDep.getAccNo());
+    }
+
+    public List<BankAccount> findAll() {
+        String sql = "SELECT b.acc_no, b.type, b.balance, b.is_deleted, u.id, u.name, u.email, u.age " +
+                     "FROM account_schema.bankaccount b JOIN user_schema.users u " +
+                     "on b.user_id = u.id ";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) ->{
+                        BankAccount account = new BankAccount();
+                        account.setAccNo(rs.getLong("acc_no"));
+                        account.setAccountType(AccountType.valueOf(rs.getString("type")));
+                        account.setBalance(rs.getDouble("balance"));
+                        account.setIsDeleted(rs.getBoolean("is_deleted"));
+
+                        User user = new User();
+                        user.setId(rs.getLong("id"));
+                        user.setName(rs.getString("name"));
+                        user.setEmail(rs.getString("email"));
+                        user.setAge(rs.getInt("age"));
+
+                        account.setUser(user);
+                        return account;
+        });
+    }
+
+    public void delete(BankAccount accountToDel) {
+        String sql = "DELETE FROM account_schema.bankaccount b " +
+                     "WHERE b.acc_no = ? ";
+
+        jdbcTemplate.update(sql, accountToDel.getAccNo());
+    }
+
+    public List<BankAccount> findByBalanceLessThan(Double amount) {
+        String sql = "SELECT u.id, u.name, u.email, u.age, b.acc_no, b.type, b.balance, b.is_deleted FROM user_schema.users u " +
+                     "JOIN account_schema.bankaccount b on u.id = b.user_id " +
+                     "WHERE b.balance < ?";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) ->{
+
+            BankAccount account = new BankAccount();
+            account.setAccNo(rs.getLong("acc_no"));
+            account.setAccountType(AccountType.valueOf(rs.getString("type")));
+            account.setBalance(rs.getDouble("balance"));
+            account.setIsDeleted(rs.getBoolean("is_deleted"));
+
+            User user = new User();
+            user.setId(rs.getLong("id"));
+            user.setName(rs.getString("name"));
+            user.setEmail(rs.getString("email"));
+            user.setAge(rs.getInt("age"));
+
+            account.setUser(user);
+
+            return account;
+        }, amount);
     }
 }
