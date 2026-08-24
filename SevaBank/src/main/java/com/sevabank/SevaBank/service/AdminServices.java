@@ -1,9 +1,8 @@
 package com.sevabank.SevaBank.service;
 
 import com.sevabank.SevaBank.dto.request.AgeReqDto;
-import com.sevabank.SevaBank.dto.response.BalanceResDto;
-import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
-import com.sevabank.SevaBank.dto.response.UserResponseDto;
+import com.sevabank.SevaBank.dto.request.UpdateUserReq;
+import com.sevabank.SevaBank.dto.response.*;
 
 import java.util.List;
 
@@ -52,6 +51,8 @@ public interface AdminServices {
 
     Boolean deleteAccountById(Long id);
 
+    Boolean deleteUserById(Long id);
+
     List<UserResponseDto> getUsersWithMulAcc();
 
     List<UserResponseDto> getUsersHavingTotalBalGreaterThan100000();
@@ -59,4 +60,12 @@ public interface AdminServices {
     BalanceResDto getAvgBalOfAcc();
 
     List<BankAccountResponseDto> getUsersWithBalGreaterThanAvgBal();
+
+    UserResponseDto updateUser(Long id, UpdateUserReq updateReqUser);
+
+    UserResponseDto updateDetailsUser(Long id, UpdateUserReq updateReqUser);
+
+    InterestResponseDto setInterestLevel(Double interest);
+
+    OverDraftLimitRes setOverDraftLimit(Double odl);
 }

@@ -6,6 +6,7 @@ import com.sevabank.SevaBank.dto.request.RegisterReqDto;
 import com.sevabank.SevaBank.dto.request.UpdateUserReq;
 import com.sevabank.SevaBank.dto.response.UserResponseDto;
 import com.sevabank.SevaBank.service.UserServices;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,10 @@ public class UserController {
 
 
     @PostMapping("/register")
+    @Operation(
+            summary = "Register a new user",
+            description = "Registers a new user in the system using the provided user details."
+    )
     @ResponseStatus(HttpStatus.CREATED)
     public GenericDto<UserResponseDto> createUser(@RequestBody RegisterReqDto registerReqDto){
         UserResponseDto userDto =  userService.createUser(registerReqDto);
@@ -33,6 +38,10 @@ public class UserController {
 
 
     @PostMapping("/login")
+    @Operation(
+            summary = "Logins user",
+            description = "User gets logged in by providing account number, email and password"
+    )
     public GenericDto<UserResponseDto> loginUser(@RequestBody LoginReqDto loginReqDto){
         UserResponseDto loggedInUser = userService.login(loginReqDto);
         return new GenericDto<UserResponseDto>(HttpStatus.ACCEPTED, "Login successfull", loggedInUser);
@@ -45,16 +54,14 @@ public class UserController {
         return new GenericDto<UserResponseDto>(HttpStatus.ACCEPTED, "Login successfull", loggedInUser);
     }
 
-    @PutMapping("/update/{id}")
-    public GenericDto<UserResponseDto> updateUser(@PathVariable Long id, @RequestBody UpdateUserReq updateUserReq){
-        UserResponseDto updatedUser = userService.updateUser(id, updateUserReq);
-        return new GenericDto<UserResponseDto>(HttpStatus.ACCEPTED, "updated successfully", updatedUser);
-    }
-
-    @PatchMapping("/update/{id}")
-    public GenericDto<UserResponseDto> updateDetailsUser(@PathVariable Long id, @RequestBody UpdateUserReq updateUserReq){
-        UserResponseDto updatedUser = userService.updateDetailsUser(id, updateUserReq);
-        return new GenericDto<UserResponseDto>(HttpStatus.ACCEPTED, "updated successfully", updatedUser);
+    @GetMapping("/getMyDetails/{accNo}")
+    @Operation(
+            summary = "Retrieves user details",
+            description = "Retrieves user detail by providing account number"
+    )
+    public GenericDto<UserResponseDto> getMyDeatils(@PathVariable Long accNo){
+        UserResponseDto user = userService.getUserDetails(accNo);
+        return new GenericDto<UserResponseDto>(HttpStatus.OK, "Here are your details: ", user);
     }
 
 

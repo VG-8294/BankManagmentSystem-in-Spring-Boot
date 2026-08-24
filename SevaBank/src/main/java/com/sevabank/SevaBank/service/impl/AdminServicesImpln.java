@@ -2,11 +2,11 @@ package com.sevabank.SevaBank.service.impl;
 
 import com.sevabank.SevaBank.Enum.AccountType;
 import com.sevabank.SevaBank.dto.request.AgeReqDto;
-import com.sevabank.SevaBank.dto.response.BalanceResDto;
-import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
-import com.sevabank.SevaBank.dto.response.UserResponseDto;
+import com.sevabank.SevaBank.dto.request.UpdateUserReq;
+import com.sevabank.SevaBank.dto.response.*;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.entity.User;
+import com.sevabank.SevaBank.exception.InvalidAgeException;
 import com.sevabank.SevaBank.exception.ResourceNotFoundException;
 import com.sevabank.SevaBank.repository.BankAccountRepository;
 import com.sevabank.SevaBank.repository.UserRepository;
@@ -14,6 +14,7 @@ import com.sevabank.SevaBank.service.AdminServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -369,6 +370,17 @@ public class AdminServicesImpln implements AdminServices {
         log.info("bank account deleted with id-{}", id);
         return accountToDel.getDeleted();
     }
+    @Override
+    public Boolean deleteUserById(Long id){
+        Optional<User> user = userRepository.findById(id);
+        if(!user.isPresent()){
+            throw new ResourceNotFoundException("User not found!");
+        }
+        user.get().setIsDeleted(true);
+        userRepository.save(user.get());
+        return user.get().getIsDeleted();
+    }
+
 
     @Override
     public List<UserResponseDto> getUsersWithMulAcc(){
@@ -401,6 +413,74 @@ public class AdminServicesImpln implements AdminServices {
                 .stream()
                 .map(this::mapToBankDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserResponseDto updateUser(Long id, UpdateUserReq updateReqUser) {
+        Optional<User> user = userRepository.findById(id);
+        if(!user.isPresent()){
+            log.error("user doesn't exist with this id- {}", id);
+            throw new ResourceNotFoundException("User not found!");
+        }
+        user.get().setName(updateReqUser.getName());
+        user.get().setEmail(updateReqUser.getEmail());
+        user.get().setPassword(updateReqUser.getPassword());
+        user.get().setAge(updateReqUser.getAge());
+        user.get().setUpdatedAt(LocalDateTime.now());
+        userRepository.save(user.get());
+        log.info("User updated successfully!");
+        return mapToDto(user.get());
+    }
+
+    @Override
+    public UserResponseDto updateDetailsUser(Long id, UpdateUserReq updateReqUser) {
+        Optional<User> user = userRepository.findById(id);
+        if(!user.isPresent()){
+            log.error("user doesn't exist with this id- {}", id);
+            throw new ResourceNotFoundException("User not found!");
+        }
+        if(updateReqUser.getAge() < 0){
+            log.error("age is negative");
+            throw new InvalidAgeException("Age cannot be negative!");
+        }
+        if(updateReqUser.getName()!= null){
+            user.get().setName(updateReqUser.getName());
+        }
+        if(updateReqUser.getEmail() != null){
+            user.get().setEmail(updateReqUser.getEmail());
+        }
+        if(updateReqUser.getPassword()!= null){
+            user.get().setPassword(updateReqUser.getPassword());
+        }
+        if(updateReqUser.getAge() != 0){
+            user.get().setAge(updateReqUser.getAge());
+        }
+        user.get().setUpdatedAt(LocalDateTime.now());
+        userRepository.save(user.get());
+        log.info("User updated successfully!");
+        return mapToDto(user.get());
+    }
+
+    @Override
+    public InterestResponseDto setInterestLevel(Double interest) {
+        List<BankAccount> allAccounts = bankAccountRepository.findAll();
+        allAccounts
+                .stream()
+                .forEach(x -> x.setInterestRate(interest));
+        InterestResponseDto dto = new InterestResponseDto();
+        dto.setInterest(interest);
+        return dto;
+    }
+
+    @Override
+    public OverDraftLimitRes setOverDraftLimit(Double odl) {
+        List<BankAccount> allAccounts = bankAccountRepository.findAll();
+        allAccounts
+                .stream()
+                .forEach(x -> x.setOverdraftLimit(odl));
+        OverDraftLimitRes dto = new OverDraftLimitRes();
+        dto.setOdl(odl);
+        return dto;
     }
 
 }

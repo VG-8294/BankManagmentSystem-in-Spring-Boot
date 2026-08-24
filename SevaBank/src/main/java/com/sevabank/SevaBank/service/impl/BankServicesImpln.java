@@ -176,4 +176,15 @@ public class BankServicesImpln implements BankServices {
         log.info("interest checked!");
         return intDto;
     }
+
+    @Override
+    public BankAccountResponseDto getBankAccountDetails(Long accNo) {
+        Optional<BankAccount> accountExist = bankAccountRepository.findById(accNo);
+        if(!accountExist.isPresent()){
+            log.error("Account number doesn't exist in db for interest check");
+            throw new ResourceNotFoundException("Account not found!");
+        }
+        BankAccount accountToExist = accountExist.get();
+        return bankAccountToDto(accountToExist);
+    }
 }

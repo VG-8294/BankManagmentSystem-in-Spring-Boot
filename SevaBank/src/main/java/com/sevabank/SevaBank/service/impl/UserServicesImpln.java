@@ -98,49 +98,16 @@ public class UserServicesImpln implements UserServices {
     }
 
     @Override
-    public UserResponseDto updateUser(Long id, UpdateUserReq updateReqUser) {
-        Optional<User> user = userRepo.findById(id);
-        if(!user.isPresent()){
-            log.error("user doesn't exist with this id- {}", id);
-            throw new ResourceNotFoundException("User not found!");
-        }
-        user.get().setName(updateReqUser.getName());
-        user.get().setEmail(updateReqUser.getEmail());
-        user.get().setPassword(updateReqUser.getPassword());
-        user.get().setAge(updateReqUser.getAge());
-        user.get().setUpdatedAt(LocalDateTime.now());
-        userRepo.save(user.get());
-        log.info("User updated successfully!");
-        return mapToDto(user.get());
-    }
+    public UserResponseDto getUserDetails(Long id) {
+        User user = bankAccountRepository.findById(id)
+                .get()
+                .getUser();
 
-    @Override
-    public UserResponseDto updateDetailsUser(Long id, UpdateUserReq updateReqUser) {
-        Optional<User> user = userRepo.findById(id);
-        if(!user.isPresent()){
-            log.error("user doesn't exist with this id- {}", id);
-            throw new ResourceNotFoundException("User not found!");
+        if(user == null){
+            throw new ResourceNotFoundException("Account not found!");
         }
-        if(updateReqUser.getAge() < 0){
-            log.error("age is negative");
-            throw new InvalidAgeException("Age cannot be negative!");
-        }
-        if(updateReqUser.getName()!= null){
-            user.get().setName(updateReqUser.getName());
-        }
-        if(updateReqUser.getEmail() != null){
-            user.get().setEmail(updateReqUser.getEmail());
-        }
-        if(updateReqUser.getPassword()!= null){
-            user.get().setPassword(updateReqUser.getPassword());
-        }
-        if(updateReqUser.getAge() != 0){
-            user.get().setAge(updateReqUser.getAge());
-        }
-        user.get().setUpdatedAt(LocalDateTime.now());
-        userRepo.save(user.get());
-        log.info("User updated successfully!");
-        return mapToDto(user.get());
+
+        return mapToDto(user);
     }
 
 }

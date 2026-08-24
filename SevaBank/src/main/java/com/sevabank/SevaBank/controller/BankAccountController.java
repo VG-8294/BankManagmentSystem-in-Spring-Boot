@@ -6,10 +6,15 @@ import com.sevabank.SevaBank.dto.response.BalanceResDto;
 import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
 import com.sevabank.SevaBank.dto.request.CreateBankAccountRequest;
 import com.sevabank.SevaBank.dto.response.InterestResponseDto;
+import com.sevabank.SevaBank.dto.response.UserResponseDto;
+import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.service.BankServices;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/bankAccount")
@@ -23,39 +28,70 @@ public class BankAccountController {
     }
 
     @PostMapping
+    @Operation(
+            summary = "Creates bank account",
+            description = "Creates bank account by providing basic details"
+    )
     public GenericDto<BankAccountResponseDto> createBankAccount(@RequestBody CreateBankAccountRequest bankReq){
         BankAccountResponseDto bankDto =  bankAccountService.createBankAccount(bankReq);
         return new GenericDto<BankAccountResponseDto>(HttpStatus.CREATED, "Account created", bankDto);
 
     }
 
-    @PostMapping("/deposit/{id}")
-    public GenericDto<BankAccountResponseDto> deposit(@PathVariable Long id, @RequestBody BalanceReq balanceReq){
-        BankAccountResponseDto depositedAccount = bankAccountService.depositInAccount(id, balanceReq.getBalance());
+    @PostMapping("/deposit/{accNo}")
+    @Operation(
+            summary = "Deposits money",
+            description = "Deposit money in user account by providing user account number"
+    )
+    public GenericDto<BankAccountResponseDto> deposit(@PathVariable Long accNo, @RequestBody BalanceReq balanceReq){
+        BankAccountResponseDto depositedAccount = bankAccountService.depositInAccount(accNo, balanceReq.getBalance());
 
         return new GenericDto<BankAccountResponseDto>(HttpStatus.ACCEPTED, "Amount deposited!", depositedAccount);
     }
 
-    @PostMapping("/withdraw/{id}")
-    public GenericDto<BankAccountResponseDto> withdraw(@PathVariable Long id, @RequestBody BalanceReq balanceReq){
-        BankAccountResponseDto withdrawnInAccount = bankAccountService.withdrawInAccount(id, balanceReq.getBalance());
+    @PostMapping("/withdraw/{accNo}")
+    @Operation(
+            summary = "Withdraws money",
+            description = "Withdraw money in user account by providing user account number"
+    )
+    public GenericDto<BankAccountResponseDto> withdraw(@PathVariable Long accNo, @RequestBody BalanceReq balanceReq){
+        BankAccountResponseDto withdrawnInAccount = bankAccountService.withdrawInAccount(accNo, balanceReq.getBalance());
 
         return new GenericDto<BankAccountResponseDto>(HttpStatus.ACCEPTED, "Amount withdrawn", withdrawnInAccount);
     }
 
-    @GetMapping("/balance/{id}")
-    public GenericDto<BalanceResDto> checkBalance(@PathVariable Long id){
-        BalanceResDto balance =  bankAccountService.checkBalance(id);
+    @GetMapping("/balance/{accNo}")
+    @Operation(
+            summary = "Check bank account balance",
+            description = "Check balance of a user account by providing user account number"
+    )
+    public GenericDto<BalanceResDto> checkBalance(@PathVariable Long accNo){
+        BalanceResDto balance =  bankAccountService.checkBalance(accNo);
         return new GenericDto<BalanceResDto>(HttpStatus.ACCEPTED, "" ,  balance);
     }
 
-    @GetMapping("/interest/{id}")
-        public GenericDto<InterestResponseDto> checkInterest(@PathVariable Long id){
-        InterestResponseDto interest =  bankAccountService.calculateInterest(id);
+    @GetMapping("/interest/{accNo}")
+    @Operation(
+            summary = "Check interest of a account",
+            description = "Check interest of a user account getting on that account by providing user account number"
+    )
+        public GenericDto<InterestResponseDto> checkInterest(@PathVariable Long accNo){
+        InterestResponseDto interest =  bankAccountService.calculateInterest(accNo);
         if(interest == null){
             return new GenericDto<InterestResponseDto>(HttpStatus.NOT_FOUND, "account not found");
         }
         return new GenericDto<InterestResponseDto>(HttpStatus.ACCEPTED, "" ,  interest);
     }
+
+    @GetMapping("/getBankAccountDetails/{accNo}")
+    @Operation(
+            summary = " Retrieve bank account details",
+            description = "Retrieve bank account details of the logged in user by taking it's account number"
+    )
+    public GenericDto<BankAccountResponseDto> getBankAccountDetails(@PathVariable Long accNo){
+        BankAccountResponseDto bankAccount = bankAccountService.getBankAccountDetails(accNo);
+        return new GenericDto<BankAccountResponseDto>(HttpStatus.OK, "Here are your bank details: ", bankAccount);
+    }
+
 
 }

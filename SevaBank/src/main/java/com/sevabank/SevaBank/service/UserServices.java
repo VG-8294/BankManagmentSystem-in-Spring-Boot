@@ -12,8 +12,10 @@ public interface UserServices {
 
     UserResponseDto loginV1(LoginReqDto loginReqDto);
 
+    UserResponseDto getUserDetails(Long id);
 
-    UserResponseDto updateUser(Long id, UpdateUserReq updateReqUser);
 
-    UserResponseDto updateDetailsUser(Long id, UpdateUserReq updateReqUser);
+//    UserResponseDto updateUser(Long id, UpdateUserReq updateReqUser);
+//
+//    UserResponseDto updateDetailsUser(Long id, UpdateUserReq updateReqUser);
 }
