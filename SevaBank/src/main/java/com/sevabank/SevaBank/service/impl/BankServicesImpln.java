@@ -63,7 +63,7 @@ public class BankServicesImpln implements BankServices {
 
     @Override
     public BankAccountResponseDto createBankAccount(CreateBankAccountRequest bankReq) {
-
+        log.info("Creating bank acount with user-id-{}", bankReq.getUserId());
         Optional<User> user = Optional.of(userRepository.findById(bankReq.getUserId())
                 .stream()
                 .filter(x -> x.getId() == bankReq.getUserId())
@@ -88,7 +88,7 @@ public class BankServicesImpln implements BankServices {
         BankAccount createdBankAccount = new BankAccount(bankReq.getBalance(), type);
         createdBankAccount.setUser(user.get());
         bankAccountRepository.createAccount(createdBankAccount);
-        log.info("Bank account created!");
+        log.info("Bank account created by user with user-id -{} with account number - {}", user.get().getId(), createdBankAccount.getAccNo());
         return bankAccountToDto(createdBankAccount);
     }
 //
@@ -106,6 +106,7 @@ public class BankServicesImpln implements BankServices {
 //
     @Override
     public BankAccountResponseDto depositInAccount(Long id, double balance) {
+        log.info("User with user-id-{} is depositing with amount - {}", id, balance);
         if(balance < 0){
             log.error("Amount is negative for deposit");
             throw new InvalidAmountException("Amount is less then 0");
@@ -122,7 +123,7 @@ public class BankServicesImpln implements BankServices {
         accountInDep.deposit(balance);
         bankAccountRepository.deposit(accountInDep, balance);
         saveTransaction(accountInDep, TransactionType.DEPOSIT, balance, accountInDep.getBalance());
-        log.info("Amount deposited successfully!");
+        log.info("Amount deposited successfully with user-id-{} having account with account number-{} and deposited -{}", id, accountInDep.getAccNo(), balance);
         return bankAccountToDto(accountInDep);
     }
 //
@@ -130,6 +131,7 @@ public class BankServicesImpln implements BankServices {
 //
     @Override
     public BankAccountResponseDto withdrawInAccount(Long id, double balance) {
+        log.info("User with user-id-{} is withdrawing with amount - {}", id, balance);
         if(balance < 0){
             log.error("Amount is negative for withdrawal");
             throw new InvalidAmountException("Amount is less then 0");
@@ -147,16 +149,23 @@ public class BankServicesImpln implements BankServices {
             log.error("Amount entered is greater then balance");
             throw new BalanceException("Balance less then " + balance);
         }
+        if(accountInDep.getAccountType() == AccountType.CURRENT){
+            if(accountInDep.getBalance() + accountInDep.getOverdraftLimit() < balance){
+                log.error("Bank account is current and amount is less than balance plus overdraft limit");
+                throw new BalanceException("Balance is less then the amount in your account");
+            }
+        }
         accountInDep.withdraw(balance);
         bankAccountRepository.withdraw(accountInDep, balance);
         saveTransaction(accountInDep, TransactionType.WITHDRAW, balance, accountInDep.getBalance());
-        log.info("amount withdrawal successfully");
+        log.info("amount withdrawal successfully with user-id-{} from account wih acount number- {}", accountInDep.getUser().getId(), accountInDep.getAccNo());
         return bankAccountToDto(accountInDep);
     }
 //
 //
     @Override
     public BalanceResDto checkBalance(Long id) {
+        log.info("Checking balance for account number - {}", id);
         Optional<BankAccount> accountExist = bankAccountRepository.findById(id)
                 .stream()
                 .findFirst();
@@ -167,12 +176,13 @@ public class BankServicesImpln implements BankServices {
         BankAccount accountToExist = accountExist.get();
         BalanceResDto balanceDto = new BalanceResDto();
         balanceDto.setBalance(accountToExist.getBalance());
-        log.info("balance checked!");
+        log.info("balance checked for account number-{}", id);
         return balanceDto;
     }
 
     @Override
     public InterestResponseDto calculateInterest(Long id) {
+        log.info("calculating interest for account having account number - {}", id);
         Optional<BankAccount> accountExist = bankAccountRepository.findById(id)
                 .stream()
                 .findFirst();
@@ -184,7 +194,7 @@ public class BankServicesImpln implements BankServices {
         saveTransaction(accountToExist, TransactionType.INTEREST, accountToExist.calculateInt(), accountToExist.getBalance());
         InterestResponseDto intDto = new InterestResponseDto();
         intDto.setInterest(accountToExist.calculateInt());
-        log.info("interest checked!");
+        log.info("interest checked for account number - {}", id);
         return intDto;
     }
 }
