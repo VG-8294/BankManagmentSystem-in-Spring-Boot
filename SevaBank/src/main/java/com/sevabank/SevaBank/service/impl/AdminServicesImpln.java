@@ -4,6 +4,7 @@ import com.sevabank.SevaBank.Enum.AccountType;
 import com.sevabank.SevaBank.dto.request.AgeReqDto;
 import com.sevabank.SevaBank.dto.response.BalanceResDto;
 import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
+import com.sevabank.SevaBank.dto.response.EmailResDto;
 import com.sevabank.SevaBank.dto.response.UserResponseDto;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.entity.User;
@@ -65,14 +66,13 @@ public class AdminServicesImpln implements AdminServices {
 
     @Override
     public List<UserResponseDto> getUsersLessThanBal(Double balance){
-        List<BankAccount> accounts = bankAccountRepository.findAll();
+        List<BankAccount> accounts = bankAccountRepository.findAccountsLessThanAmt(balance);
         if(accounts.isEmpty()){
             log.error("Nothing present in bank db having balance less than {}", balance);
             throw new ResourceNotFoundException("Users not found!");
         }
         log.error("All bank accounts having balance less than {}", balance);
         return accounts.stream()
-                .filter(x -> x.getBalance() < balance && x.getIsDeleted() == false)
                 .map(BankAccount::getUser)
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
@@ -80,7 +80,7 @@ public class AdminServicesImpln implements AdminServices {
 //
     @Override
     public List<UserResponseDto> getUsersHavingSaving(){
-        List<BankAccount> accounts = bankAccountRepository.findAll();
+        List<BankAccount> accounts = bankAccountRepository.findAccountsHavingSaving();
         if(accounts.isEmpty()){
             log.error("Nothing present in bank db having savings account");
             throw new ResourceNotFoundException("Users not found!");
@@ -88,7 +88,6 @@ public class AdminServicesImpln implements AdminServices {
         log.info("returned users having savings account");
         return accounts
                 .stream()
-                .filter(x -> x.getAccountType() == AccountType.SAVING)
                 .map(BankAccount::getUser)
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
@@ -96,7 +95,7 @@ public class AdminServicesImpln implements AdminServices {
 
     @Override
     public List<UserResponseDto> getUsersHavingCurrent() {
-        List<BankAccount> accounts = bankAccountRepository.findAll();
+        List<BankAccount> accounts = bankAccountRepository.findAccountsHavingCurrent();
         if(accounts.isEmpty()){
             log.error("Nothing present in bank db having current account");
             throw new ResourceNotFoundException("Users not found!");
@@ -112,7 +111,7 @@ public class AdminServicesImpln implements AdminServices {
 
     @Override
     public List<UserResponseDto> getOldAgeUsers() {
-        List<User> users = userRepository.findAll();
+        List<User> users = userRepository.findOldAgeUsers();
         if(users.isEmpty()){
             log.error("Nothing present in bank db of old age users");
             throw new ResourceNotFoundException("Users not found!");
@@ -154,45 +153,36 @@ public class AdminServicesImpln implements AdminServices {
 //
 //
     @Override
-    public List<String> getAllUsersEmail() {
-        return userRepository.findAll()
-                .stream()
-                .map(User::getEmail)
-                .collect(Collectors.toList());
+    public List<EmailResDto> getAllUsersEmail() {
+        return userRepository.findEmails();
     }
-//
+
     @Override
     public Integer getTotalNoAcc() {
-        List<BankAccount> accounts = bankAccountRepository.findAll();
-        if(accounts.isEmpty()){
+        Integer accounts = bankAccountRepository.findTotalNoAccs();
+        if(accounts == 0){
             log.error("accounts not present in bank db");
             throw new ResourceNotFoundException("accounts not found!");
         }
         log.info("returned the total number of accounts");
-        return Math.toIntExact(accounts
-                .stream()
-                .count());
+        return accounts;
     }
 //
 //
     @Override
     public Double getTotalMoneyInBank() {
-        List<BankAccount> accounts = bankAccountRepository.findAll();
-        if(accounts.isEmpty()){
+        Double totalMoney = bankAccountRepository.findTotalMoney();
+        if(totalMoney == 0){
             log.error("accounts not present in bank db for total money");
             throw new ResourceNotFoundException("accounts not found!");
         }
         log.info("returned the total money");
-        return accounts
-                .stream()
-                .filter(x -> x.getIsDeleted() == false)
-                .mapToDouble(BankAccount::getBalance)
-                .sum();
+        return totalMoney;
     }
 //
     @Override
-    public UserResponseDto getUserWithMaxBal() {
-        List<BankAccount> accounts = bankAccountRepository.findAll();
+    public UserResponseDto getUserWithMaxBal(){
+        List<BankAccount> accounts = bankAccountRepository.findUserWithMaxBal();
         if(accounts.isEmpty()){
             log.error("accounts not present in bank db for maximum balance");
             throw new ResourceNotFoundException("account not found!");
@@ -200,15 +190,15 @@ public class AdminServicesImpln implements AdminServices {
         log.info("User returned with maximum balance");
         return accounts
                 .stream()
-                .max(Comparator.comparing(BankAccount::getBalance))
                 .map(BankAccount::getUser)
                 .map(this::mapToDto)
-                .get();
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
     }
 //
     @Override
     public List<UserResponseDto> getUserOverSpecificBal(Double amt) {
-        List<BankAccount> accounts = bankAccountRepository.findAll();
+        List<BankAccount> accounts = bankAccountRepository.findByBalanceMoreThan(amt);
         if(accounts.isEmpty()){
             log.error("accounts not present in bank db above this balance");
             throw new ResourceNotFoundException("account not found!");
@@ -216,7 +206,6 @@ public class AdminServicesImpln implements AdminServices {
         log.info("retuned users having balance more than {}", amt);
         return accounts
                 .stream()
-                .filter(x -> x.getBalance() > amt)
                 .map(BankAccount::getUser)
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
@@ -225,9 +214,8 @@ public class AdminServicesImpln implements AdminServices {
     @Override
     public List<UserResponseDto> getUserAboveAge(Integer age) {
         log.info("returned users b/w particular ages");
-        return userRepository.findAll()
+        return userRepository.findByAgeGreaterThanEqual(age)
                 .stream()
-                .filter(x -> x.getAge() > age)
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
@@ -239,9 +227,8 @@ public class AdminServicesImpln implements AdminServices {
      */
     @Override
     public UserResponseDto getUserByAccNo(Long accNo) {
-        User user =  bankAccountRepository.findAll()
+        User user =  bankAccountRepository.findByAccNo(accNo)
                 .stream()
-                .filter(x -> x.getAccNo() == accNo)
                 .map(BankAccount::getUser)
                 .findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with account number " + accNo));
@@ -252,7 +239,7 @@ public class AdminServicesImpln implements AdminServices {
     @Override
     public List<UserResponseDto> getUserBwAge(AgeReqDto ageReqDto) {
         log.info("returned users b/w two ages");
-        return userRepository.findAll()
+        return userRepository.findUsersBwAge(ageReqDto.getAge1(), ageReqDto.getAge2())
                 .stream()
                 .filter(x -> x.getAge() > ageReqDto.getAge1() && x.getAge() <ageReqDto.getAge2())
                 .map(this::mapToDto)
@@ -316,7 +303,6 @@ public class AdminServicesImpln implements AdminServices {
         log.info("returned all the bank accounts");
         return bankAccountRepository.findAll()
                 .stream()
-                .filter(x -> x.getIsDeleted() == false)
                 .map(this::mapToBankDto)
                 .collect(Collectors.toList());
     }
@@ -360,6 +346,16 @@ public class AdminServicesImpln implements AdminServices {
         dto.setBalance(avgBal);
         return dto;
     }
+
+    @Override
+    public List<BankAccountResponseDto> getAllDeletedAccs() {
+        List<BankAccount> accounts = bankAccountRepository.findDeletedAccounts();
+        return accounts
+                .stream()
+                .map(this::mapToBankDto)
+                .collect(Collectors.toList());
+    }
+
 //
 //    @Override
 //    public List<BankAccountResponseDto> getUsersWithBalGreaterThanAvgBal(){

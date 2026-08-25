@@ -6,6 +6,8 @@ import com.sevabank.SevaBank.entity.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,6 +18,31 @@ public class BankAccountRepository {
 
     public BankAccountRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+
+    private BankAccount rowMapper(ResultSet rs, int rowNum) throws SQLException {
+        BankAccount account = new BankAccount();
+        account.setAccNo(rs.getLong("acc_no"));
+        account.setAccountType(AccountType.valueOf(rs.getString("type")));
+        account.setBalance(rs.getDouble("balance"));
+
+        User user = new User();
+        user.setId(rs.getLong("id"));
+        user.setName(rs.getString("name"));
+        user.setEmail(rs.getString("email"));
+        user.setAge(rs.getInt("age"));
+
+        account.setUser(user);
+        return account;
+    }
+
+    private BankAccount bankAccountRowMapper(ResultSet rs, int rowNum) throws SQLException {
+        BankAccount account = new BankAccount();
+        account.setAccNo(rs.getLong("acc_no"));
+        account.setAccountType(AccountType.valueOf(rs.getString("type")));
+        account.setBalance(rs.getDouble("balance"));
+        return account;
     }
 
     public void createAccount(BankAccount createdBankAccount) {
@@ -94,7 +121,8 @@ public class BankAccountRepository {
     public List<BankAccount> findAll() {
         String sql = "SELECT b.acc_no, b.type, b.balance, b.is_deleted, u.id, u.name, u.email, u.age " +
                      "FROM account_schema.bankaccount b JOIN user_schema.users u " +
-                     "on b.user_id = u.id ";
+                     "on b.user_id = u.id " +
+                     "WHERE b.is_deleted = false";
 
         return jdbcTemplate.query(sql, (rs, rowNum) ->{
                         BankAccount account = new BankAccount();
@@ -150,5 +178,85 @@ public class BankAccountRepository {
         String sql = "SELECT AVG(balance) FROM account_schema.bankaccount " +
                      "WHERE is_deleted = false";
         return jdbcTemplate.queryForObject(sql, Double.class);
+    }
+
+    public List<BankAccount> findAccountsLessThanAmt(Double balance) {
+        String sql = "SELECT b.acc_no, b.type, b.balance, u.id, u.name, u.email, u.age " +
+                     "FROM user_schema.users u JOIN account_schema.bankaccount b " +
+                     "ON u.id = b.user_id " +
+                     "WHERE b.balance < ? AND b.is_deleted = false";
+
+        return jdbcTemplate.query(sql, this::rowMapper, balance);
+
+    }
+
+    public List<BankAccount> findAccountsHavingSaving() {
+        String sql = "SELECT b.acc_no, b.type, b.balance, u.id, u.name, u.email, u.age " +
+                "FROM user_schema.users u JOIN account_schema.bankaccount b " +
+                "ON u.id = b.user_id " +
+                "WHERE b.type = 'SAVING' AND b.is_deleted = false";
+
+        return jdbcTemplate.query(sql, this::rowMapper);
+    }
+
+    public List<BankAccount> findAccountsHavingCurrent() {
+        String sql = "SELECT b.acc_no, b.type, b.balance, u.id, u.name, u.email, u.age " +
+                "FROM user_schema.users u JOIN account_schema.bankaccount b " +
+                "ON u.id = b.user_id " +
+                "WHERE b.type = 'CURRENT' AND b.is_deleted = false";
+
+        return jdbcTemplate.query(sql, this::rowMapper);
+    }
+
+
+    public Integer findTotalNoAccs() {
+        String sql = "SELECT COUNT(*) FROM account_schema.bankaccount WHERE is_deleted = false";
+
+        return jdbcTemplate.queryForObject(sql, Integer.class);
+    }
+
+    public Double findTotalMoney() {
+        String sql = "SELECT SUM(balance) FROM account_schema.bankaccount WHERE is_deleted = false";
+
+        return jdbcTemplate.queryForObject(sql, Double.class);
+    }
+
+    public List<BankAccount> findByAccNo(Long accNo) {
+
+        String sql = "SELECT b.acc_no, b.type, b.balance, u.id, u.name, u.email, u.age " +
+                "FROM user_schema.users u JOIN account_schema.bankaccount b " +
+                "ON u.id = b.user_id " +
+                "WHERE b.acc_no = ? AND b.is_deleted = false";
+
+        return jdbcTemplate.query(sql, this::rowMapper, accNo);
+    }
+
+    public List<BankAccount> findDeletedAccounts() {
+        String sql = "SELECT b.acc_no, b.type, b.balance, u.id, u.name, u.email, u.age " +
+                "FROM user_schema.users u JOIN account_schema.bankaccount b " +
+                "ON u.id = b.user_id " +
+                "WHERE b.is_deleted = true";
+
+        return jdbcTemplate.query(sql, this::rowMapper);
+    }
+
+    public List<BankAccount> findByBalanceMoreThan(Double amt) {
+        String sql = "SELECT b.acc_no, b.type, b.balance, u.id, u.name, u.email, u.age " +
+                "FROM user_schema.users u JOIN account_schema.bankaccount b " +
+                "ON u.id = b.user_id " +
+                "WHERE b.balance > ? AND b.is_deleted = false";
+
+        return jdbcTemplate.query(sql, this::rowMapper, amt);
+    }
+
+    public List<BankAccount> findUserWithMaxBal() {
+        String sql = "SELECT b.acc_no, b.type, b.balance, u.id, u.name, u.email, u.age " +
+                "FROM user_schema.users u JOIN account_schema.bankaccount b " +
+                "ON u.id = b.user_id " +
+                "WHERE b.is_deleted = false " +
+                "ORDER BY b.balance DESC " +
+                "LIMIT 1" ;
+        return jdbcTemplate.query(sql, this::rowMapper);
+
     }
 }

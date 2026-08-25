@@ -3,6 +3,7 @@ package com.sevabank.SevaBank.service;
 import com.sevabank.SevaBank.dto.request.AgeReqDto;
 import com.sevabank.SevaBank.dto.response.BalanceResDto;
 import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
+import com.sevabank.SevaBank.dto.response.EmailResDto;
 import com.sevabank.SevaBank.dto.response.UserResponseDto;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface AdminServices {
 //
     UserResponseDto getUsersByEmail(String email);
 //
-    List<String> getAllUsersEmail();
+    List<EmailResDto> getAllUsersEmail();
 //
     Integer getTotalNoAcc();
 //
@@ -57,6 +58,8 @@ public interface AdminServices {
 //    List<UserResponseDto> getUsersHavingTotalBalGreaterThan100000();
 //
     BalanceResDto getAvgBalOfAcc();
+
+    List<BankAccountResponseDto> getAllDeletedAccs();
 //
 //    List<BankAccountResponseDto> getUsersWithBalGreaterThanAvgBal();
 }

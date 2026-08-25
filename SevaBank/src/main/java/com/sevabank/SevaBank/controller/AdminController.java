@@ -4,6 +4,7 @@ import com.sevabank.SevaBank.dto.generic.GenericDto;
 import com.sevabank.SevaBank.dto.request.AgeReqDto;
 import com.sevabank.SevaBank.dto.response.BalanceResDto;
 import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
+import com.sevabank.SevaBank.dto.response.EmailResDto;
 import com.sevabank.SevaBank.dto.response.UserResponseDto;
 import com.sevabank.SevaBank.entity.User;
 import com.sevabank.SevaBank.service.AdminServices;
@@ -72,8 +73,9 @@ public class AdminController {
     }
 //
     @GetMapping("/getAllUsersEmail")
-    public List<String> getAllUsersEmail(){
-         return adminService.getAllUsersEmail();
+    public GenericDto<List<EmailResDto>> getAllUsersEmail(){
+         List<EmailResDto> emailsList =  adminService.getAllUsersEmail();
+         return new GenericDto<List<EmailResDto>>(HttpStatus.OK, "Here all the emails of users: ", emailsList);
     }
 //
     @GetMapping("/getTotalNoAcc")
@@ -177,5 +179,12 @@ public class AdminController {
 //        List<BankAccountResponseDto> listOfAcc = adminService.getUsersWithBalGreaterThanAvgBal();
 //        return new GenericDto<List<BankAccountResponseDto>>(HttpStatus.OK, "Users with balance greater than average of balance of all accounts", listOfAcc);
 //    }
+
+    @GetMapping("/getAllDeletedAccounts")
+    public GenericDto<List<BankAccountResponseDto>> getAllDeletedAccounts(){
+        List<BankAccountResponseDto> accountsList = adminService.getAllDeletedAccs();
+        return new GenericDto<List<BankAccountResponseDto>>(HttpStatus.OK, "Here are the deleted accounts", accountsList);
+    }
+
 
  }

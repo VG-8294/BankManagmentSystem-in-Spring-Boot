@@ -1,12 +1,17 @@
 package com.sevabank.SevaBank.repository;
 
+import com.sevabank.SevaBank.dto.response.EmailResDto;
 import com.sevabank.SevaBank.entity.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.DoubleStream;
 
 @Repository
 public class UserRepository {
@@ -15,6 +20,15 @@ public class UserRepository {
 
     public UserRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    private User userRowMapper(ResultSet rs, int rowNum) throws SQLException {
+        User user = new User();
+        user.setId(rs.getLong("id"));
+        user.setName(rs.getString("name"));
+        user.setEmail(rs.getString("email"));
+        user.setAge(rs.getInt("age"));
+        return user;
     }
 
 
@@ -81,14 +95,7 @@ public class UserRepository {
         String sql = "SELECT u.id, u.name, u.email, u.age " +
                      "FROM user_schema.users u ";
 
-        return jdbcTemplate.query(sql, (rs, rowNum) -> {
-                    User user = new User();
-                    user.setId(rs.getLong("id"));
-                    user.setName(rs.getString("name"));
-                    user.setEmail(rs.getString("email"));
-                    user.setAge(rs.getInt("age"));
-                    return user;
-        });
+        return jdbcTemplate.query(sql, this::userRowMapper);
     }
 
     public List<User> findByEmail(String email) {
@@ -96,14 +103,7 @@ public class UserRepository {
                      "FROM user_schema.users u " +
                      "WHERE email = ?";
 
-        return jdbcTemplate.query(sql, (rs, rowNum) ->{
-                            User user = new User();
-                            user.setId(rs.getLong("id"));
-                            user.setName(rs.getString("name"));
-                            user.setEmail(rs.getString("email"));
-                            user.setAge(rs.getInt("age"));
-                            return user;
-        }, email);
+        return jdbcTemplate.query(sql, this::userRowMapper, email);
     }
 
     public List<User> findUsersWithMultipleAccounts() {
@@ -113,19 +113,18 @@ public class UserRepository {
                      "GROUP BY u.id " +
                      "HAVING COUNT(*) > 1";
 
-        return jdbcTemplate.query(sql, (rs, rowNum) ->{
-                        User user = new User();
-                        user.setId(rs.getLong("id"));
-                        user.setName(rs.getString("name"));
-                        user.setEmail(rs.getString("email"));
-                        user.setAge(rs.getInt("age"));
-                        return user;
-        });
+        return jdbcTemplate.query(sql, this::userRowMapper);
     }
 
     public List<User> findByAgeGreaterThanEqual(int i) {
         String sql = "SELECT u.id, u.name, u.email, u.age FROM user-schema.users u" +
-                     "WHERE u.age >= 60";
+                     "WHERE u.age >= ?";
+        return jdbcTemplate.query(sql, this::userRowMapper, i);
+    }
+
+    public List<User> findOldAgeUsers() {
+        String sql = "SELECT u.id, u.name, u.email, u.age FROM user-schema.users u" +
+                "WHERE u.age >= 60";
         return jdbcTemplate.query(sql, (rs, rowNum) ->{
             User user = new User();
             user.setId(rs.getLong("id"));
@@ -134,5 +133,21 @@ public class UserRepository {
             user.setAge(rs.getInt("age"));
             return user;
         });
+    }
+
+    public List<EmailResDto> findEmails() {
+        String sql = "SELECT email FROM user_schema.users";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            EmailResDto emailResDto = new EmailResDto();
+            emailResDto.setEmail(rs.getString("email"));
+            return emailResDto;
+        });
+    }
+
+    public List<User> findUsersBwAge(int age1, int age2) {
+        String sql = "SELECT u.id, u.name, u.email, u.age FROM user-schema.users u" +
+                "WHERE u.age > ? AND u.age < ?";
+
+        return jdbcTemplate.query(sql, this::userRowMapper, age1, age2);
     }
 }
