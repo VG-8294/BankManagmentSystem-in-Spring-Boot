@@ -43,6 +43,7 @@ public class UserServicesImpln implements UserServices {
 
     @Override
     public UserResponseDto createUser(RegisterReqDto dto){
+        log.info("In createUser with user email-{}", dto.getEmail());
         User newUser = new User(dto.getName(),dto.getEmail(), dto.getPassword(), dto.getAge());
         if(userRepo.existsByEmail(newUser.getEmail())){
             log.error("user email already exists in db");
@@ -59,6 +60,7 @@ public class UserServicesImpln implements UserServices {
 
     @Override
     public UserResponseDto login(LoginReqDto loginReqDto) {
+        log.info("In login with user with accNo-{}", loginReqDto.getAccNo());
         Optional<BankAccount> account = bankAccountRepository.findById(loginReqDto.getAccNo())
                 .stream()
                 .findFirst();
@@ -71,7 +73,7 @@ public class UserServicesImpln implements UserServices {
             log.error("email or password is incorrect");
             throw new InvalidCredentialsException("Invalid credentials!");
         }
-        log.info("User logged in successfully!");
+        log.info("User logged in successfully with id-{}", user.getId());
             return mapToDto(user);
     }
 
@@ -99,6 +101,7 @@ public class UserServicesImpln implements UserServices {
 //
     @Override
     public UserResponseDto updateUser(Long id, UpdateUserReq updateReqUser) {
+        log.info("User requested for update with user-id-{}", id);
         Optional<User> user = userRepo.findById(id)
                 .stream()
                 .findFirst();
@@ -112,15 +115,16 @@ public class UserServicesImpln implements UserServices {
         user.get().setAge(updateReqUser.getAge());
         user.get().setUpdatedAt(LocalDateTime.now());
         if(userRepo.updateUser(user.get())){
-            log.info("User updated successfully!");
+            log.info("User updated successfully with user-id-{}", id);
             return mapToDto(user.get());
         }
-        log.error("Some error in updating user");
+        log.error("Some error in updating user with user-id-{}", id);
         throw new RuntimeException("Some error in updating the user");
     }
 
     @Override
     public UserResponseDto updateDetailsUser(Long id, UpdateUserReq updateReqUser) {
+        log.info("User requested for update with user-id-{}", id);
         Optional<User> user = userRepo.findById(id)
                 .stream()
                 .findFirst();
@@ -146,10 +150,10 @@ public class UserServicesImpln implements UserServices {
         }
         user.get().setUpdatedAt(LocalDateTime.now());
         if(userRepo.updateUser(user.get())){
-            log.info("User updated successfully!");
+            log.info("User updated successfully with user-id-{}", id);
             return mapToDto(user.get());
         }
-        log.error("Some error in updating user");
+        log.error("Some error in updating user with user-id-{}", id);
         throw new RuntimeException("Some error in updating the user");
     }
 
