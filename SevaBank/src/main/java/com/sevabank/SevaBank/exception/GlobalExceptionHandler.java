@@ -1,13 +1,31 @@
 package com.sevabank.SevaBank.exception;
 
 import com.sevabank.SevaBank.dto.generic.GenericDto;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.SQLException;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(BadSqlGrammarException.class)
+    public GenericDto<String> handleSQLException(SQLException e){
+        return new GenericDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(DataAccessException.class)
+    public GenericDto<String> handleSQLException(DataAccessException e){
+        return new GenericDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+    }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
@@ -54,6 +72,11 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidAgeException.class)
     private GenericDto<String> invalidAgeException(InvalidAgeException e){
+        return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+
+    @ExceptionHandler(CustomServiceException.class)
+    private GenericDto<String> serviceException(CustomServiceException e){
         return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
