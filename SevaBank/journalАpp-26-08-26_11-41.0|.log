@@ -1,0 +1,4 @@
+11:41:38.453 [http-nio-8080-exec-3] INFO  c.s.S.service.impl.BankServicesImpln -Creating bank acount with user-id-53
+11:41:38.463 [http-nio-8080-exec-3] ERROR c.s.S.service.impl.BankServicesImpln -accountType is not valid
+11:41:48.369 [http-nio-8080-exec-2] INFO  c.s.S.service.impl.BankServicesImpln -Creating bank acount with user-id-53
+11:41:48.371 [http-nio-8080-exec-2] ERROR c.s.S.service.impl.BankServicesImpln -accountType is not valid

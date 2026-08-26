@@ -123,7 +123,7 @@ public class UserRepository {
     }
 
     public List<User> findOldAgeUsers() {
-        String sql = "SELECT u.id, u.name, u.email, u.age FROM user-schema.users u" +
+        String sql = "SELECT u.id, u.name, u.email, u.age FROM user_schema.users u " +
                 "WHERE u.age >= 60";
         return jdbcTemplate.query(sql, (rs, rowNum) ->{
             User user = new User();
@@ -145,7 +145,7 @@ public class UserRepository {
     }
 
     public List<User> findUsersBwAge(int age1, int age2) {
-        String sql = "SELECT u.id, u.name, u.email, u.age FROM user-schema.users u" +
+        String sql = "SELECT u.id, u.name, u.email, u.age FROM user_schema.users u " +
                 "WHERE u.age > ? AND u.age < ?";
 
         return jdbcTemplate.query(sql, this::userRowMapper, age1, age2);

@@ -69,7 +69,7 @@ public class AdminController {
     @GetMapping("/getUsersByEmail/{email}")
     public GenericDto<UserResponseDto> getUsersByEmail(@PathVariable String email){
         UserResponseDto user =  adminService.getUsersByEmail(email);
-        return new GenericDto<UserResponseDto>(HttpStatus.OK, "Here the user: " + user);
+        return new GenericDto<UserResponseDto>(HttpStatus.OK, "Here the user: ", user);
     }
 //
     @GetMapping("/getAllUsersEmail")

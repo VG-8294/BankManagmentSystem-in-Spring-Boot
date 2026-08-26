@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,8 +55,13 @@ public class UserServicesImpln implements UserServices {
             throw new InvalidAgeException("Age cannot be negative!");
         }
         userRepo.createUser(newUser);
-        log.info("User created with id-{}", newUser.getId());
-        return mapToDto(newUser);
+            UserResponseDto user = userRepo.findByEmail(dto.getEmail())
+                    .stream()
+                    .map(this::mapToDto)
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Cannot be converted to user dto"));
+        log.info("User created with id-{}", user.getId());
+        return user;
     }
 
     @Override

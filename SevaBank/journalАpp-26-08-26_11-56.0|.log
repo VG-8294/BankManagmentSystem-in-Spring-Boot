@@ -1,0 +1,4 @@
+11:56:35.930 [http-nio-8080-exec-3] INFO  c.s.S.service.impl.BankServicesImpln -User with user-id-65 is depositing with amount - 5000.0
+11:56:35.938 [http-nio-8080-exec-3] INFO  c.s.S.service.impl.BankServicesImpln -transaction saved!
+11:56:35.970 [http-nio-8080-exec-3] INFO  c.s.S.service.impl.BankServicesImpln -Amount deposited successfully with user-id-65 having account with account number-65 and deposited -5000.0
+11:56:35.971 [http-nio-8080-exec-3] INFO  c.s.S.service.impl.BankServicesImpln -normal bank class to dto converted

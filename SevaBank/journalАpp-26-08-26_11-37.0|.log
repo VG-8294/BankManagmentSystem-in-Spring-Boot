@@ -1,0 +1,5 @@
+11:37:04.918 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+11:37:04.921 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+11:37:04.922 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 1 ms
+11:37:04.973 [http-nio-8080-exec-1] INFO  c.s.S.service.impl.UserServicesImpln -In createUser with user email-karan@mail.com
+11:37:04.985 [http-nio-8080-exec-1] INFO  c.s.S.service.impl.UserServicesImpln -User created with id-54

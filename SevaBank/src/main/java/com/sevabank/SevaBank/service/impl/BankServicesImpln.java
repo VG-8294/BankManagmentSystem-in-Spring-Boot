@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -88,8 +89,12 @@ public class BankServicesImpln implements BankServices {
         BankAccount createdBankAccount = new BankAccount(bankReq.getBalance(), type);
         createdBankAccount.setUser(user.get());
         bankAccountRepository.createAccount(createdBankAccount);
-        log.info("Bank account created by user with user-id -{} with account number - {}", user.get().getId(), createdBankAccount.getAccNo());
-        return bankAccountToDto(createdBankAccount);
+        BankAccount account = bankAccountRepository.findAccountByUserId(bankReq.getUserId())
+                .stream()
+                .findFirst()
+                        .orElseThrow(() -> new RuntimeException("Account not created due to some error"));
+        log.info("Bank account created by user with user-id -{} with account number - {}", user.get().getId(), account.getAccNo());
+        return bankAccountToDto(account);
     }
 //
 //    @Override

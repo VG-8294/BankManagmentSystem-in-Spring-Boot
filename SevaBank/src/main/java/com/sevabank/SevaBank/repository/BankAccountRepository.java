@@ -259,4 +259,12 @@ public class BankAccountRepository {
         return jdbcTemplate.query(sql, this::rowMapper);
 
     }
+
+    public  List<BankAccount> findAccountByUserId(Long userId) {
+        String sql = "SELECT b.acc_no, b.type, b.balance " +
+                "FROM account_schema.bankaccount b " +
+                "WHERE b.user_id = ? AND b.is_deleted = false";
+
+        return jdbcTemplate.query(sql, this::bankAccountRowMapper, userId);
+    }
 }

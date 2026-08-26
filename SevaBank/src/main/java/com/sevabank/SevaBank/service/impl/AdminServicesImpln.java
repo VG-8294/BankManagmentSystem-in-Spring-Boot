@@ -36,7 +36,6 @@ public class AdminServicesImpln implements AdminServices {
         dto.setName(user.getName());
         dto.setEmail(user.getEmail());
         dto.setAge(user.getAge());
-        log.info("user mapped to userDto");
         return dto;
     }
 

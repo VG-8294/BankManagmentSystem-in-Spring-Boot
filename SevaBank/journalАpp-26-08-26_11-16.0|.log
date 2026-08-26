@@ -1,0 +1,2 @@
+11:16:23.203 [http-nio-8080-exec-3] INFO  c.s.S.s.impl.AdminServicesImpln -Getting user with email-vgautam@gmail.com
+11:16:23.213 [http-nio-8080-exec-3] INFO  c.s.S.s.impl.AdminServicesImpln -User found by email!

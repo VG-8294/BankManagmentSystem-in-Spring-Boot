@@ -1,0 +1,4 @@
+11:32:37.359 [http-nio-8080-exec-6] INFO  c.s.S.service.impl.UserServicesImpln -In createUser with user email-karanMal@mail.com
+11:32:37.370 [http-nio-8080-exec-6] ERROR c.s.S.service.impl.UserServicesImpln -age is negative
+11:32:56.496 [http-nio-8080-exec-7] INFO  c.s.S.service.impl.UserServicesImpln -In createUser with user email-karanMal@mail.com
+11:32:56.517 [http-nio-8080-exec-7] INFO  c.s.S.service.impl.UserServicesImpln -User created with id-null

@@ -1,6 +1,7 @@
 package com.sevabank.SevaBank.exception;
 
 import com.sevabank.SevaBank.dto.generic.GenericDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -9,8 +10,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
 
@@ -18,65 +21,76 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(BadSqlGrammarException.class)
     public GenericDto<String> handleSQLException(SQLException e){
+        log.error(Arrays.toString(e.getStackTrace()));
         return new GenericDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(DataAccessException.class)
     public GenericDto<String> handleSQLException(DataAccessException e){
+        log.error(Arrays.toString(e.getStackTrace()));
         return new GenericDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public GenericDto<String> handleException(Exception e){
+        log.error(Arrays.toString(e.getStackTrace()));
         return new GenericDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ResourceNotFoundException.class)
     public GenericDto<String> resourceNotFound(ResourceNotFoundException e){
+        log.error(Arrays.toString(e.getStackTrace()));
         return new GenericDto<String>(HttpStatus.NOT_FOUND, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BalanceException.class)
     public GenericDto<String> balanceLessException(BalanceException e){
+        log.error(Arrays.toString(e.getStackTrace()));
         return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidCredentialsException.class)
     public GenericDto<String> invalidCredentialsException(InvalidCredentialsException e){
+        log.error(Arrays.toString(e.getStackTrace()));
         return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(UserAlreadyExistsException.class)
     public GenericDto<String> userAlreadyExistsException(UserAlreadyExistsException e){
+        log.error(Arrays.toString(e.getStackTrace()));
         return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidAmountException.class)
     private GenericDto<String> invalidAmountException(InvalidAmountException e){
+        log.error(Arrays.toString(e.getStackTrace()));
         return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidAccountTypeException.class)
     private GenericDto<String> invalidAccountTypeException(InvalidAccountTypeException e){
+        log.error(Arrays.toString(e.getStackTrace()));
         return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidAgeException.class)
     private GenericDto<String> invalidAgeException(InvalidAgeException e){
+        log.error(Arrays.toString(e.getStackTrace()));
         return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
     @ExceptionHandler(CustomServiceException.class)
     private GenericDto<String> serviceException(CustomServiceException e){
+        log.error(Arrays.toString(e.getStackTrace()));
         return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
