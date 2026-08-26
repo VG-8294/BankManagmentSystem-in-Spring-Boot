@@ -55,7 +55,7 @@ public class BankServicesImpln implements BankServices {
         tx.setAmount(amount);
         tx.setBalanceAfterTransaction(currBal);
         tx.setTransactionType(transactionType);
-        tx.setTransactionTime(LocalDateTime.now());
+//        tx.setTransactionTime(LocalDateTime.now());
         log.info("transaction saved!");
         transactionRepository.save(tx);
     }
