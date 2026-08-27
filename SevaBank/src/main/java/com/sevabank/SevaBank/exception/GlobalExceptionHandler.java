@@ -12,9 +12,6 @@ import java.sql.SQLException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
-
-
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(BadSqlGrammarException.class)
     public GenericDto<String> handleSQLException(SQLException e){
