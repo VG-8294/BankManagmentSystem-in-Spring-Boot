@@ -1,0 +1,7 @@
+14:40:20.168 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+14:40:20.169 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+14:40:20.170 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 1 ms
+14:40:20.197 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -returned user having account number 41
+14:40:20.197 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:40:29.666 [http-nio-8080-exec-3] INFO  c.s.S.s.impl.AdminServicesImpln -returned user having account number 45
+14:40:29.667 [http-nio-8080-exec-3] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
