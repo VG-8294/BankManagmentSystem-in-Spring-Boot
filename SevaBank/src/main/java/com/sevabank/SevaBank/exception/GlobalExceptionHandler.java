@@ -13,18 +13,6 @@ import java.sql.SQLException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(BadSqlGrammarException.class)
-    public GenericDto<String> handleSQLException(SQLException e){
-        return new GenericDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-    }
-
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(DataAccessException.class)
-    public GenericDto<String> handleSQLException(DataAccessException e){
-        return new GenericDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-    }
-
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public GenericDto<String> handleException(Exception e){
         return new GenericDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
@@ -72,9 +60,11 @@ public class GlobalExceptionHandler {
         return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
-    @ExceptionHandler(CustomServiceException.class)
-    private GenericDto<String> serviceException(CustomServiceException e){
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(UserCreationException.class)
+    private GenericDto<String> userCreationException(UserCreationException e){
         return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
     }
+
 
 }
