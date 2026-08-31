@@ -6,21 +6,22 @@ import com.sevabank.SevaBank.dto.response.BalanceResDto;
 import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
 import com.sevabank.SevaBank.dto.request.CreateBankAccountRequest;
 import com.sevabank.SevaBank.dto.response.InterestResponseDto;
-import com.sevabank.SevaBank.dto.response.UserResponseDto;
-import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.service.BankServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/api/bankAccount")
-@Tag(name="Bank APIs", description = "create, deposit, withdraw, balance, check balance, interest")
+@Tag(
+        name = "Bank APIs",
+        description = "create, deposit, withdraw, balance, check balance, interest"
+)
 public class BankAccountController {
 
     BankServices bankAccountService;
@@ -29,6 +30,7 @@ public class BankAccountController {
         this.bankAccountService = bankAccountService;
     }
 
+
     @PostMapping
     @Operation(
             summary = "Creates bank account",
@@ -36,26 +38,74 @@ public class BankAccountController {
             responses = {
                     @ApiResponse(
                             responseCode = "201",
-                            description = "Bank account created successfully"
+                            description = "Bank account created successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"CREATED\","
+                                                    + "\"message\":\"Account created\","
+                                                    + "\"data\":{"
+                                                    + "\"accNo\":65,"
+                                                    + "\"balance\":24567.0,"
+                                                    + "\"accountType\":\"SAVING\","
+                                                    + "\"interestRate\":3.5,"
+                                                    + "\"overdraftLimit\":null"
+                                                    + "}"
+                                                    + "}"
+                                    )
+                            )
                     ),
                     @ApiResponse(
                             responseCode = "400",
-                            description = "Wrong input given"
+                            description = "Wrong input given",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Bad Request",
+                                            value = "{"
+                                                    + "\"status\":\"BAD_REQUEST\","
+                                                    + "\"message\":\"Wrong input given\","
+                                                    + "\"data\":null"
+                                                    + "}"
+                                    )
+                            )
                     ),
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal Server Error"
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Internal server error\","
+                                                    + "\"data\":null"
+                                                    + "}"
+                                    )
+                            )
                     )
             }
     )
-    public GenericDto<BankAccountResponseDto> createBankAccount(@io.swagger.v3.oas.annotations.parameters.RequestBody(
-            description = "Bank Creation details",
-            required = true
-    ) @RequestBody CreateBankAccountRequest bankReq){
-        BankAccountResponseDto bankDto =  bankAccountService.createBankAccount(bankReq);
-        return new GenericDto<BankAccountResponseDto>(HttpStatus.CREATED, "Account created", bankDto);
+    public GenericDto<BankAccountResponseDto> createBankAccount(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Bank Creation details",
+                    required = true
+            )
+            @RequestBody CreateBankAccountRequest bankReq) {
 
+        BankAccountResponseDto bankDto =
+                bankAccountService.createBankAccount(bankReq);
+
+        return new GenericDto<BankAccountResponseDto>(
+                HttpStatus.CREATED,
+                "Account created",
+                bankDto
+        );
     }
+
 
     @PostMapping("/deposit/{accNo}")
     @Operation(
@@ -63,31 +113,84 @@ public class BankAccountController {
             description = "Deposit money in user account by providing user account number",
             responses = {
                     @ApiResponse(
-                            responseCode = "201",
-                            description = "Money deposited successfully"
+                            responseCode = "202",
+                            description = "Money deposited successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"ACCEPTED\","
+                                                    + "\"message\":\"Amount deposited!\","
+                                                    + "\"data\":{"
+                                                    + "\"accNo\":65,"
+                                                    + "\"balance\":25567.0,"
+                                                    + "\"accountType\":\"SAVING\","
+                                                    + "\"interestRate\":3.5,"
+                                                    + "\"overdraftLimit\":null"
+                                                    + "}"
+                                                    + "}"
+                                    )
+                            )
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Account not found"
+                            description = "Account not found",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Account Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"Account not found\","
+                                                    + "\"data\":null"
+                                                    + "}"
+                                    )
+                            )
                     ),
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal Server Error"
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Internal server error\","
+                                                    + "\"data\":null"
+                                                    + "}"
+                                    )
+                            )
                     )
             }
-
     )
-    public GenericDto<BankAccountResponseDto> deposit(@Parameter(
-            description = "Account number",
-            example="65"
-    ) @PathVariable Long accNo, @io.swagger.v3.oas.annotations.parameters.RequestBody(
-            description = "Amount to be deposited",
-            required = true
-    ) @RequestBody BalanceReq balanceReq){
-        BankAccountResponseDto depositedAccount = bankAccountService.depositInAccount(accNo, balanceReq.getBalance());
+    public GenericDto<BankAccountResponseDto> deposit(
+            @Parameter(
+                    description = "Account number",
+                    example = "65"
+            )
+            @PathVariable Long accNo,
 
-        return new GenericDto<BankAccountResponseDto>(HttpStatus.ACCEPTED, "Amount deposited!", depositedAccount);
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Amount to be deposited",
+                    required = true
+            )
+            @RequestBody BalanceReq balanceReq) {
+
+        BankAccountResponseDto depositedAccount =
+                bankAccountService.depositInAccount(
+                        accNo,
+                        balanceReq.getBalance()
+                );
+
+        return new GenericDto<BankAccountResponseDto>(
+                HttpStatus.ACCEPTED,
+                "Amount deposited!",
+                depositedAccount
+        );
     }
+
 
     @PostMapping("/withdraw/{accNo}")
     @Operation(
@@ -95,34 +198,99 @@ public class BankAccountController {
             description = "Withdraw money in user account by providing user account number",
             responses = {
                     @ApiResponse(
-                            responseCode = "201",
-                            description = "Money withdrawn successfully"
+                            responseCode = "202",
+                            description = "Money withdrawn successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"ACCEPTED\","
+                                                    + "\"message\":\"Amount withdrawn\","
+                                                    + "\"data\":{"
+                                                    + "\"accNo\":65,"
+                                                    + "\"balance\":23567.0,"
+                                                    + "\"accountType\":\"SAVING\","
+                                                    + "\"interestRate\":3.5,"
+                                                    + "\"overdraftLimit\":null"
+                                                    + "}"
+                                                    + "}"
+                                    )
+                            )
                     ),
                     @ApiResponse(
                             responseCode = "400",
-                            description = "Some error due to your side"
+                            description = "Some error due to your side",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Bad Request",
+                                            value = "{"
+                                                    + "\"status\":\"BAD_REQUEST\","
+                                                    + "\"message\":\"Insufficient balance\","
+                                                    + "\"data\":null"
+                                                    + "}"
+                                    )
+                            )
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Account not found"
+                            description = "Account not found",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Account Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"Account not found\","
+                                                    + "\"data\":null"
+                                                    + "}"
+                                    )
+                            )
                     ),
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal Server Error"
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Internal server error\","
+                                                    + "\"data\":null"
+                                                    + "}"
+                                    )
+                            )
                     )
             }
     )
-    public GenericDto<BankAccountResponseDto> withdraw( @Parameter(
-            description = "Account number",
-            example="65"
-    ) @PathVariable Long accNo, @io.swagger.v3.oas.annotations.parameters.RequestBody(
-            description = "Amount to be withdrawn",
-            required = true
-    ) @RequestBody BalanceReq balanceReq){
-        BankAccountResponseDto withdrawnInAccount = bankAccountService.withdrawInAccount(accNo, balanceReq.getBalance());
+    public GenericDto<BankAccountResponseDto> withdraw(
+            @Parameter(
+                    description = "Account number",
+                    example = "65"
+            )
+            @PathVariable Long accNo,
 
-        return new GenericDto<BankAccountResponseDto>(HttpStatus.ACCEPTED, "Amount withdrawn", withdrawnInAccount);
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Amount to be withdrawn",
+                    required = true
+            )
+            @RequestBody BalanceReq balanceReq) {
+
+        BankAccountResponseDto withdrawnInAccount =
+                bankAccountService.withdrawInAccount(
+                        accNo,
+                        balanceReq.getBalance()
+                );
+
+        return new GenericDto<BankAccountResponseDto>(
+                HttpStatus.ACCEPTED,
+                "Amount withdrawn",
+                withdrawnInAccount
+        );
     }
+
 
     @GetMapping("/balance/{accNo}")
     @Operation(
@@ -130,83 +298,225 @@ public class BankAccountController {
             description = "Check balance of a user account by providing user account number",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
-                            description = "Checked balance of account successfully"
+                            responseCode = "202",
+                            description = "Checked balance of account successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"ACCEPTED\","
+                                                    + "\"message\":\"\","
+                                                    + "\"data\":{"
+                                                    + "\"accNo\":65,"
+                                                    + "\"balance\":24567.0"
+                                                    + "}"
+                                                    + "}"
+                                    )
+                            )
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Account not found"
+                            description = "Account not found",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Account Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"Account not found\","
+                                                    + "\"data\":null"
+                                                    + "}"
+                                    )
+                            )
                     ),
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal server error"
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Internal server error\","
+                                                    + "\"data\":null"
+                                                    + "}"
+                                    )
+                            )
                     )
             }
     )
-    public GenericDto<BalanceResDto> checkBalance(@Parameter(
-            description = "Account number",
-            example = "65"
-    ) @PathVariable Long accNo){
-        BalanceResDto balance =  bankAccountService.checkBalance(accNo);
-        return new GenericDto<BalanceResDto>(HttpStatus.ACCEPTED, "" ,  balance);
+    public GenericDto<BalanceResDto> checkBalance(
+            @Parameter(
+                    description = "Account number",
+                    example = "65"
+            )
+            @PathVariable Long accNo) {
+
+        BalanceResDto balance = bankAccountService.checkBalance(accNo);
+
+        return new GenericDto<BalanceResDto>(
+                HttpStatus.ACCEPTED,
+                "",
+                balance
+        );
     }
+
 
     @GetMapping("/interest/{accNo}")
     @Operation(
-            summary = "Check interest of a account",
-            description = "Check interest of a user account getting on that account by providing user account number",
+            summary = "Check interest of an account",
+            description = "Check interest of a user account by providing user account number",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
-                            description = "Checked interest of account successfully"
+                            responseCode = "202",
+                            description = "Checked interest of account successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"ACCEPTED\","
+                                                    + "\"message\":\"\","
+                                                    + "\"data\":{"
+                                                    + "\"accNo\":65,"
+                                                    + "\"interestRate\":3.5,"
+                                                    + "\"interestAmount\":859.85"
+                                                    + "}"
+                                                    + "}"
+                                    )
+                            )
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Account not found"
+                            description = "Account not found",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Account Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"account not found\","
+                                                    + "\"data\":null"
+                                                    + "}"
+                                    )
+                            )
                     ),
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal server error"
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Internal server error\","
+                                                    + "\"data\":null"
+                                                    + "}"
+                                    )
+                            )
                     )
             }
     )
-        public GenericDto<InterestResponseDto> checkInterest( @Parameter(
-            description = "Account number",
-            example = "65"
-    ) @PathVariable Long accNo){
-        InterestResponseDto interest =  bankAccountService.calculateInterest(accNo);
-        if(interest == null){
-            return new GenericDto<InterestResponseDto>(HttpStatus.NOT_FOUND, "account not found");
+    public GenericDto<InterestResponseDto> checkInterest(
+            @Parameter(
+                    description = "Account number",
+                    example = "65"
+            )
+            @PathVariable Long accNo) {
+
+        InterestResponseDto interest =
+                bankAccountService.calculateInterest(accNo);
+
+        if (interest == null) {
+            return new GenericDto<InterestResponseDto>(
+                    HttpStatus.NOT_FOUND,
+                    "account not found"
+            );
         }
-        return new GenericDto<InterestResponseDto>(HttpStatus.ACCEPTED, "" ,  interest);
+
+        return new GenericDto<InterestResponseDto>(
+                HttpStatus.ACCEPTED,
+                "",
+                interest
+        );
     }
+
 
     @GetMapping("/getBankAccountDetails/{accNo}")
     @Operation(
-            summary = " Retrieve bank account details",
-            description = "Retrieve bank account details of the logged in user by taking it's account number",
+            summary = "Retrieve bank account details",
+            description = "Retrieve bank account details of the logged in user by taking its account number",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Got Bank account details"
+                            description = "Got Bank account details",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"Here are your bank details: \","
+                                                    + "\"data\":{"
+                                                    + "\"accNo\":65,"
+                                                    + "\"balance\":24567.0,"
+                                                    + "\"accountType\":\"SAVING\","
+                                                    + "\"interestRate\":3.5,"
+                                                    + "\"overdraftLimit\":null"
+                                                    + "}"
+                                                    + "}"
+                                    )
+                            )
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Account not found"
+                            description = "Account not found",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Account Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"Account not found\","
+                                                    + "\"data\":null"
+                                                    + "}"
+                                    )
+                            )
                     ),
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal server error"
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Internal server error\","
+                                                    + "\"data\":null"
+                                                    + "}"
+                                    )
+                            )
                     )
             }
     )
-    public GenericDto<BankAccountResponseDto> getBankAccountDetails( @Parameter(
-            description = "Account number",
-            example = "65"
-    ) @PathVariable Long accNo){
-        BankAccountResponseDto bankAccount = bankAccountService.getBankAccountDetails(accNo);
-        return new GenericDto<BankAccountResponseDto>(HttpStatus.OK, "Here are your bank details: ", bankAccount);
+    public GenericDto<BankAccountResponseDto> getBankAccountDetails(
+            @Parameter(
+                    description = "Account number",
+                    example = "65"
+            )
+            @PathVariable Long accNo) {
+
+        BankAccountResponseDto bankAccount =
+                bankAccountService.getBankAccountDetails(accNo);
+
+        return new GenericDto<BankAccountResponseDto>(
+                HttpStatus.OK,
+                "Here are your bank details: ",
+                bankAccount
+        );
     }
-
-
 }
