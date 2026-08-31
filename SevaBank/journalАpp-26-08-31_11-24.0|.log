@@ -1,0 +1,14 @@
+11:24:00.721 [http-nio-8080-exec-6] INFO  c.s.S.s.impl.AdminServicesImpln -returned the total number of accounts
+11:24:16.126 [http-nio-8080-exec-8] INFO  c.s.S.s.impl.AdminServicesImpln -returned users having savings account
+11:24:16.131 [http-nio-8080-exec-8] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:24:16.131 [http-nio-8080-exec-8] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:24:16.131 [http-nio-8080-exec-8] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:24:16.133 [http-nio-8080-exec-8] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:24:16.135 [http-nio-8080-exec-8] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:24:16.135 [http-nio-8080-exec-8] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:24:16.136 [http-nio-8080-exec-8] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:24:16.137 [http-nio-8080-exec-8] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:24:16.138 [http-nio-8080-exec-8] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:24:16.140 [http-nio-8080-exec-8] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:24:16.140 [http-nio-8080-exec-8] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:24:16.140 [http-nio-8080-exec-8] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto

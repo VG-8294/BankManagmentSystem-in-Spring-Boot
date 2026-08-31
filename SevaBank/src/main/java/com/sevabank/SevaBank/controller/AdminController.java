@@ -4,9 +4,11 @@ import com.sevabank.SevaBank.dto.generic.GenericDto;
 import com.sevabank.SevaBank.dto.request.AgeReqDto;
 import com.sevabank.SevaBank.dto.request.UpdateUserReq;
 import com.sevabank.SevaBank.dto.response.*;
+import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.service.AdminServices;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.http.HttpStatus;
@@ -62,6 +64,10 @@ public class AdminController {
             description = "Retrieves users whose bank account balance is less than the specified amount using the version 1 implementation."
     )
     public GenericDto<List<UserResponseDto>> getUsersLessThanBalV1(
+            @Parameter(
+                    description = "amount",
+                    example = "2000"
+            )
             @PathVariable Double amount) {
 
         List<UserResponseDto> usersList = adminService.getUsersLessThanBalV1(amount);
@@ -143,6 +149,10 @@ public class AdminController {
             description = "Retrieves a user using the specified email address."
     )
     public GenericDto<UserResponseDto> getUsersByEmail(
+            @Parameter(
+                    description = "email",
+                    example = "vishal@mail.com"
+            )
             @PathVariable String email) {
 
         UserResponseDto user = adminService.getUsersByEmail(email);
@@ -224,6 +234,10 @@ public class AdminController {
             description = "Retrieves users whose bank account balance is greater than the specified amount."
     )
     public GenericDto<List<UserResponseDto>> getUserWithSpecificBal(
+            @Parameter(
+                    description = "amount",
+                    example = "20000"
+            )
             @PathVariable Double amt) {
 
         List<UserResponseDto> usersList = adminService.getUserOverSpecificBal(amt);
@@ -241,6 +255,10 @@ public class AdminController {
             description = "Retrieves users whose bank account balance is greater than the specified amount using the version 1 implementation."
     )
     public GenericDto<List<UserResponseDto>> getUserWithSpecificBalV1(
+            @Parameter(
+                    description = "amount",
+                    example = "20000"
+            )
             @PathVariable Double amt) {
 
         List<UserResponseDto> usersList = adminService.getUserOverSpecificBalV1(amt);
@@ -258,6 +276,10 @@ public class AdminController {
             description = "Retrieves users whose age is greater than the specified age."
     )
     public GenericDto<List<UserResponseDto>> getUserAboveAge(
+            @Parameter(
+                    description = "age",
+                    example = "27"
+            )
             @PathVariable Integer age) {
 
         List<UserResponseDto> usersList = adminService.getUserAboveAge(age);
@@ -275,6 +297,10 @@ public class AdminController {
             description = "Retrieves users whose age is greater than the specified age using the version 1 implementation."
     )
     public GenericDto<List<UserResponseDto>> getUserAboveAgeV1(
+            @Parameter(
+                    description = "age",
+                    example = "27"
+            )
             @PathVariable Integer age) {
 
         List<UserResponseDto> usersList = adminService.getUserAboveAgeV1(age);
@@ -292,6 +318,10 @@ public class AdminController {
             description = "Retrieves the user associated with the specified bank account number."
     )
     public GenericDto<UserResponseDto> getUserByAccNo(
+            @Parameter(
+                    description = "account number",
+                    example = "62"
+            )
             @PathVariable Long accNo) {
 
         UserResponseDto dto = adminService.getUserByAccNo(accNo);
@@ -309,6 +339,10 @@ public class AdminController {
             description = "Retrieves the user associated with the specified bank account number using the version 1 implementation."
     )
     public GenericDto<UserResponseDto> getUserByAccNoV1(
+            @Parameter(
+                    description = "account number",
+                    example = "62"
+            )
             @PathVariable Long accNo) {
 
         UserResponseDto dto = adminService.getUserByAccNoV1(accNo);
@@ -343,6 +377,7 @@ public class AdminController {
             description = "Retrieves a list of all bank accounts registered in the system."
     )
     public List<BankAccountResponseDto> getAllBankAccounts() {
+        System.out.println(adminService.getAllBankAccounts());
         return adminService.getAllBankAccounts();
     }
 
@@ -435,6 +470,10 @@ public class AdminController {
             description = "Updates the interest rate applied to the bank accounts."
     )
     public GenericDto<InterestResponseDto> setInterest(
+            @Parameter(
+                    description = "interest",
+                    example = "3.5"
+            )
             @PathVariable Double interest) {
 
         InterestResponseDto intDto =
@@ -453,6 +492,10 @@ public class AdminController {
             description = "Updates the overdraft limit for bank accounts."
     )
     public GenericDto<OverDraftLimitRes> setOverDraftLimit(
+            @Parameter(
+                    description = "overdraft limit amount",
+                    example = "12000"
+            )
             @PathVariable Double odl) {
 
         OverDraftLimitRes odlRes =
@@ -471,6 +514,10 @@ public class AdminController {
             description = "Updates the user details associated with the specified user ID."
     )
     public GenericDto<UserResponseDto> updateUser(
+            @Parameter(
+                    description = "user id",
+                    example = "20"
+            )
             @PathVariable Long id,
             @RequestBody UpdateUserReq updateUserReq) {
 
@@ -490,6 +537,10 @@ public class AdminController {
             description = "Updates selected user details associated with the specified user ID."
     )
     public GenericDto<UserResponseDto> updateDetailsUser(
+            @Parameter(
+                    description = "user id",
+                    example = "20"
+            )
             @PathVariable Long id,
             @RequestBody UpdateUserReq updateUserReq) {
 
@@ -509,6 +560,10 @@ public class AdminController {
             description = "Deletes the user associated with the specified user ID."
     )
     public GenericDto<UserResponseDto> deleteUser(
+            @Parameter(
+                    description = "user id",
+                    example = "20"
+            )
             @PathVariable Long id) {
 
         Boolean isUserDel = adminService.deleteUserById(id);

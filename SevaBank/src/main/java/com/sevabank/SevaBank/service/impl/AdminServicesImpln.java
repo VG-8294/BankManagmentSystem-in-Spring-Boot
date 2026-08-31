@@ -344,16 +344,7 @@ public class AdminServicesImpln implements AdminServices {
         log.info("returned all the bank accounts");
         return bankAccountRepository.findAll()
                 .stream()
-                .filter(x -> x.getIsDeleted() == false)
-                .map(x -> {
-                    BankAccountResponseDto dto = new BankAccountResponseDto();
-                    dto.setAccNo(x.getAccNo());
-                    dto.setUser_name(x.getUser().getName());
-                    dto.setEmail(x.getUser().getEmail());
-                    dto.setAccountType(x.getAccountType());
-                    dto.setBalance(x.getBalance());
-                    return dto;
-                })
+                .map(this::mapToBankDto)
                 .collect(Collectors.toList());
     }
 

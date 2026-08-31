@@ -3,6 +3,7 @@ package com.sevabank.SevaBank.service;
 import com.sevabank.SevaBank.dto.request.AgeReqDto;
 import com.sevabank.SevaBank.dto.request.UpdateUserReq;
 import com.sevabank.SevaBank.dto.response.*;
+import com.sevabank.SevaBank.entity.BankAccount;
 
 import java.util.List;
 
