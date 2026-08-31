@@ -9,6 +9,9 @@ import com.sevabank.SevaBank.service.AdminServices;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.http.HttpStatus;
@@ -30,7 +33,33 @@ public class AdminController {
     @GetMapping("/getAllUsers")
     @Operation(
             summary = "Retrieve all users",
-            description = "Retrieves a list of all registered users from the system."
+            description = "Retrieves a list of all registered users from the system.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Users retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"All the users are:\","
+                                                    + "\"data\":[{"
+                                                    + "\"id\":37,"
+                                                    + "\"name\":\"Farhad\","
+                                                    + "\"email\":\"farhad@gmail.com\","
+                                                    + "\"age\":34"
+                                                    + "}]"
+                                                    + "}"
+                                    )
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal server error"
+                    )
+            }
     )
     public GenericDto<List<UserResponseDto>> getAllUsers() {
         List<UserResponseDto> usersList = adminService.getAllUsers();
@@ -44,7 +73,28 @@ public class AdminController {
     @GetMapping("/getUsersLessThanBal/{amount}")
     @Operation(
             summary = "Retrieve users with low balance",
-            description = "Retrieves users whose bank account balance is less than the specified amount."
+            description = "Retrieves users whose bank account balance is less than the specified amount.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Users retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"All the users are:\","
+                                                    + "\"data\":[]"
+                                                    + "}"
+                                    )
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal server error"
+                    )
+            }
     )
     public GenericDto<List<UserResponseDto>> getUsersLessThanBal(
             @PathVariable Double amount) {
@@ -61,7 +111,24 @@ public class AdminController {
     @GetMapping("/v1/getUsersThanBal/{amount}")
     @Operation(
             summary = "Retrieve users with low balance (V1)",
-            description = "Retrieves users whose bank account balance is less than the specified amount using the version 1 implementation."
+            description = "Retrieves users whose bank account balance is less than the specified amount using V1 implementation.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Users retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"All the users are:\","
+                                                    + "\"data\":[]"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<List<UserResponseDto>> getUsersLessThanBalV1(
             @Parameter(
@@ -82,7 +149,24 @@ public class AdminController {
     @GetMapping("/getUsersHavingSaving")
     @Operation(
             summary = "Retrieve users with savings accounts",
-            description = "Retrieves all users who have at least one savings account."
+            description = "Retrieves all users who have at least one savings account.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Users retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"All the users are:\","
+                                                    + "\"data\":[]"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<List<UserResponseDto>> getUsersHavingSaving() {
 
@@ -98,7 +182,24 @@ public class AdminController {
     @GetMapping("/getUsersHavingCurrent")
     @Operation(
             summary = "Retrieve users with current accounts",
-            description = "Retrieves all users who have at least one current account."
+            description = "Retrieves all users who have at least one current account.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Users retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"All the users are:\","
+                                                    + "\"data\":[]"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<List<UserResponseDto>> getUsersHavingCurrent() {
 
@@ -114,7 +215,24 @@ public class AdminController {
     @GetMapping("/getOldAgeUsers")
     @Operation(
             summary = "Retrieve senior users",
-            description = "Retrieves users who satisfy the configured age criteria for senior users."
+            description = "Retrieves users who satisfy the configured age criteria.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Users retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"All the users are:\","
+                                                    + "\"data\":[]"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<List<UserResponseDto>> getOldAgeUsers() {
 
@@ -130,7 +248,24 @@ public class AdminController {
     @GetMapping("/v1/getOldAgeUsers")
     @Operation(
             summary = "Retrieve senior users (V1)",
-            description = "Retrieves users who satisfy the configured age criteria using the version 1 implementation."
+            description = "Retrieves senior users using the V1 implementation.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Users retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"All the users are:\","
+                                                    + "\"data\":[]"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<List<UserResponseDto>> getOldAgeUsersV1() {
 
@@ -146,7 +281,33 @@ public class AdminController {
     @GetMapping("/getUsersByEmail/{email}")
     @Operation(
             summary = "Retrieve user by email",
-            description = "Retrieves a user using the specified email address."
+            description = "Retrieves a user using the specified email address.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "User retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"Here the user:\","
+                                                    + "\"data\":{"
+                                                    + "\"id\":37,"
+                                                    + "\"name\":\"Farhad\","
+                                                    + "\"email\":\"farhad@gmail.com\","
+                                                    + "\"age\":34"
+                                                    + "}"
+                                                    + "}"
+                                    )
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "User not found"
+                    )
+            }
     )
     public GenericDto<UserResponseDto> getUsersByEmail(
             @Parameter(
@@ -166,7 +327,20 @@ public class AdminController {
     @GetMapping("/getAllUsersEmail")
     @Operation(
             summary = "Retrieve all user emails",
-            description = "Retrieves the email addresses of all registered users."
+            description = "Retrieves the email addresses of all registered users.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Emails retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "[\"farhad@gmail.com\", \"chote@gmail.com\"]"
+                                    )
+                            )
+                    )
+            }
     )
     public List<String> getAllUsersEmail() {
         return adminService.getAllUsersEmail();
@@ -175,7 +349,24 @@ public class AdminController {
     @GetMapping("/getTotalNoAcc")
     @Operation(
             summary = "Retrieve total number of accounts",
-            description = "Retrieves the total number of bank accounts registered in the system."
+            description = "Retrieves the total number of bank accounts.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Total accounts retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"The total number of accounts in bank are:\","
+                                                    + "\"data\":9"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<Integer> getTotalNoAcc() {
 
@@ -189,7 +380,24 @@ public class AdminController {
     @GetMapping("/v1/getTotalNoAcc")
     @Operation(
             summary = "Retrieve total number of accounts (V1)",
-            description = "Retrieves the total number of bank accounts using the version 1 implementation."
+            description = "Retrieves the total number of bank accounts using V1 implementation.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Total accounts retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"The total number of accounts in bank are:\","
+                                                    + "\"data\":9"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<Long> getTotalNoAccV1() {
 
@@ -203,7 +411,24 @@ public class AdminController {
     @GetMapping("/getTotalMoney")
     @Operation(
             summary = "Retrieve total money in bank",
-            description = "Retrieves the total balance held across all bank accounts."
+            description = "Retrieves the total balance held across all bank accounts.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Total money retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"The total in money in bank is:\","
+                                                    + "\"data\":1234567.50"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<Double> getTotalMoney() {
 
@@ -217,7 +442,28 @@ public class AdminController {
     @GetMapping("/getUserWithMaxBal")
     @Operation(
             summary = "Retrieve user with maximum balance",
-            description = "Retrieves the user associated with the bank account having the highest balance."
+            description = "Retrieves the user associated with the account having the highest balance.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "User retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"The user with maximum balance is:\","
+                                                    + "\"data\":{"
+                                                    + "\"id\":37,"
+                                                    + "\"name\":\"Farhad\","
+                                                    + "\"email\":\"farhad@gmail.com\""
+                                                    + "}"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<UserResponseDto> getUserWithMaxBal() {
 
@@ -231,7 +477,24 @@ public class AdminController {
     @GetMapping("/getUsersOverCertainBal/{amt}")
     @Operation(
             summary = "Retrieve users above a specified balance",
-            description = "Retrieves users whose bank account balance is greater than the specified amount."
+            description = "Retrieves users whose bank account balance is greater than the specified amount.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Users retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"All the users are:\","
+                                                    + "\"data\":[]"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<List<UserResponseDto>> getUserWithSpecificBal(
             @Parameter(
@@ -252,7 +515,24 @@ public class AdminController {
     @GetMapping("/v1/getUsersOverCertainBal/{amt}")
     @Operation(
             summary = "Retrieve users above a specified balance (V1)",
-            description = "Retrieves users whose bank account balance is greater than the specified amount using the version 1 implementation."
+            description = "Retrieves users whose bank account balance is greater than the specified amount using V1.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Users retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"All the users are:\","
+                                                    + "\"data\":[]"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<List<UserResponseDto>> getUserWithSpecificBalV1(
             @Parameter(
@@ -273,7 +553,24 @@ public class AdminController {
     @GetMapping("/getUsersAboveSomeAge/{age}")
     @Operation(
             summary = "Retrieve users above specified age",
-            description = "Retrieves users whose age is greater than the specified age."
+            description = "Retrieves users whose age is greater than the specified age.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Users retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"All the users are:\","
+                                                    + "\"data\":[]"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<List<UserResponseDto>> getUserAboveAge(
             @Parameter(
@@ -294,7 +591,24 @@ public class AdminController {
     @GetMapping("/v1/getUsersAboveSomeAge/{age}")
     @Operation(
             summary = "Retrieve users above specified age (V1)",
-            description = "Retrieves users whose age is greater than the specified age using the version 1 implementation."
+            description = "Retrieves users whose age is greater than the specified age using V1.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Users retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"All the users are:\","
+                                                    + "\"data\":[]"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<List<UserResponseDto>> getUserAboveAgeV1(
             @Parameter(
@@ -315,7 +629,32 @@ public class AdminController {
     @GetMapping("/getUserByAccNo/{accNo}")
     @Operation(
             summary = "Retrieve user by account number",
-            description = "Retrieves the user associated with the specified bank account number."
+            description = "Retrieves the user associated with the specified account number.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "User retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"All the users are:\","
+                                                    + "\"data\":{"
+                                                    + "\"id\":37,"
+                                                    + "\"name\":\"Farhad\","
+                                                    + "\"email\":\"farhad@gmail.com\""
+                                                    + "}"
+                                                    + "}"
+                                    )
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Account not found"
+                    )
+            }
     )
     public GenericDto<UserResponseDto> getUserByAccNo(
             @Parameter(
@@ -336,7 +675,28 @@ public class AdminController {
     @GetMapping("/v1/getUserByAccNo/{accNo}")
     @Operation(
             summary = "Retrieve user by account number (V1)",
-            description = "Retrieves the user associated with the specified bank account number using the version 1 implementation."
+            description = "Retrieves the user associated with the specified account number using V1.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "User retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"All the users are:\","
+                                                    + "\"data\":{"
+                                                    + "\"id\":37,"
+                                                    + "\"name\":\"Farhad\","
+                                                    + "\"email\":\"farhad@gmail.com\""
+                                                    + "}"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<UserResponseDto> getUserByAccNoV1(
             @Parameter(
@@ -356,8 +716,25 @@ public class AdminController {
 
     @GetMapping("/getUsersBwAge")
     @Operation(
-            summary = "Retrieve users within an age range",
-            description = "Retrieves users whose age falls within the specified age range."
+            summary = "Retrieve users within age range",
+            description = "Retrieves users whose age falls within the specified range.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Users retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"All the users are:\","
+                                                    + "\"data\":[]"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<List<UserResponseDto>> getUserBwAge(
             @RequestBody AgeReqDto ageReqDto) {
@@ -374,7 +751,25 @@ public class AdminController {
     @GetMapping("/getAllBankAccounts")
     @Operation(
             summary = "Retrieve all bank accounts",
-            description = "Retrieves a list of all bank accounts registered in the system."
+            description = "Retrieves all bank accounts registered in the system.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Bank accounts retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "[{"
+                                                    + "\"accNo\":41,"
+                                                    + "\"balance\":24567,"
+                                                    + "\"accountType\":\"SAVING\","
+                                                    + "\"interestRate\":3.5"
+                                                    + "}]"
+                                    )
+                            )
+                    )
+            }
     )
     public List<BankAccountResponseDto> getAllBankAccounts() {
         System.out.println(adminService.getAllBankAccounts());
@@ -384,7 +779,28 @@ public class AdminController {
     @DeleteMapping("/deleteAccount/{id}")
     @Operation(
             summary = "Delete bank account",
-            description = "Deletes the bank account associated with the specified account ID."
+            description = "Deletes the bank account associated with the specified account ID.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Account deleted successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"Account deleted!\","
+                                                    + "\"data\":null"
+                                                    + "}"
+                                    )
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Account not found"
+                    )
+            }
     )
     public GenericDto<BankAccountResponseDto> deleteAccount(
             @PathVariable Long id) {
@@ -400,7 +816,24 @@ public class AdminController {
     @GetMapping("/getUsersWithMulAcc")
     @Operation(
             summary = "Retrieve users with multiple accounts",
-            description = "Retrieves users who have more than one bank account."
+            description = "Retrieves users who have more than one bank account.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Users retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"ACCEPTED\","
+                                                    + "\"message\":\"users with multiple accounts\","
+                                                    + "\"data\":[]"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<List<UserResponseDto>> usersWithMulAcc() {
 
@@ -416,8 +849,25 @@ public class AdminController {
 
     @GetMapping("/getUsersHavingMoreThan100000")
     @Operation(
-            summary = "Retrieve users with total balance above 100000",
-            description = "Retrieves users whose combined balance across their bank accounts is greater than 100000."
+            summary = "Retrieve users with balance greater than 100000",
+            description = "Retrieves users whose total balance across accounts is greater than 100000.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Users retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"ACCEPTED\","
+                                                    + "\"message\":\"users with balance greater than 100000\","
+                                                    + "\"data\":[]"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<List<UserResponseDto>> usersHavingBalanceGreaterThan100000() {
 
@@ -434,7 +884,26 @@ public class AdminController {
     @GetMapping("/getAvgBalOfAllAcc")
     @Operation(
             summary = "Retrieve average account balance",
-            description = "Retrieves the average balance across all bank accounts."
+            description = "Retrieves the average balance across all bank accounts.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Average balance retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"Average of balance of all accounts\","
+                                                    + "\"data\":{"
+                                                    + "\"averageBalance\":24567.50"
+                                                    + "}"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<BalanceResDto> avgBalOfAllAcc() {
 
@@ -450,7 +919,24 @@ public class AdminController {
     @GetMapping("/getUsersWithBalGreaterThanAvgBal")
     @Operation(
             summary = "Retrieve accounts above average balance",
-            description = "Retrieves bank accounts whose balance is greater than the average balance of all bank accounts."
+            description = "Retrieves bank accounts whose balance is greater than the average balance.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Accounts retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"Users with balance greater than average of balance of all accounts\","
+                                                    + "\"data\":[]"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<List<BankAccountResponseDto>> getUsersWithBalGreaterThanAvgBal() {
 
@@ -467,7 +953,26 @@ public class AdminController {
     @PutMapping("/setInterestLevel/{interest}")
     @Operation(
             summary = "Update interest rate",
-            description = "Updates the interest rate applied to the bank accounts."
+            description = "Updates the interest rate applied to bank accounts.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Interest rate updated successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"interest level updated\","
+                                                    + "\"data\":{"
+                                                    + "\"interestRate\":3.5"
+                                                    + "}"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<InterestResponseDto> setInterest(
             @Parameter(
@@ -489,7 +994,26 @@ public class AdminController {
     @PutMapping("/setOverDraftLimit/{odl}")
     @Operation(
             summary = "Update overdraft limit",
-            description = "Updates the overdraft limit for bank accounts."
+            description = "Updates the overdraft limit for bank accounts.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Overdraft limit updated successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"overdraft limit updated\","
+                                                    + "\"data\":{"
+                                                    + "\"overdraftLimit\":12000"
+                                                    + "}"
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
     )
     public GenericDto<OverDraftLimitRes> setOverDraftLimit(
             @Parameter(
@@ -511,7 +1035,33 @@ public class AdminController {
     @PutMapping("/update/{id}")
     @Operation(
             summary = "Update user",
-            description = "Updates the user details associated with the specified user ID."
+            description = "Updates the user details associated with the specified user ID.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "202",
+                            description = "User updated successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"ACCEPTED\","
+                                                    + "\"message\":\"updated successfully\","
+                                                    + "\"data\":{"
+                                                    + "\"id\":37,"
+                                                    + "\"name\":\"Farhad\","
+                                                    + "\"email\":\"farhad@gmail.com\","
+                                                    + "\"age\":34"
+                                                    + "}"
+                                                    + "}"
+                                    )
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "User not found"
+                    )
+            }
     )
     public GenericDto<UserResponseDto> updateUser(
             @Parameter(
@@ -534,7 +1084,33 @@ public class AdminController {
     @PatchMapping("/update/{id}")
     @Operation(
             summary = "Partially update user",
-            description = "Updates selected user details associated with the specified user ID."
+            description = "Updates selected user details associated with the specified user ID.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "202",
+                            description = "User partially updated successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"ACCEPTED\","
+                                                    + "\"message\":\"updated successfully\","
+                                                    + "\"data\":{"
+                                                    + "\"id\":37,"
+                                                    + "\"name\":\"Farhad\","
+                                                    + "\"email\":\"farhad@gmail.com\","
+                                                    + "\"age\":34"
+                                                    + "}"
+                                                    + "}"
+                                    )
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "User not found"
+                    )
+            }
     )
     public GenericDto<UserResponseDto> updateDetailsUser(
             @Parameter(
@@ -557,7 +1133,28 @@ public class AdminController {
     @DeleteMapping("/deleteUserById/{id}")
     @Operation(
             summary = "Delete user",
-            description = "Deletes the user associated with the specified user ID."
+            description = "Deletes the user associated with the specified user ID.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "User deleted successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"User deleted!\","
+                                                    + "\"data\":null"
+                                                    + "}"
+                                    )
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "User not found"
+                    )
+            }
     )
     public GenericDto<UserResponseDto> deleteUser(
             @Parameter(
