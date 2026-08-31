@@ -31,6 +31,7 @@ public class AdminController {
     @Operation(
             summary = "Retrieve all users",
             description = "Retrieves a list of all registered users from the system."
+            //Checking Jira
     )
     public GenericDto<List<UserResponseDto>> getAllUsers() {
         List<UserResponseDto> usersList = adminService.getAllUsers();
