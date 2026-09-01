@@ -19,6 +19,7 @@ public class GlobalExceptionHandler {
         return new GenericDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, "Some error occurred");
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public GenericDto<MessageResponseDto> argumentNotValid(MethodArgumentNotValidException e){
         MessageResponseDto msg = new MessageResponseDto();
