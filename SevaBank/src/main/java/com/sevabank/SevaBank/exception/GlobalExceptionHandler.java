@@ -1,10 +1,14 @@
 package com.sevabank.SevaBank.exception;
 
 import com.sevabank.SevaBank.dto.generic.GenericDto;
+import com.sevabank.SevaBank.dto.response.MessageResponseDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -12,8 +16,17 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public GenericDto<String> handleException(Exception e){
-        return new GenericDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, "Some error occured");
+        return new GenericDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, "Some error occurred");
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public GenericDto<MessageResponseDto> argumentNotValid(MethodArgumentNotValidException e){
+        MessageResponseDto msg = new MessageResponseDto();
+        e.getBindingResult().getAllErrors().forEach(x -> msg.setMessage(x.getDefaultMessage()));
+
+        return new GenericDto<MessageResponseDto>(HttpStatus.INTERNAL_SERVER_ERROR, msg);
+    }
+
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ResourceNotFoundException.class)

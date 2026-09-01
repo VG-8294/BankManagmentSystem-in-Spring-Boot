@@ -9,6 +9,7 @@ import com.sevabank.SevaBank.service.UserServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,7 +25,7 @@ public class UserController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public GenericDto<UserResponseDto> createUser(@RequestBody RegisterReqDto registerReqDto){
+    public GenericDto<UserResponseDto> createUser(@RequestBody @Valid RegisterReqDto registerReqDto){
         UserResponseDto userDto =  userService.createUser(registerReqDto);
         return new GenericDto<UserResponseDto>(HttpStatus.CREATED, "user registered", userDto);
     }
