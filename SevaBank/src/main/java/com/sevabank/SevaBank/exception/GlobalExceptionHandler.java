@@ -1,18 +1,21 @@
 package com.sevabank.SevaBank.exception;
 
 import com.sevabank.SevaBank.dto.generic.GenericDto;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.SQLException;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public GenericDto<String> handleException(Exception e){
-        return new GenericDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, "Some error occured");
+        return new GenericDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -56,5 +59,12 @@ public class GlobalExceptionHandler {
     private GenericDto<String> invalidAgeException(InvalidAgeException e){
         return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
     }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(UserCreationException.class)
+    private GenericDto<String> userCreationException(UserCreationException e){
+        return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+
 
 }

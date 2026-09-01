@@ -33,16 +33,16 @@ public class UserController {
     @PostMapping("/login")
     public GenericDto<UserResponseDto> loginUser(@RequestBody LoginReqDto loginReqDto){
         UserResponseDto loggedInUser = userService.login(loginReqDto);
-        return new GenericDto<UserResponseDto>(HttpStatus.ACCEPTED, "Login successfull", loggedInUser);
+        return new GenericDto<UserResponseDto>(HttpStatus.ACCEPTED, "Login successfully", loggedInUser);
     }
-
-    @PostMapping("/v1/login")
-    public GenericDto<UserResponseDto> loginV1User(@RequestBody LoginReqDto loginReqDto){
-        System.out.println("In User controller");
-        UserResponseDto loggedInUser = userService.loginV1(loginReqDto);
-        return new GenericDto<UserResponseDto>(HttpStatus.ACCEPTED, "Login successfull", loggedInUser);
-    }
-
+//
+//    @PostMapping("/v1/login")
+//    public GenericDto<UserResponseDto> loginV1User(@RequestBody LoginReqDto loginReqDto){
+//        System.out.println("In User controller");
+//        UserResponseDto loggedInUser = userService.loginV1(loginReqDto);
+//        return new GenericDto<UserResponseDto>(HttpStatus.ACCEPTED, "Login successfull", loggedInUser);
+//    }
+//
     @PutMapping("/update/{id}")
     public GenericDto<UserResponseDto> updateUser(@PathVariable Long id, @RequestBody UpdateUserReq updateUserReq){
         UserResponseDto updatedUser = userService.updateUser(id, updateUserReq);

@@ -1,0 +1,6 @@
+18:04:07.536 [http-nio-8080-exec-7] INFO  c.s.S.service.impl.BankServicesImpln -transaction saved!
+18:04:07.542 [http-nio-8080-exec-7] INFO  c.s.S.service.impl.BankServicesImpln -amount withdrawal successfully
+18:04:07.543 [http-nio-8080-exec-7] INFO  c.s.S.service.impl.BankServicesImpln -normal bank class to dto converted
+18:04:56.847 [http-nio-8080-exec-8] INFO  c.s.S.service.impl.BankServicesImpln -transaction saved!
+18:04:56.853 [http-nio-8080-exec-8] INFO  c.s.S.service.impl.BankServicesImpln -amount withdrawal successfully
+18:04:56.853 [http-nio-8080-exec-8] INFO  c.s.S.service.impl.BankServicesImpln -normal bank class to dto converted

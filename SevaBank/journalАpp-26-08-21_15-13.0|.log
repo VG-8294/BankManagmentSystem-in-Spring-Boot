@@ -1,0 +1,4 @@
+15:13:58.389 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+15:13:58.390 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+15:13:58.391 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 1 ms
+15:13:58.440 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -returned users b/w two ages

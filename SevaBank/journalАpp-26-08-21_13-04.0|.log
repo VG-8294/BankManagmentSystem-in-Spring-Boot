@@ -1,0 +1,4 @@
+13:04:17.940 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+13:04:17.942 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+13:04:17.943 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 1 ms
+13:04:17.967 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -returned the total number of accounts

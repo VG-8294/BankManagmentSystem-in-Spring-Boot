@@ -46,7 +46,7 @@ public class BankAccountController {
         BalanceResDto balance =  bankAccountService.checkBalance(id);
         return new GenericDto<BalanceResDto>(HttpStatus.ACCEPTED, "" ,  balance);
     }
-
+//
     @GetMapping("/interest/{id}")
         public GenericDto<InterestResponseDto> checkInterest(@PathVariable Long id){
         InterestResponseDto interest =  bankAccountService.calculateInterest(id);
