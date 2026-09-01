@@ -1,0 +1,16 @@
+11:54:31.580 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+11:54:31.581 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+11:54:31.583 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 2 ms
+11:54:31.667 [http-nio-8080-exec-1] INFO  c.s.S.service.impl.UserServicesImpln -User created with id-56
+11:54:59.810 [http-nio-8080-exec-2] ERROR c.s.S.s.impl.AdminServicesImpln -users list returned!
+11:54:59.810 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:54:59.810 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:54:59.810 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:54:59.810 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:54:59.810 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:54:59.810 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:54:59.810 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:54:59.811 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:54:59.811 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:54:59.811 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:54:59.811 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
