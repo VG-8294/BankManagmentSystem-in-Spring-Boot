@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public GenericDto<String> handleException(Exception e){
-        return new GenericDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        return new GenericDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, "Some error occurred");
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -30,10 +30,10 @@ public class GlobalExceptionHandler {
         return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidCredentialsException.class)
     public GenericDto<String> invalidCredentialsException(InvalidCredentialsException e){
-        return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
+        return new GenericDto<String>(HttpStatus.UNAUTHORIZED, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -56,15 +56,13 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidAgeException.class)
-    private GenericDto<String> invalidAgeException(InvalidAgeException e){
+    public GenericDto<String> invalidAgeException(InvalidAgeException e){
         return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(UserCreationException.class)
-    private GenericDto<String> userCreationException(UserCreationException e){
-        return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
+    public GenericDto<String> userCreationException(UserCreationException e){
+        return new GenericDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
-
-
 }
