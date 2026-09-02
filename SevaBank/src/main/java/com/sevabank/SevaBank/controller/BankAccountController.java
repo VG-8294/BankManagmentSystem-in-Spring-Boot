@@ -10,6 +10,8 @@ import com.sevabank.SevaBank.service.BankServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/bankAccount")
 public class BankAccountController {
@@ -21,21 +23,21 @@ public class BankAccountController {
     }
 
     @PostMapping
-    public GenericDto<BankAccountResponseDto> createBankAccount(@RequestBody CreateBankAccountRequest bankReq){
+    public GenericDto<BankAccountResponseDto> createBankAccount(@Valid @RequestBody CreateBankAccountRequest bankReq){
         BankAccountResponseDto bankDto =  bankAccountService.createBankAccount(bankReq);
         return new GenericDto<BankAccountResponseDto>(HttpStatus.CREATED, "Account created", bankDto);
 
     }
 
     @PostMapping("/deposit/{id}")
-    public GenericDto<BankAccountResponseDto> deposit(@PathVariable Long id, @RequestBody BalanceReq balanceReq){
+    public GenericDto<BankAccountResponseDto> deposit(@PathVariable Long id, @Valid @RequestBody BalanceReq balanceReq){
         BankAccountResponseDto depositedAccount = bankAccountService.depositInAccount(id, balanceReq.getBalance());
 
         return new GenericDto<BankAccountResponseDto>(HttpStatus.ACCEPTED, "Amount deposited!", depositedAccount);
     }
 
     @PostMapping("/withdraw/{id}")
-    public GenericDto<BankAccountResponseDto> withdraw(@PathVariable Long id, @RequestBody BalanceReq balanceReq){
+    public GenericDto<BankAccountResponseDto> withdraw(@PathVariable Long id, @Valid @RequestBody BalanceReq balanceReq){
         BankAccountResponseDto withdrawnInAccount = bankAccountService.withdrawInAccount(id, balanceReq.getBalance());
 
         return new GenericDto<BankAccountResponseDto>(HttpStatus.ACCEPTED, "Amount withdrawn", withdrawnInAccount);
