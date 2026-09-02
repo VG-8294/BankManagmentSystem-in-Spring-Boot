@@ -1,0 +1,16 @@
+11:00:00.109 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration -spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+11:00:00.242 [main] INFO  o.a.coyote.http11.Http11NioProtocol -Starting ProtocolHandler ["http-nio-8080"]
+11:00:00.250 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer -Tomcat started on port(s): 8080 (http) with context path ''
+11:00:00.254 [main] INFO  c.s.SevaBank.SevaBankApplication -Started SevaBankApplication in 1.333 seconds (JVM running for 1.523)
+11:00:10.226 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+11:00:10.226 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+11:00:10.227 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 1 ms
+11:00:10.254 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -returned users having savings account
+11:00:10.254 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:00:10.254 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:00:10.254 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:00:10.254 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:00:10.254 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:00:10.254 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:00:10.254 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+11:00:10.254 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto

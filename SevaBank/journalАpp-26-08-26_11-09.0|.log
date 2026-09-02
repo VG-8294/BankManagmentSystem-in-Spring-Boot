@@ -1,0 +1,2 @@
+11:09:47.357 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -Getting users list with balance less than 32000.0
+11:09:47.376 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -All bank accounts having balance less than 32000.0

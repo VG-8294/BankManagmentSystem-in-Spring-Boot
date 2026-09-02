@@ -1,0 +1,2 @@
+11:25:39.249 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -Getting average balance of accounts
+11:25:56.012 [http-nio-8080-exec-3] INFO  c.s.S.s.impl.AdminServicesImpln -Getting all deleted accounts

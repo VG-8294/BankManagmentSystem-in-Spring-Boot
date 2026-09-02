@@ -1,0 +1,4 @@
+11:30:08.858 [http-nio-8080-exec-4] INFO  c.s.S.service.impl.UserServicesImpln -In login with user with accNo-61
+11:30:08.868 [http-nio-8080-exec-4] INFO  c.s.S.service.impl.UserServicesImpln -User logged in successfully with id-48
+11:30:24.092 [http-nio-8080-exec-5] INFO  c.s.S.service.impl.UserServicesImpln -In login with user with accNo-61
+11:30:24.095 [http-nio-8080-exec-5] ERROR c.s.S.service.impl.UserServicesImpln -email or password is incorrect

@@ -1,0 +1,4 @@
+15:17:04.774 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+15:17:04.775 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+15:17:04.776 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 1 ms
+15:17:04.790 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -returned all the bank accounts

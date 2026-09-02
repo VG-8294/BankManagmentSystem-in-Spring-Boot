@@ -1,0 +1,5 @@
+11:11:05.240 [http-nio-8080-exec-3] INFO  c.s.S.s.impl.AdminServicesImpln -Getting users having saving account
+11:11:05.253 [http-nio-8080-exec-3] INFO  c.s.S.s.impl.AdminServicesImpln -returned users having savings account
+11:11:22.997 [http-nio-8080-exec-4] INFO  c.s.S.s.impl.AdminServicesImpln -Getting users having current account
+11:11:23.003 [http-nio-8080-exec-4] INFO  c.s.S.s.impl.AdminServicesImpln -returned users with current account!
+11:11:56.413 [http-nio-8080-exec-5] INFO  c.s.S.s.impl.AdminServicesImpln -Getting old age users

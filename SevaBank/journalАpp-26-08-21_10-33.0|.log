@@ -1,0 +1,33 @@
+10:33:06.631 [main] INFO  c.s.SevaBank.SevaBankApplication -Starting SevaBankApplication using Java 26.0.1 on 67s-MacBook-Pro.local with PID 57715 (/Users/vishalgautam/Downloads/BankManagementSys/SevaBank/target/classes started by vishalgautam in /Users/vishalgautam/Downloads/BankManagementSys/SevaBank)
+10:33:06.634 [main] INFO  c.s.SevaBank.SevaBankApplication -No active profile set, falling back to 1 default profile: "default"
+10:33:06.879 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate -Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+10:33:06.899 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate -Finished Spring Data repository scanning in 16 ms. Found 1 JPA repository interfaces.
+10:33:07.080 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer -Tomcat initialized with port(s): 8080 (http)
+10:33:07.083 [main] INFO  o.a.coyote.http11.Http11NioProtocol -Initializing ProtocolHandler ["http-nio-8080"]
+10:33:07.084 [main] INFO  o.a.catalina.core.StandardService -Starting service [Tomcat]
+10:33:07.084 [main] INFO  o.a.catalina.core.StandardEngine -Starting Servlet engine: [Apache Tomcat/9.0.83]
+10:33:07.118 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring embedded WebApplicationContext
+10:33:07.118 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext -Root WebApplicationContext: initialization completed in 460 ms
+10:33:07.186 [main] INFO  o.h.jpa.internal.util.LogHelper -HHH000204: Processing PersistenceUnitInfo [name: default]
+10:33:07.201 [main] INFO  org.hibernate.Version -HHH000412: Hibernate ORM core version 5.6.15.Final
+10:33:07.249 [main] INFO  o.h.annotations.common.Version -HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+10:33:07.276 [main] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Starting...
+10:33:07.316 [main] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Start completed.
+10:33:07.325 [main] INFO  org.hibernate.dialect.Dialect -HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+10:33:07.609 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator -HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+10:33:07.613 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean -Initialized JPA EntityManagerFactory for persistence unit 'default'
+10:33:07.723 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration -spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+10:33:07.813 [main] INFO  o.a.coyote.http11.Http11NioProtocol -Starting ProtocolHandler ["http-nio-8080"]
+10:33:07.822 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer -Tomcat started on port(s): 8080 (http) with context path ''
+10:33:07.827 [main] INFO  c.s.SevaBank.SevaBankApplication -Started SevaBankApplication in 1.329 seconds (JVM running for 1.522)
+10:33:22.062 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+10:33:22.062 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+10:33:22.063 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 1 ms
+10:33:22.082 [http-nio-8080-exec-1] ERROR c.s.S.s.impl.AdminServicesImpln -users list returned!
+10:33:22.083 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+10:33:22.083 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+10:33:22.083 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+10:33:22.083 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+10:33:22.083 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+10:33:22.083 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+10:33:22.083 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto

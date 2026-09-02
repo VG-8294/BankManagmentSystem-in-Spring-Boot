@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -63,11 +64,14 @@ public class BankServicesImpln implements BankServices {
 
     @Override
     public BankAccountResponseDto createBankAccount(CreateBankAccountRequest bankReq) {
+        log.info("Creating bank acount with user-id-{}", bankReq.getUserId());
+        Optional<User> user = Optional.of(userRepository.findById(bankReq.getUserId())
+                .stream()
+                .filter(x -> x.getId() == bankReq.getUserId())
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("User not found")));
 
-        User user = userRepository.findById(bankReq.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        if(user == null){
+        if(!user.isPresent()){
             log.error("user record doesn't exist with id-{}", bankReq.getUserId());
             throw new ResourceNotFoundException("User doesn't exist!");
         }
@@ -83,26 +87,31 @@ public class BankServicesImpln implements BankServices {
             throw new InvalidAccountTypeException("This type of account doesn't exist!");
         }
         BankAccount createdBankAccount = new BankAccount(bankReq.getBalance(), type);
-        createdBankAccount.setUser(user);
-        bankAccountRepository.save(createdBankAccount);
-        log.info("Bank account created!");
-        return bankAccountToDto(createdBankAccount);
+        createdBankAccount.setUser(user.get());
+        bankAccountRepository.createAccount(createdBankAccount);
+        BankAccount account = bankAccountRepository.findAccountByUserId(bankReq.getUserId())
+                .stream()
+                .findFirst()
+                        .orElseThrow(() -> new RuntimeException("Account not created due to some error"));
+        log.info("Bank account created by user with user-id -{} with account number - {}", user.get().getId(), account.getAccNo());
+        return bankAccountToDto(account);
     }
-
-    @Override
-    public Optional<BankAccount> getBankAccountById(Long id) {
-        Optional<BankAccount> bankAccount = bankAccountRepository.findById(id);
-        
-        if(!bankAccount.isPresent()){
-            log.error("BankAccount record doesn't exist with id-{}", id);
-            throw new ResourceNotFoundException("Account not found!");
-        }
-        log.info("bank account found with id-{}", id);
-        return bankAccount;
-    }
-
+//
+//    @Override
+//    public Optional<BankAccount> getBankAccountById(Long id) {
+//        Optional<BankAccount> bankAccount = bankAccountRepository.findById(id);
+//
+//        if(!bankAccount.isPresent()){
+//            log.error("BankAccount record doesn't exist with id-{}", id);
+//            throw new ResourceNotFoundException("Account not found!");
+//        }
+//        log.info("bank account found with id-{}", id);
+//        return bankAccount;
+//    }
+//
     @Override
     public BankAccountResponseDto depositInAccount(Long id, double balance) {
+        log.info("User with user-id-{} is depositing with amount - {}", id, balance);
         if(balance < 0){
             log.error("Amount is negative for deposit");
             throw new InvalidAmountException("Amount is less then 0");
@@ -112,19 +121,22 @@ public class BankServicesImpln implements BankServices {
             log.error("Account number doesn't exist in db for deposition");
             throw new ResourceNotFoundException("Account not found!");
         }
-        Optional<BankAccount> account = bankAccountRepository.findById(id);
+        Optional<BankAccount> account = bankAccountRepository.findById(id)
+                .stream()
+                .findFirst();
         BankAccount accountInDep = account.get();
         accountInDep.deposit(balance);
-        bankAccountRepository.save(accountInDep);
+        bankAccountRepository.deposit(accountInDep, balance);
         saveTransaction(accountInDep, TransactionType.DEPOSIT, balance, accountInDep.getBalance());
-        log.info("Amount deposited successfully!");
+        log.info("Amount deposited successfully with user-id-{} having account with account number-{} and deposited -{}", id, accountInDep.getAccNo(), balance);
         return bankAccountToDto(accountInDep);
     }
-
-
-
+//
+//
+//
     @Override
     public BankAccountResponseDto withdrawInAccount(Long id, double balance) {
+        log.info("User with user-id-{} is withdrawing with amount - {}", id, balance);
         if(balance < 0){
             log.error("Amount is negative for withdrawal");
             throw new InvalidAmountException("Amount is less then 0");
@@ -134,23 +146,34 @@ public class BankServicesImpln implements BankServices {
             log.error("Account number doesn't exist in db for withdrawal");
             throw new ResourceNotFoundException("Account not found!");
         }
-        Optional<BankAccount> account = bankAccountRepository.findById(id);
+        Optional<BankAccount> account = bankAccountRepository.findById(id)
+                .stream()
+                .findFirst();
         BankAccount accountInDep = account.get();
         if(accountInDep.getBalance() < balance){
             log.error("Amount entered is greater then balance");
             throw new BalanceException("Balance less then " + balance);
         }
+        if(accountInDep.getAccountType() == AccountType.CURRENT){
+            if(accountInDep.getBalance() + accountInDep.getOverdraftLimit() < balance){
+                log.error("Bank account is current and amount is less than balance plus overdraft limit");
+                throw new BalanceException("Balance is less then the amount in your account");
+            }
+        }
         accountInDep.withdraw(balance);
-        bankAccountRepository.save(accountInDep);
+        bankAccountRepository.withdraw(accountInDep, balance);
         saveTransaction(accountInDep, TransactionType.WITHDRAW, balance, accountInDep.getBalance());
-        log.info("amount withdrawal successfully");
+        log.info("amount withdrawal successfully with user-id-{} from account wih acount number- {}", accountInDep.getUser().getId(), accountInDep.getAccNo());
         return bankAccountToDto(accountInDep);
     }
-
-
+//
+//
     @Override
     public BalanceResDto checkBalance(Long id) {
-        Optional<BankAccount> accountExist = bankAccountRepository.findById(id);
+        log.info("Checking balance for account number - {}", id);
+        Optional<BankAccount> accountExist = bankAccountRepository.findById(id)
+                .stream()
+                .findFirst();
         if(!accountExist.isPresent()){
             log.error("Account number doesn't exist in db for balance check");
             throw new ResourceNotFoundException("Account not found!");
@@ -158,13 +181,16 @@ public class BankServicesImpln implements BankServices {
         BankAccount accountToExist = accountExist.get();
         BalanceResDto balanceDto = new BalanceResDto();
         balanceDto.setBalance(accountToExist.getBalance());
-        log.info("balance checked!");
+        log.info("balance checked for account number-{}", id);
         return balanceDto;
     }
 
     @Override
     public InterestResponseDto calculateInterest(Long id) {
-        Optional<BankAccount> accountExist = bankAccountRepository.findById(id);
+        log.info("calculating interest for account having account number - {}", id);
+        Optional<BankAccount> accountExist = bankAccountRepository.findById(id)
+                .stream()
+                .findFirst();
         if(!accountExist.isPresent()){
             log.error("Account number doesn't exist in db for interest check");
             throw new ResourceNotFoundException("Account not found!");
@@ -173,7 +199,7 @@ public class BankServicesImpln implements BankServices {
         saveTransaction(accountToExist, TransactionType.INTEREST, accountToExist.calculateInt(), accountToExist.getBalance());
         InterestResponseDto intDto = new InterestResponseDto();
         intDto.setInterest(accountToExist.calculateInt());
-        log.info("interest checked!");
+        log.info("interest checked for account number - {}", id);
         return intDto;
     }
 }

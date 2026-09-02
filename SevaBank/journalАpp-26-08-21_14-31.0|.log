@@ -1,0 +1,26 @@
+14:31:21.189 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+14:31:21.191 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+14:31:21.192 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 1 ms
+14:31:21.223 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -retuned users having balance more than 24000.0
+14:31:21.224 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:21.224 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:21.224 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:21.224 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:21.224 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:21.224 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:21.224 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:21.224 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:21.224 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:21.224 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:33.622 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -retuned users having balance more than 32000.0
+14:31:33.623 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:33.623 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:33.623 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:33.623 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:33.623 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:33.623 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:44.402 [http-nio-8080-exec-3] INFO  c.s.S.s.impl.AdminServicesImpln -retuned users having balance more than 52000.0
+14:31:44.403 [http-nio-8080-exec-3] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:44.403 [http-nio-8080-exec-3] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:44.403 [http-nio-8080-exec-3] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+14:31:44.403 [http-nio-8080-exec-3] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
