@@ -31,7 +31,43 @@ public class UserController {
     @Operation(
             summary = "Register a new user",
             description = "Registers a new user in the system using the provided user details.",
+
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "User registration details",
+                    required = true,
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = RegisterReqDto.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Valid Request",
+                                            summary = "Valid user registration request",
+                                            value = "{"
+                                                    + "\"name\":\"Hitesh\","
+                                                    + "\"email\":\"hitesh@mail.com\","
+                                                    + "\"password\":\"Hitesh@123\","
+                                                    + "\"age\":44"
+                                                    + "}"
+                                    ),
+                                    @ExampleObject(
+                                            name = "Invalid Request",
+                                            summary = "Request containing invalid field values",
+                                            value = "{"
+                                                    + "\"name\":\"\","
+                                                    + "\"email\":\"invalid-email\","
+                                                    + "\"password\":\"123\","
+                                                    + "\"age\":15"
+                                                    + "}"
+                                    )
+                            }
+                    )
+            ),
+
             responses = {
+
+                    /*
+                     * 201 - User successfully registered
+                     */
                     @ApiResponse(
                             responseCode = "201",
                             description = "User created successfully",
@@ -42,6 +78,7 @@ public class UserController {
                                     ),
                                     examples = @ExampleObject(
                                             name = "Success",
+                                            summary = "User registered successfully",
                                             value = "{"
                                                     + "\"status\":\"CREATED\","
                                                     + "\"message\":\"user registered\","
@@ -55,17 +92,93 @@ public class UserController {
                                     )
                             )
                     ),
+
+                    /*
+                     * 400 - Validation failure
+                     */
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Invalid registration data",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(
+                                            implementation = GenericDto.class
+                                    ),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Required Field Missing",
+                                                    summary = "One or more required fields are missing",
+                                                    value = "{"
+                                                            + "\"status\":\"BAD_REQUEST\","
+                                                            + "\"message\":\"Name is required\""
+                                                            + "}"
+                                            ),
+                                            @ExampleObject(
+                                                    name = "Invalid Email",
+                                                    summary = "Email format is invalid",
+                                                    value = "{"
+                                                            + "\"status\":\"BAD_REQUEST\","
+                                                            + "\"message\":\"Invalid email format\""
+                                                            + "}"
+                                            ),
+                                            @ExampleObject(
+                                                    name = "Invalid Password",
+                                                    summary = "Password does not satisfy validation rules",
+                                                    value = "{"
+                                                            + "\"status\":\"BAD_REQUEST\","
+                                                            + "\"message\":\"Password must contain at least 8 characters\""
+                                                            + "}"
+                                            ),
+                                            @ExampleObject(
+                                                    name = "Invalid Age",
+                                                    summary = "Age is outside the allowed range",
+                                                    value = "{"
+                                                            + "\"status\":\"BAD_REQUEST\","
+                                                            + "\"message\":\"Age must be greater than or equal to 18\""
+                                                            + "}"
+                                            )
+                                    }
+                            )
+                    ),
+
+                    /*
+                     * 409 - Duplicate email
+                     */
+                    @ApiResponse(
+                            responseCode = "409",
+                            description = "User already exists",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(
+                                            implementation = GenericDto.class
+                                    ),
+                                    examples = @ExampleObject(
+                                            name = "Email Already Exists",
+                                            summary = "A user with the provided email already exists",
+                                            value = "{"
+                                                    + "\"status\":\"CONFLICT\","
+                                                    + "\"message\":\"Email already registered\""
+                                                    + "}"
+                                    )
+                            )
+                    ),
+
+                    /*
+                     * 500 - Internal server error
+                     */
                     @ApiResponse(
                             responseCode = "500",
                             description = "Internal server error",
                             content = @Content(
                                     mediaType = "application/json",
+                                    schema = @Schema(
+                                            implementation = GenericDto.class
+                                    ),
                                     examples = @ExampleObject(
                                             name = "Internal Server Error",
                                             value = "{"
                                                     + "\"status\":\"INTERNAL_SERVER_ERROR\","
-                                                    + "\"message\":\"Internal server error\","
-                                                    + "\"data\":null"
+                                                    + "\"message\":\"Internal server error\""
                                                     + "}"
                                     )
                             )
@@ -93,54 +206,107 @@ public class UserController {
     @PostMapping("/login")
     @Operation(
             summary = "Login user",
-            description = "User gets logged in by providing account number, email and password.",
+            description = "Authenticates a user using account number, email and password.",
+
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Login credentials",
+                    required = true,
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = LoginReqDto.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "Valid Login",
+                                            summary = "Successful login request",
+                                            value = "{"
+                                                    + "\"accountNo\": 37,"
+                                                    + "\"email\": \"farhad@gmail.com\","
+                                                    + "\"password\": \"123456\""
+                                                    + "}"
+                                    ),
+                                    @ExampleObject(
+                                            name = "Invalid Login",
+                                            summary = "Invalid credentials",
+                                            value = "{"
+                                                    + "\"accountNo\": 37,"
+                                                    + "\"email\": \"wrong@gmail.com\","
+                                                    + "\"password\": \"wrong\""
+                                                    + "}"
+                                    ),
+                                    @ExampleObject(
+                                            name = "Invalid Account number",
+                                            summary = "Account number not found",
+                                            value = "{"
+                                                    + "\"accountNo\": 78,"
+                                                    + "\"email\": \"farhad@gmail.com\","
+                                                    + "\"password\": \"123456\""
+                                                    + "}"
+                                    )
+                            }
+                    )
+            ),
+
             responses = {
+
                     @ApiResponse(
                             responseCode = "200",
                             description = "User retrieved successfully",
                             content = @Content(
                                     mediaType = "application/json",
+                                    schema = @Schema(implementation = GenericDto.class),
                                     examples = @ExampleObject(
-                                            name = "Success",
+                                            name = "Login Successful",
                                             value = "{"
-                                                    + "\"status\":\"OK\","
-                                                    + "\"message\":\"Login successful\","
-                                                    + "\"data\":{"
-                                                    + "\"id\":37,"
-                                                    + "\"name\":\"Farhad\","
-                                                    + "\"email\":\"farhad@gmail.com\","
-                                                    + "\"age\":34"
+                                                    + "\"status\": \"OK\","
+                                                    + "\"message\": \"Login successful\","
+                                                    + "\"data\": {"
+                                                    + "\"id\": 37,"
+                                                    + "\"name\": \"Farhad\","
+                                                    + "\"email\": \"farhad@gmail.com\","
+                                                    + "\"age\": 34"
                                                     + "}"
                                                     + "}"
                                     )
                             )
                     ),
+
                     @ApiResponse(
                             responseCode = "404",
-                            description = "User not found",
+                            description = "User not found / invalid credentials",
                             content = @Content(
                                     mediaType = "application/json",
-                                    examples = @ExampleObject(
-                                            name = "User Not Found",
-                                            value = "{"
-                                                    + "\"status\":\"NOT_FOUND\","
-                                                    + "\"message\":\"Invalid credentials!\","
-                                                    + "\"data\":null"
-                                                    + "}"
-                                    )
+                                    schema = @Schema(implementation = GenericDto.class),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Invalid Credentials",
+                                                    value = "{"
+                                                            + "\"status\": \"NOT_FOUND\","
+                                                            + "\"message\": \"Invalid credentials!\""
+                                                            + "}"
+                                            ),
+
+                                            @ExampleObject(
+                                                    name = "Account Not Found",
+                                                    value = "{"
+                                                            + "\"status\": \"NOT_FOUND\","
+                                                            + "\"message\": \"Bank account not found!\""
+                                                            + "}"
+                                            )
+                                    }
                             )
                     ),
+
                     @ApiResponse(
                             responseCode = "500",
                             description = "Internal server error",
                             content = @Content(
                                     mediaType = "application/json",
+                                    schema = @Schema(implementation = GenericDto.class),
                                     examples = @ExampleObject(
                                             name = "Internal Server Error",
                                             value = "{"
-                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
-                                                    + "\"message\":\"Internal server error\","
-                                                    + "\"data\":null"
+                                                    + "\"status\": \"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\": \"Internal server error\""
                                                     + "}"
                                     )
                             )

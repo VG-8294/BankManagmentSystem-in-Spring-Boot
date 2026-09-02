@@ -1,0 +1,2 @@
+15:46:39.507 [http-nio-8080-exec-10] INFO  c.s.S.service.impl.UserServicesImpln -User logged in successfully!
+15:46:46.525 [http-nio-8080-exec-1] ERROR c.s.S.service.impl.UserServicesImpln -email or password is incorrect
