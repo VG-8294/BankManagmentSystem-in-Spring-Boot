@@ -49,9 +49,7 @@ public class BankAccountController {
                                                     + "\"data\":{"
                                                     + "\"accNo\":65,"
                                                     + "\"balance\":24567.0,"
-                                                    + "\"accountType\":\"SAVING\","
-                                                    + "\"interestRate\":3.5,"
-                                                    + "\"overdraftLimit\":null"
+                                                    + "\"accountType\":\"SAVING\""
                                                     + "}"
                                                     + "}"
                                     )
@@ -125,9 +123,7 @@ public class BankAccountController {
                                                     + "\"data\":{"
                                                     + "\"accNo\":65,"
                                                     + "\"balance\":25567.0,"
-                                                    + "\"accountType\":\"SAVING\","
-                                                    + "\"interestRate\":3.5,"
-                                                    + "\"overdraftLimit\":null"
+                                                    + "\"accountType\":\"SAVING\""
                                                     + "}"
                                                     + "}"
                                     )
@@ -210,9 +206,7 @@ public class BankAccountController {
                                                     + "\"data\":{"
                                                     + "\"accNo\":65,"
                                                     + "\"balance\":23567.0,"
-                                                    + "\"accountType\":\"SAVING\","
-                                                    + "\"interestRate\":3.5,"
-                                                    + "\"overdraftLimit\":null"
+                                                    + "\"accountType\":\"SAVING\""
                                                     + "}"
                                                     + "}"
                                     )
@@ -381,8 +375,6 @@ public class BankAccountController {
                                                     + "\"message\":\"\","
                                                     + "\"data\":{"
                                                     + "\"accNo\":65,"
-                                                    + "\"interestRate\":3.5,"
-                                                    + "\"interestAmount\":859.85"
                                                     + "}"
                                                     + "}"
                                     )
@@ -463,9 +455,7 @@ public class BankAccountController {
                                                     + "\"data\":{"
                                                     + "\"accNo\":65,"
                                                     + "\"balance\":24567.0,"
-                                                    + "\"accountType\":\"SAVING\","
-                                                    + "\"interestRate\":3.5,"
-                                                    + "\"overdraftLimit\":null"
+                                                    + "\"accountType\":\"SAVING\""
                                                     + "}"
                                                     + "}"
                                     )
