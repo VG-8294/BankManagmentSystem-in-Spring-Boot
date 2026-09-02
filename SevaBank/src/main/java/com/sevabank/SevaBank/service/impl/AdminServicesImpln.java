@@ -57,7 +57,7 @@ public class AdminServicesImpln implements AdminServices {
             log.error("Users not present in db");
             throw new ResourceNotFoundException("Users not found!");
         }
-        log.error("users list returned!");
+        log.info("users list returned!");
         return users
                 .stream()
                 .map(this::mapToDto)

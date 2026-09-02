@@ -1,0 +1,30 @@
+14:54:25.790 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean -Closing JPA EntityManagerFactory for persistence unit 'default'
+14:54:25.792 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Shutdown initiated...
+14:54:25.793 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Shutdown completed.
+14:54:26.906 [main] INFO  c.s.SevaBank.SevaBankApplication.logStarting -Starting SevaBankApplication using Java 26.0.1 on 67s-MacBook-Pro.local with PID 8431 (/Users/vishalgautam/Downloads/BankManagementSys/SevaBank/target/classes started by vishalgautam in /Users/vishalgautam/Downloads/BankManagementSys/SevaBank)
+14:54:26.908 [main] INFO  c.s.SevaBank.SevaBankApplication.logStartupProfileInfo -No active profile set, falling back to 1 default profile: "default"
+14:54:27.153 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn -Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:54:27.172 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn -Finished Spring Data repository scanning in 15 ms. Found 1 JPA repository interfaces.
+14:54:27.360 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize -Tomcat initialized with port(s): 8080 (http)
+14:54:27.363 [main] INFO  o.a.coyote.http11.Http11NioProtocol.log -Initializing ProtocolHandler ["http-nio-8080"]
+14:54:27.365 [main] INFO  o.a.catalina.core.StandardService.log -Starting service [Tomcat]
+14:54:27.365 [main] INFO  o.a.catalina.core.StandardEngine.log -Starting Servlet engine: [Apache Tomcat/9.0.83]
+14:54:27.398 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log -Initializing Spring embedded WebApplicationContext
+14:54:27.399 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext -Root WebApplicationContext: initialization completed in 457 ms
+14:54:27.471 [main] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation -HHH000204: Processing PersistenceUnitInfo [name: default]
+14:54:27.487 [main] INFO  org.hibernate.Version.logVersion -HHH000412: Hibernate ORM core version 5.6.15.Final
+14:54:27.534 [main] INFO  o.h.annotations.common.Version.<clinit> -HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+14:54:27.559 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection -HikariPool-1 - Starting...
+14:54:27.599 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection -HikariPool-1 - Start completed.
+14:54:27.608 [main] INFO  org.hibernate.dialect.Dialect.<init> -HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+14:54:27.890 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService -HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+14:54:27.894 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory -Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:54:28.028 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor -spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+14:54:28.138 [main] INFO  o.a.coyote.http11.Http11NioProtocol.log -Starting ProtocolHandler ["http-nio-8080"]
+14:54:28.146 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start -Tomcat started on port(s): 8080 (http) with context path ''
+14:54:28.151 [main] INFO  c.s.SevaBank.SevaBankApplication.logStarted -Started SevaBankApplication in 1.437 seconds (JVM running for 1.658)
+14:54:34.656 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log -Initializing Spring DispatcherServlet 'dispatcherServlet'
+14:54:34.656 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean -Initializing Servlet 'dispatcherServlet'
+14:54:34.657 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean -Completed initialization in 1 ms
+14:54:34.668 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln.getAllUsers -Getting all users that exists in this bank system
+14:54:34.678 [http-nio-8080-exec-1] ERROR c.s.S.s.impl.AdminServicesImpln.getAllUsers -users list returned!
