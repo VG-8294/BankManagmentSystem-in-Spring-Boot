@@ -16,8 +16,7 @@ public class TransactionRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void save(Transaction tx) throws Exception {
-        try{
+    public void save(Transaction tx){
             String sql = "INSERT INTO transaction_schema.transactions" +
                     "(amount, balance_after_transaction, transaction_time, transaction_type, account_number) " +
                     "VALUES (?, ?, ?, ?, ?)";
@@ -29,9 +28,5 @@ public class TransactionRepository {
                     tx.getTransactionType().name(),
                     tx.getBankAccount().getAccNo()
             );
-        }
-        catch (DataAccessException e){
-            throw new Exception("Some error in creating transaction");
-        }
     }
 }
