@@ -57,7 +57,17 @@ public class AdminController {
                     ),
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal server error"
+                            description = "Internal server error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Internal server error\""
+                                                    + "}"
+                                    )
+                            )
                     )
             }
     )
@@ -92,7 +102,17 @@ public class AdminController {
                     ),
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal server error"
+                            description = "Internal server error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Internal server error\""
+                                                    + "}"
+                                    )
+                            )
                     )
             }
     )
@@ -130,34 +150,34 @@ public class AdminController {
                     ),
 
                     @ApiResponse(
-        responseCode = "404",
-        description = "Users not found",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Not Found",
-                        value = "{"
-                                + "\"status\":\"NOT_FOUND\","
-                                + "\"message\":\"Users not found\""
-                                + "}"
-                )
-        )
-),
+                            responseCode = "404",
+                            description = "Users not found",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"Users not found\""
+                                                    + "}"
+                                    )
+                            )
+                    ),
 
-@ApiResponse(
-        responseCode = "500",
-        description = "Internal Server Error",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Internal Server Error",
-                        value = "{"
-                                + "\"status\":\"INTERNAL_SERVER_ERROR\","
-                                + "\"message\":\"Some error occurred\""
-                                + "}"
-                )
-        )
-),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
+                                                    + "}"
+                                    )
+                            )
+                    )
             }
     )
     public GenericDto<List<UserResponseDto>> getUsersLessThanBalV1(
@@ -183,48 +203,54 @@ public class AdminController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Users retrieved successfully",
+                            description = "Users retrieved successfully. Returns an empty list if no users have a savings account.",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"All the users are:\","
-                                                    + "\"data\":[]"
+                                                    + "\"message\":\"Users with savings accounts retrieved successfully\","
+                                                    + "\"data\":[{"
+                                                    + "\"id\":37,"
+                                                    + "\"name\":\"Farhad\","
+                                                    + "\"email\":\"farhad@gmail.com\","
+                                                    + "\"age\":34"
+                                                    + "}]"
                                                     + "}"
                                     )
                             )
                     ),
-                    @ApiResponse(
-        responseCode = "404",
-        description = "Users not found",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Not Found",
-                        value = "{"
-                                + "\"status\":\"NOT_FOUND\","
-                                + "\"message\":\"Users not found\""
-                                + "}"
-                )
-        )
-),
 
-@ApiResponse(
-        responseCode = "500",
-        description = "Internal Server Error",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Internal Server Error",
-                        value = "{"
-                                + "\"status\":\"INTERNAL_SERVER_ERROR\","
-                                + "\"message\":\"Some error occurred\""
-                                + "}"
-                )
-        )
-),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "No users with savings accounts found",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"No users with savings accounts found\""
+                                                    + "}"
+                                    )
+                            )
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
+                                                    + "}"
+                                    )
+                            )
+                    )
             }
     )
     public GenericDto<List<UserResponseDto>> getUsersHavingSaving() {
@@ -245,48 +271,54 @@ public class AdminController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Users retrieved successfully",
+                            description = "Users retrieved successfully. Returns an empty list if no users have a current account.",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"All the users are:\","
-                                                    + "\"data\":[]"
+                                                    + "\"message\":\"Users with current accounts retrieved successfully\","
+                                                    + "\"data\":[{"
+                                                    + "\"id\":37,"
+                                                    + "\"name\":\"Farhad\","
+                                                    + "\"email\":\"farhad@gmail.com\","
+                                                    + "\"age\":34"
+                                                    + "}]"
                                                     + "}"
                                     )
                             )
                     ),
-                    @ApiResponse(
-        responseCode = "404",
-        description = "Users not found",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Not Found",
-                        value = "{"
-                                + "\"status\":\"NOT_FOUND\","
-                                + "\"message\":\"Users not found\""
-                                + "}"
-                )
-        )
-),
 
-@ApiResponse(
-        responseCode = "500",
-        description = "Internal Server Error",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Internal Server Error",
-                        value = "{"
-                                + "\"status\":\"INTERNAL_SERVER_ERROR\","
-                                + "\"message\":\"Some error occurred\""
-                                + "}"
-                )
-        )
-),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "No users with current accounts found",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"No users with current accounts found\""
+                                                    + "}"
+                                    )
+                            )
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
+                                                    + "}"
+                                    )
+                            )
+                    )
             }
     )
     public GenericDto<List<UserResponseDto>> getUsersHavingCurrent() {
@@ -303,52 +335,58 @@ public class AdminController {
     @GetMapping("/getOldAgeUsers")
     @Operation(
             summary = "Retrieve senior users",
-            description = "Retrieves users who satisfy the configured age criteria.",
+            description = "Retrieves all users whose age qualifies them as senior users.",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Users retrieved successfully",
+                            description = "Senior users retrieved successfully. Returns an empty list if no senior users are found.",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"All the users are:\","
-                                                    + "\"data\":[]"
+                                                    + "\"message\":\"Senior users retrieved successfully\","
+                                                    + "\"data\":[{"
+                                                    + "\"id\":37,"
+                                                    + "\"name\":\"Farhad\","
+                                                    + "\"email\":\"farhad@gmail.com\","
+                                                    + "\"age\":65"
+                                                    + "}]"
                                                     + "}"
                                     )
                             )
                     ),
-                    @ApiResponse(
-        responseCode = "404",
-        description = "Users not found",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Not Found",
-                        value = "{"
-                                + "\"status\":\"NOT_FOUND\","
-                                + "\"message\":\"Users not found\""
-                                + "}"
-                )
-        )
-),
 
-@ApiResponse(
-        responseCode = "500",
-        description = "Internal Server Error",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Internal Server Error",
-                        value = "{"
-                                + "\"status\":\"INTERNAL_SERVER_ERROR\","
-                                + "\"message\":\"Some error occurred\""
-                                + "}"
-                )
-        )
-),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "No senior users found",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"No senior users found\""
+                                                    + "}"
+                                    )
+                            )
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
+                                                    + "}"
+                                    )
+                            )
+                    )
             }
     )
     public GenericDto<List<UserResponseDto>> getOldAgeUsers() {
@@ -369,48 +407,56 @@ public class AdminController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Users retrieved successfully",
+                            description = "Users retrieved successfully. Returns an empty list if no senior users are found.",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
                                             name = "Success",
-                                            value = "{"
-                                                    + "\"status\":\"OK\","
-                                                    + "\"message\":\"All the users are:\","
-                                                    + "\"data\":[]"
+                                            value = "{\n"
+                                                    + "  \"status\": \"OK\",\n"
+                                                    + "  \"message\": \"Senior users retrieved successfully\",\n"
+                                                    + "  \"data\": [\n"
+                                                    + "    {\n"
+                                                    + "      \"id\": 37,\n"
+                                                    + "      \"name\": \"Farhad\",\n"
+                                                    + "      \"email\": \"farhad@gmail.com\",\n"
+                                                    + "      \"age\": 65\n"
+                                                    + "    }\n"
+                                                    + "  ]\n"
                                                     + "}"
                                     )
                             )
                     ),
-                    @ApiResponse(
-        responseCode = "404",
-        description = "Users not found",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Not Found",
-                        value = "{"
-                                + "\"status\":\"NOT_FOUND\","
-                                + "\"message\":\"Users not found\""
-                                + "}"
-                )
-        )
-),
 
-@ApiResponse(
-        responseCode = "500",
-        description = "Internal Server Error",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Internal Server Error",
-                        value = "{"
-                                + "\"status\":\"INTERNAL_SERVER_ERROR\","
-                                + "\"message\":\"Some error occurred\""
-                                + "}"
-                )
-        )
-),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "No senior users found",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"No senior users found\""
+                                                    + "}"
+                                    )
+                            )
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
+                                                    + "}"
+                                    )
+                            )
+                    )
             }
     )
     public GenericDto<List<UserResponseDto>> getOldAgeUsersV1() {
@@ -438,7 +484,7 @@ public class AdminController {
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"Here the user:\","
+                                                    + "\"message\":\"User retrieved successfully\","
                                                     + "\"data\":{"
                                                     + "\"id\":37,"
                                                     + "\"name\":\"Farhad\","
@@ -449,35 +495,36 @@ public class AdminController {
                                     )
                             )
                     ),
-                    @ApiResponse(
-        responseCode = "404",
-        description = "Users not found",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Not Found",
-                        value = "{"
-                                + "\"status\":\"NOT_FOUND\","
-                                + "\"message\":\"Users not found\""
-                                + "}"
-                )
-        )
-),
 
-@ApiResponse(
-        responseCode = "500",
-        description = "Internal Server Error",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Internal Server Error",
-                        value = "{"
-                                + "\"status\":\"INTERNAL_SERVER_ERROR\","
-                                + "\"message\":\"Some error occurred\""
-                                + "}"
-                )
-        )
-),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "User not found",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"User not found\""
+                                                    + "}"
+                                    )
+                            )
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
+                                                    + "}"
+                                    )
+                            )
+                    )
             }
     )
     public GenericDto<UserResponseDto> getUsersByEmail(
@@ -502,7 +549,7 @@ public class AdminController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Emails retrieved successfully",
+                            description = "Emails retrieved successfully. Returns an empty list if no users are registered.",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
@@ -511,35 +558,36 @@ public class AdminController {
                                     )
                             )
                     ),
-                    @ApiResponse(
-        responseCode = "404",
-        description = "Users not found",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Not Found",
-                        value = "{"
-                                + "\"status\":\"NOT_FOUND\","
-                                + "\"message\":\"Users not found\""
-                                + "}"
-                )
-        )
-),
 
-@ApiResponse(
-        responseCode = "500",
-        description = "Internal Server Error",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Internal Server Error",
-                        value = "{"
-                                + "\"status\":\"INTERNAL_SERVER_ERROR\","
-                                + "\"message\":\"Some error occurred\""
-                                + "}"
-                )
-        )
-),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "No users found",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"Users not found\""
+                                                    + "}"
+                                    )
+                            )
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
+                                                    + "}"
+                                    )
+                            )
+                    )
             }
     )
     public List<String> getAllUsersEmail() {
@@ -553,15 +601,30 @@ public class AdminController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Total accounts retrieved successfully",
+                            description = "Total number of accounts retrieved successfully. Returns 0 if no accounts exist.",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"The total number of accounts in bank are:\","
+                                                    + "\"message\":\"Total number of accounts retrieved successfully\","
                                                     + "\"data\":9"
+                                                    + "}"
+                                    )
+                            )
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
                                                     + "}"
                                     )
                             )
@@ -584,48 +647,34 @@ public class AdminController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Total accounts retrieved successfully",
+                            description = "Total number of accounts retrieved successfully. Returns 0 if no accounts exist.",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"The total number of accounts in bank are:\","
+                                                    + "\"message\":\"Total number of accounts retrieved successfully\","
                                                     + "\"data\":9"
                                                     + "}"
                                     )
                             )
                     ),
-                    @ApiResponse(
-        responseCode = "404",
-        description = "Users not found",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Not Found",
-                        value = "{"
-                                + "\"status\":\"NOT_FOUND\","
-                                + "\"message\":\"Users not found\""
-                                + "}"
-                )
-        )
-),
 
-@ApiResponse(
-        responseCode = "500",
-        description = "Internal Server Error",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Internal Server Error",
-                        value = "{"
-                                + "\"status\":\"INTERNAL_SERVER_ERROR\","
-                                + "\"message\":\"Some error occurred\""
-                                + "}"
-                )
-        )
-),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
+                                                    + "}"
+                                    )
+                            )
+                    )
             }
     )
     public GenericDto<Long> getTotalNoAccV1() {
@@ -651,7 +700,7 @@ public class AdminController {
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"The total in money in bank is:\","
+                                                    + "\"message\":\"Total money retrieved successfully\","
                                                     + "\"data\":1234567.50"
                                                     + "}"
                                     )
@@ -666,12 +715,12 @@ public class AdminController {
                                     examples = @ExampleObject(
                                             name = "Internal Server Error",
                                             value = "{"
-                                                    + "\"status\":\"INTERNAL SERVER ERROR\","
-                                                    + "\"message\":\"Some error occurred:\","
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
                                                     + "}"
                                     )
                             )
-                    ),
+                    )
             }
     )
     public GenericDto<Double> getTotalMoney() {
@@ -690,52 +739,54 @@ public class AdminController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "User retrieved successfully",
+                            description = "User with maximum balance retrieved successfully",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"The user with maximum balance is:\","
+                                                    + "\"message\":\"User with maximum balance retrieved successfully\","
                                                     + "\"data\":{"
                                                     + "\"id\":37,"
                                                     + "\"name\":\"Farhad\","
-                                                    + "\"email\":\"farhad@gmail.com\""
+                                                    + "\"email\":\"farhad@gmail.com\","
+                                                    + "\"age\":34"
                                                     + "}"
                                                     + "}"
                                     )
                             )
                     ),
-                    @ApiResponse(
-        responseCode = "404",
-        description = "Users not found",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Not Found",
-                        value = "{"
-                                + "\"status\":\"NOT_FOUND\","
-                                + "\"message\":\"Users not found\""
-                                + "}"
-                )
-        )
-),
 
-@ApiResponse(
-        responseCode = "500",
-        description = "Internal Server Error",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Internal Server Error",
-                        value = "{"
-                                + "\"status\":\"INTERNAL_SERVER_ERROR\","
-                                + "\"message\":\"Some error occurred\""
-                                + "}"
-                )
-        )
-),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "No user found",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"No user found\""
+                                                    + "}"
+                                    )
+                            )
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
+                                                    + "}"
+                                    )
+                            )
+                    )
             }
     )
     public GenericDto<UserResponseDto> getUserWithMaxBal() {
@@ -754,48 +805,54 @@ public class AdminController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Users retrieved successfully",
+                            description = "Users retrieved successfully. Returns an empty list if no users meet the specified balance criteria.",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"All the users are:\","
-                                                    + "\"data\":[]"
+                                                    + "\"message\":\"Users above the specified balance retrieved successfully\","
+                                                    + "\"data\":[{"
+                                                    + "\"id\":37,"
+                                                    + "\"name\":\"Farhad\","
+                                                    + "\"email\":\"farhad@gmail.com\","
+                                                    + "\"age\":34"
+                                                    + "}]"
                                                     + "}"
                                     )
                             )
                     ),
-                    @ApiResponse(
-        responseCode = "404",
-        description = "Users not found",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Not Found",
-                        value = "{"
-                                + "\"status\":\"NOT_FOUND\","
-                                + "\"message\":\"Users not found\""
-                                + "}"
-                )
-        )
-),
 
-@ApiResponse(
-        responseCode = "500",
-        description = "Internal Server Error",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Internal Server Error",
-                        value = "{"
-                                + "\"status\":\"INTERNAL_SERVER_ERROR\","
-                                + "\"message\":\"Some error occurred\""
-                                + "}"
-                )
-        )
-),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "No users found above the specified balance",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"No users found above the specified balance\""
+                                                    + "}"
+                                    )
+                            )
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
+                                                    + "}"
+                                    )
+                            )
+                    )
             }
     )
     public GenericDto<List<UserResponseDto>> getUserWithSpecificBal(
@@ -817,52 +874,58 @@ public class AdminController {
     @GetMapping("/v1/getUsersOverCertainBal/{amt}")
     @Operation(
             summary = "Retrieve users above a specified balance (V1)",
-            description = "Retrieves users whose bank account balance is greater than the specified amount using V1.",
+            description = "Retrieves users whose bank account balance is greater than the specified amount using V1 implementation.",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Users retrieved successfully",
+                            description = "Users retrieved successfully. Returns an empty list if no users meet the specified balance criteria.",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"All the users are:\","
-                                                    + "\"data\":[]"
+                                                    + "\"message\":\"Users above the specified balance retrieved successfully\","
+                                                    + "\"data\":[{"
+                                                    + "\"id\":37,"
+                                                    + "\"name\":\"Farhad\","
+                                                    + "\"email\":\"farhad@gmail.com\","
+                                                    + "\"age\":34"
+                                                    + "}]"
                                                     + "}"
                                     )
                             )
                     ),
-                    @ApiResponse(
-        responseCode = "404",
-        description = "Users not found",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Not Found",
-                        value = "{"
-                                + "\"status\":\"NOT_FOUND\","
-                                + "\"message\":\"Users not found\""
-                                + "}"
-                )
-        )
-),
 
-@ApiResponse(
-        responseCode = "500",
-        description = "Internal Server Error",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Internal Server Error",
-                        value = "{"
-                                + "\"status\":\"INTERNAL_SERVER_ERROR\","
-                                + "\"message\":\"Some error occurred\""
-                                + "}"
-                )
-        )
-),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "No users found above the specified balance",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"No users found above the specified balance\""
+                                                    + "}"
+                                    )
+                            )
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
+                                                    + "}"
+                                    )
+                            )
+                    )
             }
     )
     public GenericDto<List<UserResponseDto>> getUserWithSpecificBalV1(
@@ -888,48 +951,54 @@ public class AdminController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Users retrieved successfully",
+                            description = "Users retrieved successfully. Returns an empty list if no users meet the specified age criteria.",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"All the users are:\","
-                                                    + "\"data\":[]"
+                                                    + "\"message\":\"Users above the specified age retrieved successfully\","
+                                                    + "\"data\":[{"
+                                                    + "\"id\":37,"
+                                                    + "\"name\":\"Farhad\","
+                                                    + "\"email\":\"farhad@gmail.com\","
+                                                    + "\"age\":34"
+                                                    + "}]"
                                                     + "}"
                                     )
                             )
                     ),
-                    @ApiResponse(
-        responseCode = "404",
-        description = "Users not found",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Not Found",
-                        value = "{"
-                                + "\"status\":\"NOT_FOUND\","
-                                + "\"message\":\"Users not found\""
-                                + "}"
-                )
-        )
-),
 
-@ApiResponse(
-        responseCode = "500",
-        description = "Internal Server Error",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Internal Server Error",
-                        value = "{"
-                                + "\"status\":\"INTERNAL_SERVER_ERROR\","
-                                + "\"message\":\"Some error occurred\""
-                                + "}"
-                )
-        )
-),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "No users found above the specified age",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"No users found above the specified age\""
+                                                    + "}"
+                                    )
+                            )
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
+                                                    + "}"
+                                    )
+                            )
+                    )
             }
     )
     public GenericDto<List<UserResponseDto>> getUserAboveAge(
@@ -951,52 +1020,58 @@ public class AdminController {
     @GetMapping("/v1/getUsersAboveSomeAge/{age}")
     @Operation(
             summary = "Retrieve users above specified age (V1)",
-            description = "Retrieves users whose age is greater than the specified age using V1.",
+            description = "Retrieves users whose age is greater than the specified age using V1 implementation.",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Users retrieved successfully",
+                            description = "Users retrieved successfully. Returns an empty list if no users meet the specified age criteria.",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"All the users are:\","
-                                                    + "\"data\":[]"
+                                                    + "\"message\":\"Users above the specified age retrieved successfully\","
+                                                    + "\"data\":[{"
+                                                    + "\"id\":37,"
+                                                    + "\"name\":\"Farhad\","
+                                                    + "\"email\":\"farhad@gmail.com\","
+                                                    + "\"age\":34"
+                                                    + "}]"
                                                     + "}"
                                     )
                             )
                     ),
-                    @ApiResponse(
-        responseCode = "404",
-        description = "Users not found",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Not Found",
-                        value = "{"
-                                + "\"status\":\"NOT_FOUND\","
-                                + "\"message\":\"Users not found\""
-                                + "}"
-                )
-        )
-),
 
-@ApiResponse(
-        responseCode = "500",
-        description = "Internal Server Error",
-        content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                        name = "Internal Server Error",
-                        value = "{"
-                                + "\"status\":\"INTERNAL_SERVER_ERROR\","
-                                + "\"message\":\"Some error occurred\""
-                                + "}"
-                )
-        )
-),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "No users found above the specified age",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"No users found above the specified age\""
+                                                    + "}"
+                                    )
+                            )
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
+                                                    + "}"
+                                    )
+                            )
+                    )
             }
     )
     public GenericDto<List<UserResponseDto>> getUserAboveAgeV1(
@@ -1029,19 +1104,31 @@ public class AdminController {
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"All the users are:\","
+                                                    + "\"message\":\"User retrieved successfully\","
                                                     + "\"data\":{"
                                                     + "\"id\":37,"
                                                     + "\"name\":\"Farhad\","
-                                                    + "\"email\":\"farhad@gmail.com\""
+                                                    + "\"email\":\"farhad@gmail.com\","
+                                                    + "\"age\":34"
                                                     + "}"
                                                     + "}"
                                     )
                             )
                     ),
+
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Account not found"
+                            description = "Account not found",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"Account not found\""
+                                                    + "}"
+                                    )
+                            )
                     ),
 
                     @ApiResponse(
@@ -1052,12 +1139,12 @@ public class AdminController {
                                     examples = @ExampleObject(
                                             name = "Internal Server Error",
                                             value = "{"
-                                                    + "\"status\":\"INTERNAL SERVER ERROR\","
-                                                    + "\"message\":\"Some error occurred:\","
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
                                                     + "}"
                                     )
                             )
-                    ),
+                    )
             }
     )
     public GenericDto<UserResponseDto> getUserByAccNo(
@@ -1079,7 +1166,7 @@ public class AdminController {
     @GetMapping("/v1/getUserByAccNo/{accNo}")
     @Operation(
             summary = "Retrieve user by account number (V1)",
-            description = "Retrieves the user associated with the specified account number using V1.",
+            description = "Retrieves the user associated with the specified account number using V1 implementation.",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -1090,26 +1177,28 @@ public class AdminController {
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"All the users are:\","
+                                                    + "\"message\":\"User retrieved successfully\","
                                                     + "\"data\":{"
                                                     + "\"id\":37,"
                                                     + "\"name\":\"Farhad\","
-                                                    + "\"email\":\"farhad@gmail.com\""
+                                                    + "\"email\":\"farhad@gmail.com\","
+                                                    + "\"age\":34"
                                                     + "}"
                                                     + "}"
                                     )
                             )
                     ),
+
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Users not found",
+                            description = "Account not found",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
-                                            name = "Success",
+                                            name = "Not Found",
                                             value = "{"
-                                                    + "\"status\":\"NOT FOUND\","
-                                                    + "\"message\":\"User not found\","
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"Account not found\""
                                                     + "}"
                                     )
                             )
@@ -1123,12 +1212,12 @@ public class AdminController {
                                     examples = @ExampleObject(
                                             name = "Internal Server Error",
                                             value = "{"
-                                                    + "\"status\":\"INTERNAL SERVER ERROR\","
-                                                    + "\"message\":\"Some error occurred\","
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
                                                     + "}"
                                     )
                             )
-                    ),
+                    )
             }
     )
     public GenericDto<UserResponseDto> getUserByAccNoV1(
@@ -1154,29 +1243,50 @@ public class AdminController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Users retrieved successfully",
+                            description = "Users retrieved successfully. Returns an empty list if no users fall within the specified age range.",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"All the users are:\","
-                                                    + "\"data\":[]"
+                                                    + "\"message\":\"Users within the specified age range retrieved successfully\","
+                                                    + "\"data\":[{"
+                                                    + "\"id\":37,"
+                                                    + "\"name\":\"Farhad\","
+                                                    + "\"email\":\"farhad@gmail.com\","
+                                                    + "\"age\":34"
+                                                    + "}]"
                                                     + "}"
                                     )
                             )
                     ),
+
                     @ApiResponse(
-                            responseCode = "404",
-                            description = "Users not found",
+                            responseCode = "400",
+                            description = "Invalid age range",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
-                                            name = "Success",
+                                            name = "Bad Request",
                                             value = "{"
-                                                    + "\"status\":\"NOT FOUND\","
-                                                    + "\"message\":\"Users not found\","
+                                                    + "\"status\":\"BAD_REQUEST\","
+                                                    + "\"message\":\"Invalid age range\""
+                                                    + "}"
+                                    )
+                            )
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "No users found within the specified age range",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"No users found within the specified age range\""
                                                     + "}"
                                     )
                             )
@@ -1190,12 +1300,12 @@ public class AdminController {
                                     examples = @ExampleObject(
                                             name = "Internal Server Error",
                                             value = "{"
-                                                    + "\"status\":\"INTERNAL SERVER ERROR\","
-                                                    + "\"message\":\"Some error occurred\","
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
                                                     + "}"
                                     )
                             )
-                    ),
+                    )
             }
     )
     public GenericDto<List<UserResponseDto>> getUserBwAge(
@@ -1217,7 +1327,7 @@ public class AdminController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Bank accounts retrieved successfully",
+                            description = "Bank accounts retrieved successfully. Returns an empty list if no bank accounts are registered.",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
@@ -1225,9 +1335,23 @@ public class AdminController {
                                             value = "[{"
                                                     + "\"accNo\":41,"
                                                     + "\"balance\":24567,"
-                                                    + "\"accountType\":\"SAVING\","
-                                                    + "\"interestRate\":3.5"
+                                                    + "\"accountType\":\"SAVING\""
                                                     + "}]"
+                                    )
+                            )
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
+                                                    + "}"
                                     )
                             )
                     )
@@ -1252,16 +1376,27 @@ public class AdminController {
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"Account deleted!\","
-                                                    + "\"data\":null"
+                                                    + "\"message\":\"Account deleted successfully\""
                                                     + "}"
                                     )
                             )
                     ),
+
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Account not found"
+                            description = "Account not found",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Not Found",
+                                            value = "{"
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"Account not found\""
+                                                    + "}"
+                                    )
+                            )
                     ),
+
                     @ApiResponse(
                             responseCode = "500",
                             description = "Internal Server Error",
@@ -1270,12 +1405,12 @@ public class AdminController {
                                     examples = @ExampleObject(
                                             name = "Internal Server Error",
                                             value = "{"
-                                                    + "\"status\":\"INTERNAL SERVER ERROR\","
-                                                    + "\"message\":\"Some error occurred\","
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
                                                     + "}"
                                     )
                             )
-                    ),
+                    )
             }
     )
     public GenericDto<BankAccountResponseDto> deleteAccount(
@@ -1296,29 +1431,22 @@ public class AdminController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Users retrieved successfully",
+                            description = "Users retrieved successfully. Returns an empty list if no users have multiple accounts.",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
                                             name = "Success",
-                                            value = "{"
-                                                    + "\"status\":\"ACCEPTED\","
-                                                    + "\"message\":\"users with multiple accounts\","
-                                                    + "\"data\":[]"
-                                                    + "}"
-                                    )
-                            )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Users not found",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    examples = @ExampleObject(
-                                            name = "Success",
-                                            value = "{"
-                                                    + "\"status\":\"NOT FOUND\","
-                                                    + "\"message\":\"User not found\","
+                                            value = "{\n"
+                                                    + "  \"status\": \"OK\",\n"
+                                                    + "  \"message\": \"Users with multiple accounts retrieved successfully\",\n"
+                                                    + "  \"data\": [\n"
+                                                    + "    {\n"
+                                                    + "      \"id\": 37,\n"
+                                                    + "      \"name\": \"Farhad\",\n"
+                                                    + "      \"email\": \"farhad@gmail.com\",\n"
+                                                    + "      \"age\": 34\n"
+                                                    + "    }\n"
+                                                    + "  ]\n"
                                                     + "}"
                                     )
                             )
@@ -1332,12 +1460,12 @@ public class AdminController {
                                     examples = @ExampleObject(
                                             name = "Internal Server Error",
                                             value = "{"
-                                                    + "\"status\":\"INTERNAL SERVER ERROR\","
-                                                    + "\"message\":\"Some error occurred\","
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
                                                     + "}"
                                     )
                             )
-                    ),
+                    )
             }
     )
     public GenericDto<List<UserResponseDto>> usersWithMulAcc() {
@@ -1359,30 +1487,20 @@ public class AdminController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Users retrieved successfully",
+                            description = "Users retrieved successfully. Returns an empty list if no users meet the balance criteria.",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
                                             name = "Success",
                                             value = "{"
-                                                    + "\"status\":\"ACCEPTED\","
-                                                    + "\"message\":\"users with balance greater than 100000\","
-                                                    + "\"data\":[]"
-                                                    + "}"
-                                    )
-                            )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Users not found",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    examples = @ExampleObject(
-                                            name = "Success",
-                                            value = "{"
-                                                    + "\"status\":\"NOT FOUND\","
-                                                    + "\"message\":\"User not found\","
-                                                    + "}"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"Users with balance greater than 100000 retrieved successfully\","
+                                                    + "\"data\":[{"
+                                                    + "\"id\":37,"
+                                                    + "\"name\":\"Farhad\","
+                                                    + "\"email\":\"farhad@gmail.com\","
+                                                    + "\"age\":34"
+                                                    + "}]"
                                     )
                             )
                     ),
@@ -1395,12 +1513,12 @@ public class AdminController {
                                     examples = @ExampleObject(
                                             name = "Internal Server Error",
                                             value = "{"
-                                                    + "\"status\":\"INTERNAL SERVER ERROR\","
-                                                    + "\"message\":\"Some error occurred\","
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
                                                     + "}"
                                     )
                             )
-                    ),
+                    )
             }
     )
     public GenericDto<List<UserResponseDto>> usersHavingBalanceGreaterThan100000() {
@@ -1422,21 +1540,20 @@ public class AdminController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Average balance retrieved successfully",
+                            description = "Average balance retrieved successfully. Returns 0.0 if no accounts exist.",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"Average of balance of all accounts\","
-                                                    + "\"data\":{"
-                                                    + "\"averageBalance\":24567.50"
-                                                    + "}"
+                                                    + "\"message\":\"Average balance retrieved successfully\","
+                                                    + "\"data\":24567.50"
                                                     + "}"
                                     )
                             )
                     ),
+
                     @ApiResponse(
                             responseCode = "500",
                             description = "Internal Server Error",
@@ -1445,12 +1562,12 @@ public class AdminController {
                                     examples = @ExampleObject(
                                             name = "Internal Server Error",
                                             value = "{"
-                                                    + "\"status\":\"INTERNAL SERVER ERROR\","
-                                                    + "\"message\":\"Some error occurred\","
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
                                                     + "}"
                                     )
                             )
-                    ),
+                    )
             }
     )
     public GenericDto<BalanceResDto> avgBalOfAllAcc() {
@@ -1467,33 +1584,23 @@ public class AdminController {
     @GetMapping("/getUsersWithBalGreaterThanAvgBal")
     @Operation(
             summary = "Retrieve accounts above average balance",
-            description = "Retrieves bank accounts whose balance is greater than the average balance.",
+            description = "Retrieves bank accounts whose balance is greater than the average balance across all bank accounts.",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Accounts retrieved successfully",
+                            description = "Accounts retrieved successfully. Returns an empty list if no accounts have a balance greater than the average.",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"Users with balance greater than average of balance of all accounts\","
-                                                    + "\"data\":[]"
-                                                    + "}"
-                                    )
-                            )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Users not found",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    examples = @ExampleObject(
-                                            name = "Success",
-                                            value = "{"
-                                                    + "\"status\":\"NOT FOUND\","
-                                                    + "\"message\":\"User not found\","
+                                                    + "\"message\":\"Accounts with balance greater than average retrieved successfully\","
+                                                    + "\"data\":[{"
+                                                    + "\"accNo\":41,"
+                                                    + "\"balance\":45000,"
+                                                    + "\"accountType\":\"SAVING\""
+                                                    + "}]"
                                                     + "}"
                                     )
                             )
@@ -1507,12 +1614,12 @@ public class AdminController {
                                     examples = @ExampleObject(
                                             name = "Internal Server Error",
                                             value = "{"
-                                                    + "\"status\":\"INTERNAL SERVER ERROR\","
-                                                    + "\"message\":\"Some error occurred\","
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
                                                     + "}"
                                     )
                             )
-                    ),
+                    )
             }
     )
     public GenericDto<List<BankAccountResponseDto>> getUsersWithBalGreaterThanAvgBal() {
@@ -1541,10 +1648,25 @@ public class AdminController {
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"interest level updated\","
+                                                    + "\"message\":\"Interest rate updated successfully\","
                                                     + "\"data\":{"
                                                     + "\"interestRate\":3.5"
                                                     + "}"
+                                                    + "}"
+                                    )
+                            )
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Invalid interest rate",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Bad Request",
+                                            value = "{"
+                                                    + "\"status\":\"BAD_REQUEST\","
+                                                    + "\"message\":\"Invalid interest rate\""
                                                     + "}"
                                     )
                             )
@@ -1558,12 +1680,12 @@ public class AdminController {
                                     examples = @ExampleObject(
                                             name = "Internal Server Error",
                                             value = "{"
-                                                    + "\"status\":\"INTERNAL SERVER ERROR\","
-                                                    + "\"message\":\"Some error occurred\","
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
                                                     + "}"
                                     )
                             )
-                    ),
+                    )
             }
     )
     public GenericDto<InterestResponseDto> setInterest(
@@ -1597,7 +1719,7 @@ public class AdminController {
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"overdraft limit updated\","
+                                                    + "\"message\":\"Overdraft limit updated successfully\","
                                                     + "\"data\":{"
                                                     + "\"overdraftLimit\":12000"
                                                     + "}"
@@ -1605,6 +1727,22 @@ public class AdminController {
                                     )
                             )
                     ),
+
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Invalid overdraft limit",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Bad Request",
+                                            value = "{"
+                                                    + "\"status\":\"BAD_REQUEST\","
+                                                    + "\"message\":\"Invalid overdraft limit\""
+                                                    + "}"
+                                    )
+                            )
+                    ),
+
                     @ApiResponse(
                             responseCode = "500",
                             description = "Internal Server Error",
@@ -1613,12 +1751,12 @@ public class AdminController {
                                     examples = @ExampleObject(
                                             name = "Internal Server Error",
                                             value = "{"
-                                                    + "\"status\":\"INTERNAL SERVER ERROR\","
-                                                    + "\"message\":\"Some error occurred\","
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
                                                     + "}"
                                     )
                             )
-                    ),
+                    )
             }
     )
     public GenericDto<OverDraftLimitRes> setOverDraftLimit(
@@ -1644,15 +1782,15 @@ public class AdminController {
             description = "Updates the user details associated with the specified user ID.",
             responses = {
                     @ApiResponse(
-                            responseCode = "202",
+                            responseCode = "200",
                             description = "User updated successfully",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
                                             name = "Success",
                                             value = "{"
-                                                    + "\"status\":\"ACCEPTED\","
-                                                    + "\"message\":\"updated successfully\","
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"User updated successfully\","
                                                     + "\"data\":{"
                                                     + "\"id\":37,"
                                                     + "\"name\":\"Farhad\","
@@ -1663,16 +1801,17 @@ public class AdminController {
                                     )
                             )
                     ),
+
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Users not found",
+                            description = "User not found",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
-                                            name = "Success",
+                                            name = "Not Found",
                                             value = "{"
-                                                    + "\"status\":\"NOT FOUND\","
-                                                    + "\"message\":\"User not found\","
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"User not found\""
                                                     + "}"
                                     )
                             )
@@ -1686,13 +1825,12 @@ public class AdminController {
                                     examples = @ExampleObject(
                                             name = "Internal Server Error",
                                             value = "{"
-                                                    + "\"status\":\"INTERNAL SERVER ERROR\","
-                                                    + "\"message\":\"Some error occurred\","
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
                                                     + "}"
                                     )
                             )
-                    ),
-
+                    )
             }
     )
     public GenericDto<UserResponseDto> updateUser(
@@ -1716,18 +1854,18 @@ public class AdminController {
     @PatchMapping("/update/{id}")
     @Operation(
             summary = "Partially update user",
-            description = "Updates selected user details associated with the specified user ID.",
+            description = "Partially updates the details of an existing user. One or more fields can be provided in the request body; only the provided fields will be updated.",
             responses = {
                     @ApiResponse(
-                            responseCode = "202",
+                            responseCode = "200",
                             description = "User partially updated successfully",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
                                             name = "Success",
                                             value = "{"
-                                                    + "\"status\":\"ACCEPTED\","
-                                                    + "\"message\":\"updated successfully\","
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"User partially updated successfully\","
                                                     + "\"data\":{"
                                                     + "\"id\":37,"
                                                     + "\"name\":\"Farhad\","
@@ -1738,16 +1876,48 @@ public class AdminController {
                                     )
                             )
                     ),
+
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Invalid update request",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Invalid Email",
+                                                    value = "{"
+                                                            + "\"status\":\"BAD_REQUEST\","
+                                                            + "\"message\":\"Invalid email address\""
+                                                            + "}"
+                                            ),
+                                            @ExampleObject(
+                                                    name = "Invalid Age",
+                                                    value = "{"
+                                                            + "\"status\":\"BAD_REQUEST\","
+                                                            + "\"message\":\"Invalid age\""
+                                                            + "}"
+                                            ),
+                                            @ExampleObject(
+                                                    name = "No Fields Provided",
+                                                    value = "{"
+                                                            + "\"status\":\"BAD_REQUEST\","
+                                                            + "\"message\":\"At least one field must be provided for update\""
+                                                            + "}"
+                                            )
+                                    }
+                            )
+                    ),
+
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Users not found",
+                            description = "User not found",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
-                                            name = "Success",
+                                            name = "Not Found",
                                             value = "{"
-                                                    + "\"status\":\"NOT FOUND\","
-                                                    + "\"message\":\"User not found\","
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"User not found\""
                                                     + "}"
                                     )
                             )
@@ -1761,12 +1931,12 @@ public class AdminController {
                                     examples = @ExampleObject(
                                             name = "Internal Server Error",
                                             value = "{"
-                                                    + "\"status\":\"INTERNAL SERVER ERROR\","
-                                                    + "\"message\":\"Some error occurred\","
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
                                                     + "}"
                                     )
                             )
-                    ),
+                    )
             }
     )
     public GenericDto<UserResponseDto> updateDetailsUser(
@@ -1801,22 +1971,22 @@ public class AdminController {
                                             name = "Success",
                                             value = "{"
                                                     + "\"status\":\"OK\","
-                                                    + "\"message\":\"User deleted!\","
-                                                    + "\"data\":null"
+                                                    + "\"message\":\"User deleted successfully\""
                                                     + "}"
                                     )
                             )
                     ),
+
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Users not found",
+                            description = "User not found",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(
-                                            name = "Success",
+                                            name = "Not Found",
                                             value = "{"
-                                                    + "\"status\":\"NOT FOUND\","
-                                                    + "\"message\":\"User not found\","
+                                                    + "\"status\":\"NOT_FOUND\","
+                                                    + "\"message\":\"User not found\""
                                                     + "}"
                                     )
                             )
@@ -1830,12 +2000,12 @@ public class AdminController {
                                     examples = @ExampleObject(
                                             name = "Internal Server Error",
                                             value = "{"
-                                                    + "\"status\":\"INTERNAL SERVER ERROR\","
-                                                    + "\"message\":\"Some error occurred\","
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
                                                     + "}"
                                     )
                             )
-                    ),
+                    )
             }
     )
     public GenericDto<UserResponseDto> deleteUser(
