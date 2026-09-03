@@ -23,4 +23,6 @@ public interface BankServices {
     BalanceResDto checkBalance(Long id);
 
     InterestResponseDto calculateInterest(Long id);
+
+    BankAccountResponseDto getBankAccountDetails(Long accNo);
 }

@@ -1,5 +1,6 @@
 package com.sevabank.SevaBank.entity;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,6 +31,8 @@ public class User {
     private LocalDateTime createdAt;
     @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
+    @Column(name="is_deleted")
+    private Boolean isDeleted;
 
     public User() {
     }
@@ -40,6 +43,7 @@ public class User {
         this.password = password;
         this.age = age;
         this.createdAt = LocalDateTime.now();
+        this.isDeleted = false;
     }
 
 

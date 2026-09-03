@@ -1,0 +1,2 @@
+12:17:07.472 [http-nio-8080-exec-4] ERROR c.s.S.service.impl.UserServicesImpln -email or password is incorrect
+12:17:44.984 [http-nio-8080-exec-6] ERROR c.s.S.service.impl.UserServicesImpln -Account number doesn't exist in db
