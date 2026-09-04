@@ -1,0 +1,29 @@
+17:14:09.364 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+17:14:09.367 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+17:14:09.370 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 3 ms
+17:14:09.445 [http-nio-8080-exec-1] ERROR c.s.S.s.impl.AdminServicesImpln -users list returned!
+17:14:09.446 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.446 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.446 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.446 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.446 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.446 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.446 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.446 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.446 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.446 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.446 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.446 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.513 [http-nio-8080-exec-2] ERROR c.s.S.s.impl.AdminServicesImpln -users list returned!
+17:14:09.513 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.513 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.513 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.513 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.513 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.513 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.513 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.513 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.513 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.513 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.513 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:14:09.513 [http-nio-8080-exec-2] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto

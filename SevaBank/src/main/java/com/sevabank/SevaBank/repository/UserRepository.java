@@ -2,6 +2,7 @@ package com.sevabank.SevaBank.repository;
 
 import com.sevabank.SevaBank.dto.response.EmailResDto;
 import com.sevabank.SevaBank.entity.User;
+import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -92,6 +93,28 @@ public class UserRepository {
     }
 
     public  List<User> findAll() {
+        jdbcTemplate.execute((ConnectionCallback<Void>) connection -> {
+
+            System.out.println(
+                    "START | " +
+                            Thread.currentThread().getName() +
+                            " | " + connection
+            );
+
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            System.out.println(
+                    "END   | " +
+                            Thread.currentThread().getName() +
+                            " | " + connection
+            );
+
+            return null;
+        });
         String sql = "SELECT u.id, u.name, u.email, u.age " +
                      "FROM user_schema.users u ";
 
