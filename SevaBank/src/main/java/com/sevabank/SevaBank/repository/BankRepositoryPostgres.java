@@ -3,20 +3,21 @@ package com.sevabank.SevaBank.repository;
 import com.sevabank.SevaBank.Enum.AccountType;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.entity.User;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 
 @Repository
-public class BankAccountRepository {
+public class BankRepositoryPostgres implements BankRepository{
 
     private final JdbcTemplate jdbcTemplate;
 
-    public BankAccountRepository(JdbcTemplate jdbcTemplate) {
+    public BankRepositoryPostgres(
+            @Qualifier("mysqlJdbcTemplate") JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -45,6 +46,7 @@ public class BankAccountRepository {
         return account;
     }
 
+    @Override
     public void createAccount(BankAccount createdBankAccount) {
         String sql = "INSERT INTO account_schema.bankaccount " +
                 "(type, balance, interest_rate, overdraft_limit, user_id, is_deleted, created_at, updated_at) " +
@@ -69,6 +71,8 @@ public class BankAccountRepository {
         }
     }
 
+
+    @Override
     public List<BankAccount> findById(Long accNo) {
         String sql = "SELECT * FROM account_schema.bankaccount b "+
                      "JOIN user_schema.users u "+
@@ -95,6 +99,7 @@ public class BankAccountRepository {
         }, accNo);
     }
 
+    @Override
     public Boolean existsById(Long id) {
         String sql = "SELECT EXISTS( " +
                      "SELECT 1 FROM account_schema.bankaccount " +
@@ -103,6 +108,7 @@ public class BankAccountRepository {
         return jdbcTemplate.queryForObject(sql, Boolean.class, id);
     }
 
+    @Override
     public void deposit(BankAccount accountInDep, double amt) {
         String sql = "UPDATE account_schema.bankaccount " +
                      "SET balance = balance + ? " +
@@ -111,6 +117,7 @@ public class BankAccountRepository {
         jdbcTemplate.update(sql, amt, accountInDep.getAccNo());
     }
 
+    @Override
     public void withdraw(BankAccount accountInDep, double amt) {
         String sql = "UPDATE account_schema.bankaccount " +
                      "SET balance = balance - ? " +
@@ -118,6 +125,7 @@ public class BankAccountRepository {
         jdbcTemplate.update(sql, amt, accountInDep.getAccNo());
     }
 
+    @Override
     public List<BankAccount> findAll() {
         String sql = "SELECT b.acc_no, b.type, b.balance, b.is_deleted, u.id, u.name, u.email, u.age " +
                      "FROM account_schema.bankaccount b JOIN user_schema.users u " +
@@ -142,6 +150,7 @@ public class BankAccountRepository {
         });
     }
 
+    @Override
     public void delete(BankAccount accountToDel) {
         String sql = "DELETE FROM account_schema.bankaccount b " +
                      "WHERE b.acc_no = ? ";
@@ -149,6 +158,7 @@ public class BankAccountRepository {
         jdbcTemplate.update(sql, accountToDel.getAccNo());
     }
 
+    @Override
     public List<BankAccount> findByBalanceLessThan(Double amount) {
         String sql = "SELECT u.id, u.name, u.email, u.age, b.acc_no, b.type, b.balance, b.is_deleted FROM user_schema.users u " +
                      "JOIN account_schema.bankaccount b on u.id = b.user_id " +
@@ -174,12 +184,14 @@ public class BankAccountRepository {
         }, amount);
     }
 
+    @Override
     public Double getAverageOfBalance() {
         String sql = "SELECT AVG(balance) FROM account_schema.bankaccount " +
                      "WHERE is_deleted = false";
         return jdbcTemplate.queryForObject(sql, Double.class);
     }
 
+    @Override
     public List<BankAccount> findAccountsLessThanAmt(Double balance) {
         String sql = "SELECT b.acc_no, b.type, b.balance, u.id, u.name, u.email, u.age " +
                      "FROM user_schema.users u JOIN account_schema.bankaccount b " +
@@ -190,6 +202,7 @@ public class BankAccountRepository {
 
     }
 
+    @Override
     public List<BankAccount> findAccountsHavingSaving() {
         String sql = "SELECT b.acc_no, b.type, b.balance, u.id, u.name, u.email, u.age " +
                 "FROM user_schema.users u JOIN account_schema.bankaccount b " +
@@ -199,6 +212,7 @@ public class BankAccountRepository {
         return jdbcTemplate.query(sql, this::rowMapper);
     }
 
+    @Override
     public List<BankAccount> findAccountsHavingCurrent() {
         String sql = "SELECT b.acc_no, b.type, b.balance, u.id, u.name, u.email, u.age " +
                 "FROM user_schema.users u JOIN account_schema.bankaccount b " +
@@ -209,18 +223,21 @@ public class BankAccountRepository {
     }
 
 
+    @Override
     public Integer findTotalNoAccs() {
         String sql = "SELECT COUNT(*) FROM account_schema.bankaccount WHERE is_deleted = false";
 
         return jdbcTemplate.queryForObject(sql, Integer.class);
     }
 
+    @Override
     public Double findTotalMoney() {
         String sql = "SELECT SUM(balance) FROM account_schema.bankaccount WHERE is_deleted = false";
 
         return jdbcTemplate.queryForObject(sql, Double.class);
     }
 
+    @Override
     public List<BankAccount> findByAccNo(Long accNo) {
 
         String sql = "SELECT b.acc_no, b.type, b.balance, u.id, u.name, u.email, u.age " +
@@ -231,6 +248,7 @@ public class BankAccountRepository {
         return jdbcTemplate.query(sql, this::rowMapper, accNo);
     }
 
+    @Override
     public List<BankAccount> findDeletedAccounts() {
         String sql = "SELECT b.acc_no, b.type, b.balance, u.id, u.name, u.email, u.age " +
                 "FROM user_schema.users u JOIN account_schema.bankaccount b " +
@@ -240,6 +258,7 @@ public class BankAccountRepository {
         return jdbcTemplate.query(sql, this::rowMapper);
     }
 
+    @Override
     public List<BankAccount> findByBalanceMoreThan(Double amt) {
         String sql = "SELECT b.acc_no, b.type, b.balance, u.id, u.name, u.email, u.age " +
                 "FROM user_schema.users u JOIN account_schema.bankaccount b " +
@@ -249,6 +268,7 @@ public class BankAccountRepository {
         return jdbcTemplate.query(sql, this::rowMapper, amt);
     }
 
+    @Override
     public List<BankAccount> findUserWithMaxBal() {
         String sql = "SELECT b.acc_no, b.type, b.balance, u.id, u.name, u.email, u.age " +
                 "FROM user_schema.users u JOIN account_schema.bankaccount b " +

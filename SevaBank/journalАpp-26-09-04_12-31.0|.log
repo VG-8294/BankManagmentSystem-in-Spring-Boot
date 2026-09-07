@@ -1,0 +1,7 @@
+12:31:00.976 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+12:31:00.978 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+12:31:00.979 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 1 ms
+12:31:01.001 [http-nio-8080-exec-1] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Starting...
+12:31:01.004 [http-nio-8080-exec-1] WARN  c.z.hikari.util.DriverDataSource -Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+12:31:01.165 [http-nio-8080-exec-1] INFO  com.zaxxer.hikari.pool.HikariPool -HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@150a91ac
+12:31:01.165 [http-nio-8080-exec-1] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Start completed.
