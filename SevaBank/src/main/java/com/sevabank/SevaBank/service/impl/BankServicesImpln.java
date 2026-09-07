@@ -13,10 +13,9 @@ import com.sevabank.SevaBank.exception.BalanceException;
 import com.sevabank.SevaBank.exception.InvalidAccountTypeException;
 import com.sevabank.SevaBank.exception.InvalidAmountException;
 import com.sevabank.SevaBank.exception.ResourceNotFoundException;
-import com.sevabank.SevaBank.repository.BankAccountRepository;
+import com.sevabank.SevaBank.repository.BankRepository;
 import com.sevabank.SevaBank.repository.TransactionRepository;
 import com.sevabank.SevaBank.repository.UserRepository;
-import com.sevabank.SevaBank.repository.UserRepositoryPostgresImpl;
 import com.sevabank.SevaBank.service.BankServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,11 +28,11 @@ import java.util.Optional;
 public class BankServicesImpln implements BankServices {
 
     UserRepository userRepository;
-    BankAccountRepository bankAccountRepository;
+    BankRepository bankRepository;
     TransactionRepository transactionRepository;
 
-    public BankServicesImpln(BankAccountRepository bankAccountRepository, @Qualifier("userRepositoryPostgresImpl") UserRepository userRepository, TransactionRepository transactionRepository) {
-        this.bankAccountRepository = bankAccountRepository;
+    public BankServicesImpln(@Qualifier("bankRepositoryPostgres") BankRepository bankRepository, @Qualifier("userRepositoryPostgresImpl") UserRepository userRepository, TransactionRepository transactionRepository) {
+        this.bankRepository = bankRepository;
         this.userRepository = userRepository;
         this.transactionRepository = transactionRepository;
     }
@@ -88,14 +87,14 @@ public class BankServicesImpln implements BankServices {
         }
         BankAccount createdBankAccount = new BankAccount(bankReq.getBalance(), type);
         createdBankAccount.setUser(user.get());
-        bankAccountRepository.createAccount(createdBankAccount);
+        bankRepository.createAccount(createdBankAccount);
         log.info("Bank account created!");
         return bankAccountToDto(createdBankAccount);
     }
 //
 //    @Override
 //    public Optional<BankAccount> getBankAccountById(Long id) {
-//        Optional<BankAccount> bankAccount = bankAccountRepository.findById(id);
+//        Optional<BankAccount> bankAccount = bankRepository.findById(id);
 //
 //        if(!bankAccount.isPresent()){
 //            log.error("BankAccount record doesn't exist with id-{}", id);
@@ -111,17 +110,17 @@ public class BankServicesImpln implements BankServices {
             log.error("Amount is negative for deposit");
             throw new InvalidAmountException("Amount is less then 0");
         }
-        Boolean isAmountDep = bankAccountRepository.existsById(id);
+        Boolean isAmountDep = bankRepository.existsById(id);
         if(!isAmountDep){
             log.error("Account number doesn't exist in db for deposition");
             throw new ResourceNotFoundException("Account not found!");
         }
-        Optional<BankAccount> account = bankAccountRepository.findById(id)
+        Optional<BankAccount> account = bankRepository.findById(id)
                 .stream()
                 .findFirst();
         BankAccount accountInDep = account.get();
         accountInDep.deposit(balance);
-        bankAccountRepository.deposit(accountInDep, balance);
+        bankRepository.deposit(accountInDep, balance);
         saveTransaction(accountInDep, TransactionType.DEPOSIT, balance, accountInDep.getBalance());
         log.info("Amount deposited successfully!");
         return bankAccountToDto(accountInDep);
@@ -135,12 +134,12 @@ public class BankServicesImpln implements BankServices {
             log.error("Amount is negative for withdrawal");
             throw new InvalidAmountException("Amount is less then 0");
         }
-        Boolean isAmountDep = bankAccountRepository.existsById(id);
+        Boolean isAmountDep = bankRepository.existsById(id);
         if(!isAmountDep){
             log.error("Account number doesn't exist in db for withdrawal");
             throw new ResourceNotFoundException("Account not found!");
         }
-        Optional<BankAccount> account = bankAccountRepository.findById(id)
+        Optional<BankAccount> account = bankRepository.findById(id)
                 .stream()
                 .findFirst();
         BankAccount accountInDep = account.get();
@@ -149,7 +148,7 @@ public class BankServicesImpln implements BankServices {
             throw new BalanceException("Balance less then " + balance);
         }
         accountInDep.withdraw(balance);
-        bankAccountRepository.withdraw(accountInDep, balance);
+        bankRepository.withdraw(accountInDep, balance);
         saveTransaction(accountInDep, TransactionType.WITHDRAW, balance, accountInDep.getBalance());
         log.info("amount withdrawal successfully");
         return bankAccountToDto(accountInDep);
@@ -158,7 +157,7 @@ public class BankServicesImpln implements BankServices {
 //
     @Override
     public BalanceResDto checkBalance(Long id) {
-        Optional<BankAccount> accountExist = bankAccountRepository.findById(id)
+        Optional<BankAccount> accountExist = bankRepository.findById(id)
                 .stream()
                 .findFirst();
         if(!accountExist.isPresent()){
@@ -174,7 +173,7 @@ public class BankServicesImpln implements BankServices {
 
     @Override
     public InterestResponseDto calculateInterest(Long id) {
-        Optional<BankAccount> accountExist = bankAccountRepository.findById(id)
+        Optional<BankAccount> accountExist = bankRepository.findById(id)
                 .stream()
                 .findFirst();
         if(!accountExist.isPresent()){

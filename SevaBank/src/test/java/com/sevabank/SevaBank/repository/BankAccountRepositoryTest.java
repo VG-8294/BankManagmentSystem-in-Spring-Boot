@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BankAccountRepositoryTest {
 
     @Autowired
-    private BankAccountRepository bankAccountRepository;
+    private BankRepositoryPostgres bankAccountRepository;
 
     @Autowired
     private UserRepositoryPostgresImpl userRepository;

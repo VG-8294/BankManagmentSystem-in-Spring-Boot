@@ -10,9 +10,8 @@ import com.sevabank.SevaBank.exception.InvalidAgeException;
 import com.sevabank.SevaBank.exception.InvalidCredentialsException;
 import com.sevabank.SevaBank.exception.ResourceNotFoundException;
 import com.sevabank.SevaBank.exception.UserAlreadyExistsException;
-import com.sevabank.SevaBank.repository.BankAccountRepository;
+import com.sevabank.SevaBank.repository.BankRepository;
 import com.sevabank.SevaBank.repository.UserRepository;
-import com.sevabank.SevaBank.repository.UserRepositoryPostgresImpl;
 import com.sevabank.SevaBank.service.UserServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,11 +25,11 @@ import java.util.Optional;
 public class UserServicesImpln implements UserServices {
 
     private final UserRepository userRepo;
-    private final BankAccountRepository bankAccountRepository;
+    private final BankRepository bankRepository;
 
-    public UserServicesImpln(@Qualifier("userRepositoryPostgresImpl") UserRepository userRepo, BankAccountRepository bankAccountRepository) {
+    public UserServicesImpln(@Qualifier("userRepositoryPostgresImpl") UserRepository userRepo, @Qualifier("bankRepositoryPostgres") BankRepository bankRepository) {
         this.userRepo = userRepo;
-        this.bankAccountRepository = bankAccountRepository;
+        this.bankRepository = bankRepository;
     }
 
     private UserResponseDto mapToDto(User user){
@@ -61,7 +60,7 @@ public class UserServicesImpln implements UserServices {
 
     @Override
     public UserResponseDto login(LoginReqDto loginReqDto) {
-        Optional<BankAccount> account = bankAccountRepository.findById(loginReqDto.getAccNo())
+        Optional<BankAccount> account = bankRepository.findById(loginReqDto.getAccNo())
                 .stream()
                 .findFirst();
         if(!account.isPresent()){
