@@ -1,0 +1,28 @@
+12:26:06.759 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+12:26:06.760 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+12:26:06.763 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 3 ms
+12:26:06.782 [http-nio-8080-exec-1] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Starting...
+12:26:06.784 [http-nio-8080-exec-1] WARN  c.z.hikari.util.DriverDataSource -Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+12:26:06.931 [http-nio-8080-exec-1] INFO  com.zaxxer.hikari.pool.HikariPool -HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1ad2cd6d
+12:26:06.932 [http-nio-8080-exec-1] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Start completed.
+12:26:52.841 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Shutdown initiated...
+12:26:52.843 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Shutdown completed.
+12:26:54.207 [main] INFO  c.s.SevaBank.SevaBankApplication -Starting SevaBankApplication using Java 26.0.1 on 67s-MacBook-Pro.local with PID 13421 (/Users/vishalgautam/Downloads/BankManagementSys/SevaBank/target/classes started by vishalgautam in /Users/vishalgautam/Downloads/BankManagementSys/SevaBank)
+12:26:54.208 [main] INFO  c.s.SevaBank.SevaBankApplication -No active profile set, falling back to 1 default profile: "default"
+12:26:54.420 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate -Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+12:26:54.426 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate -Finished Spring Data repository scanning in 3 ms. Found 0 JPA repository interfaces.
+12:26:54.577 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer -Tomcat initialized with port(s): 8080 (http)
+12:26:54.580 [main] INFO  o.a.coyote.http11.Http11NioProtocol -Initializing ProtocolHandler ["http-nio-8080"]
+12:26:54.581 [main] INFO  o.a.catalina.core.StandardService -Starting service [Tomcat]
+12:26:54.581 [main] INFO  o.a.catalina.core.StandardEngine -Starting Servlet engine: [Apache Tomcat/9.0.83]
+12:26:54.612 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring embedded WebApplicationContext
+12:26:54.612 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext -Root WebApplicationContext: initialization completed in 385 ms
+12:26:54.791 [main] INFO  o.a.coyote.http11.Http11NioProtocol -Starting ProtocolHandler ["http-nio-8080"]
+12:26:54.797 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer -Tomcat started on port(s): 8080 (http) with context path ''
+12:26:54.801 [main] INFO  c.s.SevaBank.SevaBankApplication -Started SevaBankApplication in 0.729 seconds (JVM running for 0.921)
+12:26:57.554 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+12:26:57.554 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+12:26:57.555 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 1 ms
+12:26:57.571 [http-nio-8080-exec-1] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Starting...
+12:26:57.625 [http-nio-8080-exec-1] INFO  com.zaxxer.hikari.pool.HikariPool -HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2df9d314
+12:26:57.625 [http-nio-8080-exec-1] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Start completed.

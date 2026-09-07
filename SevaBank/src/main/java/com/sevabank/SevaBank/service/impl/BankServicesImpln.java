@@ -15,23 +15,22 @@ import com.sevabank.SevaBank.exception.InvalidAmountException;
 import com.sevabank.SevaBank.exception.ResourceNotFoundException;
 import com.sevabank.SevaBank.repository.BankAccountRepository;
 import com.sevabank.SevaBank.repository.TransactionRepository;
-import com.sevabank.SevaBank.repository.UserRepository;
+import com.sevabank.SevaBank.repository.UserRepositoryPostgresImpl;
 import com.sevabank.SevaBank.service.BankServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
 @Slf4j
 public class BankServicesImpln implements BankServices {
 
-    UserRepository userRepository;
+    UserRepositoryPostgresImpl userRepository;
     BankAccountRepository bankAccountRepository;
     TransactionRepository transactionRepository;
 
-    public BankServicesImpln(BankAccountRepository bankAccountRepository, UserRepository userRepository, TransactionRepository transactionRepository) {
+    public BankServicesImpln(BankAccountRepository bankAccountRepository, UserRepositoryPostgresImpl userRepository, TransactionRepository transactionRepository) {
         this.bankAccountRepository = bankAccountRepository;
         this.userRepository = userRepository;
         this.transactionRepository = transactionRepository;

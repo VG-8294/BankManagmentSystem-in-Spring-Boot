@@ -1,0 +1,32 @@
+12:23:46.072 [main] INFO  c.s.SevaBank.SevaBankApplication -Starting SevaBankApplication using Java 26.0.1 on 67s-MacBook-Pro.local with PID 13164 (/Users/vishalgautam/Downloads/BankManagementSys/SevaBank/target/classes started by vishalgautam in /Users/vishalgautam/Downloads/BankManagementSys/SevaBank)
+12:23:46.075 [main] INFO  c.s.SevaBank.SevaBankApplication -No active profile set, falling back to 1 default profile: "default"
+12:23:46.334 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate -Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+12:23:46.342 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate -Finished Spring Data repository scanning in 4 ms. Found 0 JPA repository interfaces.
+12:23:46.506 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer -Tomcat initialized with port(s): 8080 (http)
+12:23:46.510 [main] INFO  o.a.coyote.http11.Http11NioProtocol -Initializing ProtocolHandler ["http-nio-8080"]
+12:23:46.511 [main] INFO  o.a.catalina.core.StandardService -Starting service [Tomcat]
+12:23:46.511 [main] INFO  o.a.catalina.core.StandardEngine -Starting Servlet engine: [Apache Tomcat/9.0.83]
+12:23:46.544 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring embedded WebApplicationContext
+12:23:46.545 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext -Root WebApplicationContext: initialization completed in 440 ms
+12:23:46.564 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext -Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'adminController' defined in file [/Users/vishalgautam/Downloads/BankManagementSys/SevaBank/target/classes/com/sevabank/SevaBank/controller/AdminController.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'adminServicesImpln' defined in file [/Users/vishalgautam/Downloads/BankManagementSys/SevaBank/target/classes/com/sevabank/SevaBank/service/impl/AdminServicesImpln.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userRepository' defined in file [/Users/vishalgautam/Downloads/BankManagementSys/SevaBank/target/classes/com/sevabank/SevaBank/repository/UserRepository.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'org.springframework.jdbc.core.JdbcTemplate' available: expected single matching bean but found 2: postgresJdbcTemplate,mysqlJdbcTemplate
+12:23:46.565 [main] INFO  o.a.catalina.core.StandardService -Stopping service [Tomcat]
+12:23:46.574 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener -
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+12:23:46.581 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter -
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in com.sevabank.SevaBank.repository.UserRepository required a single bean, but 2 were found:
+	- postgresJdbcTemplate: defined by method 'postgresJdbcTemplate' in class path resource [com/sevabank/SevaBank/config/JdbcTemplateConfig.class]
+	- mysqlJdbcTemplate: defined by method 'mysqlJdbcTemplate' in class path resource [com/sevabank/SevaBank/config/JdbcTemplateConfig.class]
+
+
+Action:
+
+Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
+

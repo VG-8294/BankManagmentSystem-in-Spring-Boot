@@ -1,6 +1,7 @@
 package com.sevabank.SevaBank.repository;
 
 import com.sevabank.SevaBank.entity.Transaction;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,7 +13,8 @@ public class TransactionRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public TransactionRepository(JdbcTemplate jdbcTemplate) {
+    public TransactionRepository(
+            @Qualifier("mysqlJdbcTemplate") JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

@@ -1,6 +1,5 @@
 package com.sevabank.SevaBank.repository;
 
-import com.sevabank.SevaBank.dto.response.UserResponseDto;
 import com.sevabank.SevaBank.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserRepositoryTest {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepositoryPostgresImpl userRepository;
 
 
     private User createUser(

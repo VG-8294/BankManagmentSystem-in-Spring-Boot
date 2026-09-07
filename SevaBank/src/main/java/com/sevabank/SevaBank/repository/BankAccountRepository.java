@@ -3,6 +3,7 @@ package com.sevabank.SevaBank.repository;
 import com.sevabank.SevaBank.Enum.AccountType;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.entity.User;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +17,8 @@ public class BankAccountRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public BankAccountRepository(JdbcTemplate jdbcTemplate) {
+    public BankAccountRepository(
+            @Qualifier("mysqlJdbcTemplate") JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

@@ -10,7 +10,7 @@ import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.entity.User;
 import com.sevabank.SevaBank.exception.ResourceNotFoundException;
 import com.sevabank.SevaBank.repository.BankAccountRepository;
-import com.sevabank.SevaBank.repository.UserRepository;
+import com.sevabank.SevaBank.repository.UserRepositoryPostgresImpl;
 import com.sevabank.SevaBank.service.AdminServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,10 +22,10 @@ import java.util.stream.Collectors;
 @Slf4j
 public class AdminServicesImpln implements AdminServices {
 
-    private final UserRepository userRepository;
+    private final UserRepositoryPostgresImpl userRepository;
     private final BankAccountRepository bankAccountRepository;
 
-    public AdminServicesImpln(UserRepository userRepository, BankAccountRepository bankAccountRepository) {
+    public AdminServicesImpln(UserRepositoryPostgresImpl userRepository, BankAccountRepository bankAccountRepository) {
         this.userRepository = userRepository;
         this.bankAccountRepository = bankAccountRepository;
     }

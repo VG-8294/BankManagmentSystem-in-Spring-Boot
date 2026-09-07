@@ -11,7 +11,7 @@ import com.sevabank.SevaBank.exception.InvalidCredentialsException;
 import com.sevabank.SevaBank.exception.ResourceNotFoundException;
 import com.sevabank.SevaBank.exception.UserAlreadyExistsException;
 import com.sevabank.SevaBank.repository.BankAccountRepository;
-import com.sevabank.SevaBank.repository.UserRepository;
+import com.sevabank.SevaBank.repository.UserRepositoryPostgresImpl;
 import com.sevabank.SevaBank.service.UserServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,10 +23,10 @@ import java.util.Optional;
 @Slf4j
 public class UserServicesImpln implements UserServices {
 
-    private final UserRepository userRepo;
+    private final UserRepositoryPostgresImpl userRepo;
     private final BankAccountRepository bankAccountRepository;
 
-    public UserServicesImpln(UserRepository userRepo, BankAccountRepository bankAccountRepository) {
+    public UserServicesImpln(UserRepositoryPostgresImpl userRepo, BankAccountRepository bankAccountRepository) {
         this.userRepo = userRepo;
         this.bankAccountRepository = bankAccountRepository;
     }

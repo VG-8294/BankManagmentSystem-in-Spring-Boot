@@ -22,7 +22,7 @@ class BankAccountRepositoryTest {
     private BankAccountRepository bankAccountRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepositoryPostgresImpl userRepository;
 
 
     private User createUser() {
