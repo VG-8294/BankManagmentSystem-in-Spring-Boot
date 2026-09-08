@@ -2,10 +2,12 @@ package com.sevabank.SevaBank.service.impl;
 
 import com.sevabank.SevaBank.Enum.AccountType;
 import com.sevabank.SevaBank.Enum.TransactionType;
+import com.sevabank.SevaBank.dto.request.TransferReqDto;
 import com.sevabank.SevaBank.dto.response.BalanceResDto;
 import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
 import com.sevabank.SevaBank.dto.request.CreateBankAccountRequest;
 import com.sevabank.SevaBank.dto.response.InterestResponseDto;
+import com.sevabank.SevaBank.dto.response.TransferResDto;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.entity.Transaction;
 import com.sevabank.SevaBank.entity.User;
@@ -146,6 +148,28 @@ public class BankServicesImpln implements BankServices {
         log.info("amount withdrawal successfully");
         return bankAccountToDto(accountInDep);
     }
+
+    @Override
+    public TransferResDto transferMoney(TransferReqDto reqDto){
+        Optional<BankAccount> acc1 = bankAccountRepository.findById(reqDto.getAccNo1());
+        Optional<BankAccount> acc2 = bankAccountRepository.findById(reqDto.getAccNo2());
+        if(!acc1.isPresent() || !acc2.isPresent()){
+            throw new ResourceNotFoundException("Either of the account doesn't exist");
+        }
+        if(acc1.get().getBalance() < reqDto.getAmt()){
+            throw new BalanceException("Balance is not enough in account");
+        }
+        acc1.get().withdraw(reqDto.getAmt());
+        acc2.get().deposit(reqDto.getAmt());
+        bankAccountRepository.save(acc1.get());
+        bankAccountRepository.save(acc2.get());
+        TransferResDto resDto = new TransferResDto();
+        resDto.setFrom(reqDto.getAccNo1());
+        resDto.setTo(reqDto.getAccNo2());
+        resDto.setAmt(reqDto.getAmt());
+        return resDto;
+    }
+
 
 
     @Override

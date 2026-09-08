@@ -1,10 +1,12 @@
 package com.sevabank.SevaBank.service;
 
 import com.sevabank.SevaBank.Enum.TransactionType;
+import com.sevabank.SevaBank.dto.request.TransferReqDto;
 import com.sevabank.SevaBank.dto.response.BalanceResDto;
 import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
 import com.sevabank.SevaBank.dto.request.CreateBankAccountRequest;
 import com.sevabank.SevaBank.dto.response.InterestResponseDto;
+import com.sevabank.SevaBank.dto.response.TransferResDto;
 import com.sevabank.SevaBank.entity.BankAccount;
 
 import java.util.Optional;
@@ -19,6 +21,8 @@ public interface BankServices {
     BankAccountResponseDto depositInAccount(Long id, double balance);
 
     BankAccountResponseDto withdrawInAccount(Long id, double balance);
+
+    TransferResDto transferMoney(TransferReqDto reqDto);
 
     BalanceResDto checkBalance(Long id);
 
