@@ -22,6 +22,7 @@ import com.sevabank.SevaBank.service.BankServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -150,6 +151,7 @@ public class BankServicesImpln implements BankServices {
     }
 
     @Override
+    @Transactional
     public TransferResDto transferMoney(TransferReqDto reqDto){
         Optional<BankAccount> acc1 = bankAccountRepository.findById(reqDto.getAccNo1());
         Optional<BankAccount> acc2 = bankAccountRepository.findById(reqDto.getAccNo2());
