@@ -3,7 +3,9 @@ package com.sevabank.SevaBank.controller;
 import com.sevabank.SevaBank.dto.generic.GenericDto;
 import com.sevabank.SevaBank.dto.request.LoginReqDto;
 import com.sevabank.SevaBank.dto.request.RegisterReqDto;
+import com.sevabank.SevaBank.dto.response.TransactionResponseDto;
 import com.sevabank.SevaBank.dto.response.UserResponseDto;
+import com.sevabank.SevaBank.service.TransactionService;
 import com.sevabank.SevaBank.service.UserServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,15 +17,19 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/user")
 @Tag(name = "User APIs", description = "register, login, update")
 public class UserController {
 
     private final UserServices userService;
+    private final TransactionService transactionService;
 
-    public UserController(UserServices userService) {
+    public UserController(UserServices userService, TransactionService transactionService) {
         this.userService = userService;
+        this.transactionService = transactionService;
     }
 
 
@@ -398,6 +404,24 @@ public class UserController {
                 HttpStatus.OK,
                 "Here are your details: ",
                 user
+        );
+    }
+
+    @GetMapping("/transactions/{accNo}")
+    public GenericDto<List<TransactionResponseDto>> getMyTransactions(
+            @Parameter(
+                    description = "Account number",
+                    example = "65"
+            )
+            @PathVariable Long accNo) {
+
+        List<TransactionResponseDto> transactions =
+                transactionService.getTransactionsByAccount(accNo);
+
+        return new GenericDto<>(
+                HttpStatus.OK,
+                "Here are your transactions",
+                transactions
         );
     }
 }

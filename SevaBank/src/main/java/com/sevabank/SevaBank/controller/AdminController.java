@@ -1,12 +1,15 @@
 package com.sevabank.SevaBank.controller;
 
+import com.sevabank.SevaBank.Enum.TransactionType;
 import com.sevabank.SevaBank.dto.generic.GenericDto;
 import com.sevabank.SevaBank.dto.request.AgeReqDto;
+import com.sevabank.SevaBank.dto.request.TransactionDateRangeReq;
 import com.sevabank.SevaBank.dto.request.UpdateUserReq;
 import com.sevabank.SevaBank.dto.response.*;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.service.AdminServices;
 
+import com.sevabank.SevaBank.service.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,9 +29,10 @@ import java.util.Set;
 public class AdminController {
 
     private final AdminServices adminService;
-
-    public AdminController(AdminServices adminService) {
+    private final TransactionService transactionService;
+    public AdminController(AdminServices adminService, TransactionService transactionService) {
         this.adminService = adminService;
+        this.transactionService = transactionService;
     }
 
     @GetMapping("/getAllUsers")
@@ -2023,4 +2027,380 @@ public class AdminController {
                 "User deleted successfully"
         );
     }
+
+
+        @GetMapping("/transactions")
+        @Operation(
+                summary = "Get all transactions",
+                description = "Retrieves all transactions performed in the banking system.",
+                responses = {
+
+                        @ApiResponse(
+                                responseCode = "200",
+                                description = "Transactions retrieved successfully",
+                                content = @Content(
+                                        mediaType = "application/json",
+                                        examples = @ExampleObject(
+                                                name = "Success",
+                                                value = "{"
+                                                        + "\"status\":\"OK\","
+                                                        + "\"message\":\"All transactions retrieved successfully\","
+                                                        + "\"data\":["
+                                                        + "{"
+                                                        + "\"transactionId\":51,"
+                                                        + "\"transactionType\":\"DEPOSIT\","
+                                                        + "\"amount\":5000.0,"
+                                                        + "\"balanceAfterTransaction\":35000.0,"
+                                                        + "\"transactionTime\":\"2026-09-15T12:08:51\""
+                                                        + "}"
+                                                        + "]"
+                                                        + "}"
+                                        )
+                                )
+                        ),
+
+                        @ApiResponse(
+                                responseCode = "500",
+                                description = "Internal Server Error",
+                                content = @Content(
+                                        mediaType = "application/json",
+                                        examples = @ExampleObject(
+                                                name = "Internal Server Error",
+                                                value = "{"
+                                                        + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                        + "\"message\":\"Some error occurred\""
+                                                        + "}"
+                                        )
+                                )
+                        )
+                }
+        )
+        public GenericDto<List<TransactionResponseDto>> getAllTransactions() {
+
+            List<TransactionResponseDto> transactions =
+                    transactionService.getAllTransactions();
+
+            return new GenericDto<List<TransactionResponseDto>>(
+                    HttpStatus.OK,
+                    "All transactions retrieved successfully",
+                    transactions
+            );
+        }
+
+
+        @GetMapping("/transactions/{transactionId}")
+        @Operation(
+                summary = "Get transaction by ID",
+                description = "Retrieves the details of a specific transaction using its transaction ID.",
+                responses = {
+
+                        @ApiResponse(
+                                responseCode = "200",
+                                description = "Transaction retrieved successfully",
+                                content = @Content(
+                                        mediaType = "application/json",
+                                        examples = @ExampleObject(
+                                                name = "Success",
+                                                value = "{"
+                                                        + "\"status\":\"OK\","
+                                                        + "\"message\":\"Transaction retrieved successfully\","
+                                                        + "\"data\":{"
+                                                        + "\"transactionId\":51,"
+                                                        + "\"transactionType\":\"DEPOSIT\","
+                                                        + "\"amount\":5000.0,"
+                                                        + "\"balanceAfterTransaction\":35000.0,"
+                                                        + "\"transactionTime\":\"2026-09-15T12:08:51\""
+                                                        + "}"
+                                                        + "}"
+                                        )
+                                )
+                        ),
+
+                        @ApiResponse(
+                                responseCode = "404",
+                                description = "Transaction not found",
+                                content = @Content(
+                                        mediaType = "application/json",
+                                        examples = @ExampleObject(
+                                                name = "Not Found",
+                                                value = "{"
+                                                        + "\"status\":\"NOT_FOUND\","
+                                                        + "\"message\":\"Transaction not found\""
+                                                        + "}"
+                                        )
+                                )
+                        ),
+
+                        @ApiResponse(
+                                responseCode = "500",
+                                description = "Internal Server Error",
+                                content = @Content(
+                                        mediaType = "application/json",
+                                        examples = @ExampleObject(
+                                                name = "Internal Server Error",
+                                                value = "{"
+                                                        + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                        + "\"message\":\"Some error occurred\""
+                                        )
+                                )
+                        )
+                }
+        )
+        public GenericDto<TransactionResponseDto> getTransactionById(
+
+                @Parameter(
+                        description = "Transaction ID",
+                        example = "51"
+                )
+                @PathVariable Long transactionId) {
+
+            TransactionResponseDto transaction =
+                    transactionService.getTransactionById(transactionId);
+
+            return new GenericDto<TransactionResponseDto>(
+                    HttpStatus.OK,
+                    "Transaction retrieved successfully",
+                    transaction
+            );
+        }
+
+
+        @GetMapping("/transactions/account/{accNo}")
+        @Operation(
+                summary = "Get transactions by account",
+                description = "Retrieves all transactions associated with the specified bank account number.",
+                responses = {
+
+                        @ApiResponse(
+                                responseCode = "200",
+                                description = "Account transactions retrieved successfully",
+                                content = @Content(
+                                        mediaType = "application/json",
+                                        examples = @ExampleObject(
+                                                name = "Success",
+                                                value = "{"
+                                                        + "\"status\":\"OK\","
+                                                        + "\"message\":\"Account transactions retrieved successfully\","
+                                                        + "\"data\":["
+                                                        + "{"
+                                                        + "\"transactionId\":51,"
+                                                        + "\"transactionType\":\"DEPOSIT\","
+                                                        + "\"amount\":5000.0,"
+                                                        + "\"balanceAfterTransaction\":35000.0,"
+                                                        + "\"transactionTime\":\"2026-09-15T12:08:51\""
+                                                        + "}"
+                                                        + "]"
+                                                        + "}"
+                                        )
+                                )
+                        ),
+
+                        @ApiResponse(
+                                responseCode = "404",
+                                description = "Bank account not found",
+                                content = @Content(
+                                        mediaType = "application/json",
+                                        examples = @ExampleObject(
+                                                name = "Not Found",
+                                                value = "{"
+                                                        + "\"status\":\"NOT_FOUND\","
+                                                        + "\"message\":\"Bank account not found\""
+                                                        + "}"
+                                        )
+                                )
+                        ),
+
+                        @ApiResponse(
+                                responseCode = "500",
+                                description = "Internal Server Error",
+                                content = @Content(
+                                        mediaType = "application/json",
+                                        examples = @ExampleObject(
+                                                name = "Internal Server Error",
+                                                value = "{"
+                                                        + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                        + "\"message\":\"Some error occurred\""
+                                                        + "}"
+                                        )
+                                )
+                        )
+                }
+        )
+        public GenericDto<List<TransactionResponseDto>> getTransactionsByAccount(
+
+                @Parameter(
+                        description = "Bank account number",
+                        example = "65"
+                )
+                @PathVariable Long accNo) {
+
+            List<TransactionResponseDto> transactions =
+                    transactionService.getTransactionsByAccount(accNo);
+
+            return new GenericDto<List<TransactionResponseDto>>(
+                    HttpStatus.OK,
+                    "Account transactions retrieved successfully",
+                    transactions
+            );
+        }
+
+
+        @GetMapping("/transactions/type/{transactionType}")
+        @Operation(
+                summary = "Get transactions by type",
+                description = "Retrieves all transactions of the specified transaction type. "
+                        + "Supported transaction types are DEPOSIT, WITHDRAW and TRANSFER.",
+                responses = {
+
+                        @ApiResponse(
+                                responseCode = "200",
+                                description = "Transactions retrieved successfully",
+                                content = @Content(
+                                        mediaType = "application/json",
+                                        examples = @ExampleObject(
+                                                name = "Success",
+                                                value = "{"
+                                                        + "\"status\":\"OK\","
+                                                        + "\"message\":\"Transactions retrieved successfully\","
+                                                        + "\"data\":["
+                                                        + "{"
+                                                        + "\"transactionId\":51,"
+                                                        + "\"transactionType\":\"DEPOSIT\","
+                                                        + "\"amount\":5000.0,"
+                                                        + "\"balanceAfterTransaction\":35000.0,"
+                                                        + "\"transactionTime\":\"2026-09-15T12:08:51\""
+                                                        + "}"
+                                                        + "]"
+                                                        + "}"
+                                        )
+                                )
+                        ),
+
+                        @ApiResponse(
+                                responseCode = "400",
+                                description = "Invalid transaction type",
+                                content = @Content(
+                                        mediaType = "application/json",
+                                        examples = @ExampleObject(
+                                                name = "Bad Request",
+                                                value = "{"
+                                                        + "\"status\":\"BAD_REQUEST\","
+                                                        + "\"message\":\"Invalid transaction type\""
+                                                        + "}"
+                                        )
+                                )
+                        ),
+
+                        @ApiResponse(
+                                responseCode = "500",
+                                description = "Internal Server Error",
+                                content = @Content(
+                                        mediaType = "application/json",
+                                        examples = @ExampleObject(
+                                                name = "Internal Server Error",
+                                                value = "{"
+                                                        + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                        + "\"message\":\"Some error occurred\""
+                                                        + "}"
+                                        )
+                                )
+                        )
+                }
+        )
+        public GenericDto<List<TransactionResponseDto>> getTransactionsByType(
+
+                @Parameter(
+                        description = "Transaction type",
+                        example = "DEPOSIT"
+                )
+                @PathVariable TransactionType transactionType) {
+
+            List<TransactionResponseDto> transactions =
+                    transactionService.getTransactionsByType(transactionType);
+
+            return new GenericDto<List<TransactionResponseDto>>(
+                    HttpStatus.OK,
+                    "Transactions retrieved successfully",
+                    transactions
+            );
+        }
+
+    @PostMapping("/transactions/date-range")
+    @Operation(
+            summary = "Get transactions between date and time",
+            description = "Retrieves all transactions performed between the specified "
+                    + "start date-time and end date-time.",
+            responses = {
+
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Transactions retrieved successfully",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Success",
+                                            value = "{"
+                                                    + "\"status\":\"OK\","
+                                                    + "\"message\":\"Transactions retrieved successfully\","
+                                                    + "\"data\":["
+                                                    + "{"
+                                                    + "\"transactionId\":51,"
+                                                    + "\"transactionType\":\"DEPOSIT\","
+                                                    + "\"amount\":5000.0,"
+                                                    + "\"balanceAfterTransaction\":35000.0,"
+                                                    + "\"transactionTime\":\"2026-09-15T12:08:51\""
+                                                    + "}"
+                                                    + "]"
+                                                    + "}"
+                                    )
+                            )
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Invalid date range",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Bad Request",
+                                            value = "{"
+                                                    + "\"status\":\"BAD_REQUEST\","
+                                                    + "\"message\":\"Invalid date range\""
+                                                    + "}"
+                                    )
+                            )
+                    ),
+
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+                                            name = "Internal Server Error",
+                                            value = "{"
+                                                    + "\"status\":\"INTERNAL_SERVER_ERROR\","
+                                                    + "\"message\":\"Some error occurred\""
+                                                    + "}"
+                                    )
+                            )
+                    )
+            }
+    )
+    public GenericDto<List<TransactionResponseDto>> getTransactionsBetween(
+            @RequestBody TransactionDateRangeReq request) {
+
+        List<TransactionResponseDto> transactions =
+                transactionService.getTransactionsBetween(
+                        request.getFrom(),
+                        request.getTo()
+                );
+
+        return new GenericDto<List<TransactionResponseDto>>(
+                HttpStatus.OK,
+                "Transactions retrieved successfully",
+                transactions
+        );
+    }
+
 }
