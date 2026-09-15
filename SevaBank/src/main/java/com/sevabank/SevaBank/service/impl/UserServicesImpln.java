@@ -111,7 +111,7 @@ public class UserServicesImpln implements UserServices {
         user.get().setPassword(updateReqUser.getPassword());
         user.get().setAge(updateReqUser.getAge());
         user.get().setUpdatedAt(LocalDateTime.now());
-        if(userRepo.updateUser(user.get())){
+        if(userRepo.updateUser(id, user.get())){
             log.info("User updated successfully!");
             return mapToDto(user.get());
         }
@@ -145,7 +145,7 @@ public class UserServicesImpln implements UserServices {
             user.get().setAge(updateReqUser.getAge());
         }
         user.get().setUpdatedAt(LocalDateTime.now());
-        if(userRepo.updateUser(user.get())){
+        if(userRepo.updateUser(id, user.get())){
             log.info("User updated successfully!");
             return mapToDto(user.get());
         }

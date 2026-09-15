@@ -5,8 +5,9 @@ import com.sevabank.SevaBank.entity.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.sql.DataSource;
+import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -17,8 +18,10 @@ import java.util.stream.DoubleStream;
 public class UserRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final DataSource dataSource;
 
-    public UserRepository(JdbcTemplate jdbcTemplate) {
+    public UserRepository(JdbcTemplate jdbcTemplate, DataSource dataSource) {
+        this.dataSource = dataSource;
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -81,14 +84,35 @@ public class UserRepository {
         }, userId);
     }
 
-    public boolean updateUser(User user) {
+    public boolean updateUser(Long id, User user) {
         String sql = "UPDATE user_schema.users " +
                      "SET name = ?, email = ?, password = ?, age = ?, updated_at = ? " +
                      "WHERE id = ?";
 
-        int rows = jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getPassword(), user.getAge(), LocalDateTime.now(), user.getId());
+//        int rows = jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getPassword(), user.getAge(), LocalDateTime.now(), user.getId());
 
-        return rows == 1;
+        try{
+            Connection connection = dataSource.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            connection.setAutoCommit(false);
+
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.setInt(4, user.getAge());
+            ps.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
+            ps.setLong(6, id);
+
+            int rows =  ps.executeUpdate();
+
+            connection.commit();
+
+            return rows == 1;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public  List<User> findAll() {
