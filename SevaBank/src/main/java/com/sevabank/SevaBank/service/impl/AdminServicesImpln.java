@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -76,6 +78,7 @@ public class AdminServicesImpln implements AdminServices {
         return accounts.stream()
                 .filter(x -> x.getBalance() < balance && x.getIsDeleted() == false)
                 .map(BankAccount::getUser)
+                .filter(distinctByKey(User::getId))
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
@@ -92,6 +95,7 @@ public class AdminServicesImpln implements AdminServices {
                 .stream()
                 .filter(x -> x.getAccountType() == AccountType.SAVING)
                 .map(BankAccount::getUser)
+                .filter(distinctByKey(User::getId))
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
@@ -108,6 +112,7 @@ public class AdminServicesImpln implements AdminServices {
                 .stream()
                 .filter(x -> x.getAccountType() == AccountType.CURRENT)
                 .map(BankAccount::getUser)
+                .filter(distinctByKey(User::getId))
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
@@ -224,6 +229,7 @@ public class AdminServicesImpln implements AdminServices {
                 .stream()
                 .filter(x -> x.getBalance() > amt)
                 .map(BankAccount::getUser)
+                .filter(distinctByKey(User::getId))
                 .map(user -> {
                     UserResponseDto dto = new UserResponseDto();
                     dto.setId(user.getId());
@@ -311,6 +317,7 @@ public class AdminServicesImpln implements AdminServices {
         log.error("accounts not present in bank db above this balance by v1");
         return bankAccountRepository.findByBalanceGreaterThan(amt)
                 .stream().map(BankAccount::getUser)
+                .filter(distinctByKey(User::getId))
                 .map(user -> {
                     UserResponseDto dto = new UserResponseDto();
                     dto.setId(user.getId());
@@ -328,6 +335,7 @@ public class AdminServicesImpln implements AdminServices {
         log.error("All bank accounts having balance less than {} by v1", amount);
         return bankAccountRepository.findByBalanceLessThan(amount)
                 .stream().map(BankAccount::getUser)
+                .filter(distinctByKey(User::getId))
                 .map(x -> {
                     UserResponseDto dto = new UserResponseDto();
                     dto.setId(x.getId());
@@ -472,6 +480,11 @@ public class AdminServicesImpln implements AdminServices {
         OverDraftLimitRes dto = new OverDraftLimitRes();
         dto.setOdl(odl);
         return dto;
+    }
+
+    private static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        Set<Object> seen = new HashSet<>();
+        return t -> seen.add(keyExtractor.apply(t));
     }
 
 }

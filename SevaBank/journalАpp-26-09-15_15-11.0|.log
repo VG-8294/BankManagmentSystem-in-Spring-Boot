@@ -1,0 +1,40 @@
+15:11:17.885 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean -Closing JPA EntityManagerFactory for persistence unit 'default'
+15:11:17.887 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Shutdown initiated...
+15:11:17.887 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Shutdown completed.
+15:11:19.517 [main] INFO  c.s.SevaBank.SevaBankApplication -Starting SevaBankApplication using Java 26.0.1 on 67s-MacBook-Pro.local with PID 47509 (/Users/vishalgautam/Downloads/BankManagementSys/SevaBank/target/classes started by vishalgautam in /Users/vishalgautam/Downloads/BankManagementSys/SevaBank)
+15:11:19.518 [main] INFO  c.s.SevaBank.SevaBankApplication -No active profile set, falling back to 1 default profile: "default"
+15:11:19.777 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate -Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+15:11:19.803 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate -Finished Spring Data repository scanning in 19 ms. Found 3 JPA repository interfaces.
+15:11:19.984 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer -Tomcat initialized with port(s): 8080 (http)
+15:11:19.987 [main] INFO  o.a.coyote.http11.Http11NioProtocol -Initializing ProtocolHandler ["http-nio-8080"]
+15:11:19.988 [main] INFO  o.a.catalina.core.StandardService -Starting service [Tomcat]
+15:11:19.989 [main] INFO  o.a.catalina.core.StandardEngine -Starting Servlet engine: [Apache Tomcat/9.0.83]
+15:11:20.033 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring embedded WebApplicationContext
+15:11:20.033 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext -Root WebApplicationContext: initialization completed in 496 ms
+15:11:20.098 [main] INFO  o.h.jpa.internal.util.LogHelper -HHH000204: Processing PersistenceUnitInfo [name: default]
+15:11:20.114 [main] INFO  org.hibernate.Version -HHH000412: Hibernate ORM core version 5.6.15.Final
+15:11:20.164 [main] INFO  o.h.annotations.common.Version -HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+15:11:20.191 [main] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Starting...
+15:11:20.229 [main] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Start completed.
+15:11:20.236 [main] INFO  org.hibernate.dialect.Dialect -HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+15:11:20.493 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator -HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+15:11:20.496 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean -Initialized JPA EntityManagerFactory for persistence unit 'default'
+15:11:20.792 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration -spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+15:11:20.957 [main] INFO  o.a.coyote.http11.Http11NioProtocol -Starting ProtocolHandler ["http-nio-8080"]
+15:11:20.966 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer -Tomcat started on port(s): 8080 (http) with context path ''
+15:11:20.972 [main] INFO  c.s.SevaBank.SevaBankApplication -Started SevaBankApplication in 1.59 seconds (JVM running for 1.783)
+15:11:21.916 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+15:11:21.916 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+15:11:21.917 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 1 ms
+15:11:22.288 [http-nio-8080-exec-4] INFO  o.s.api.AbstractOpenApiResource -Init duration for springdoc-openapi is: 311 ms
+15:11:30.513 [http-nio-8080-exec-5] ERROR c.s.S.s.impl.AdminServicesImpln -accounts not present in bank db above this balance by v1
+15:11:45.300 [http-nio-8080-exec-6] INFO  c.s.S.s.impl.AdminServicesImpln -returned users b/w two ages by v1
+15:11:45.311 [http-nio-8080-exec-6] INFO  c.s.S.s.impl.AdminServicesImpln -
+15:11:45.311 [http-nio-8080-exec-6] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+15:11:45.311 [http-nio-8080-exec-6] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+15:11:45.311 [http-nio-8080-exec-6] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+15:11:45.312 [http-nio-8080-exec-6] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+15:11:45.312 [http-nio-8080-exec-6] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+15:11:45.312 [http-nio-8080-exec-6] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+15:11:45.312 [http-nio-8080-exec-6] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+15:11:45.312 [http-nio-8080-exec-6] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto

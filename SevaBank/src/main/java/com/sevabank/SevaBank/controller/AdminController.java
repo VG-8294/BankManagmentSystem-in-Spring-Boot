@@ -940,7 +940,7 @@ public class AdminController {
 
         return new GenericDto<List<UserResponseDto>>(
                 HttpStatus.OK,
-                "All the users are: ",
+                "Users above the specified balance retrieved successfully",
                 usersList
         );
     }
@@ -1013,7 +1013,7 @@ public class AdminController {
 
         return new GenericDto<List<UserResponseDto>>(
                 HttpStatus.OK,
-                "All the users are: ",
+                "Users above the specified age retrieved successfully",
                 usersList
         );
     }
@@ -1086,7 +1086,7 @@ public class AdminController {
 
         return new GenericDto<List<UserResponseDto>>(
                 HttpStatus.OK,
-                "All the users are: ",
+                "Users above the specified age retrieved successfully",
                 usersList
         );
     }
@@ -1159,7 +1159,7 @@ public class AdminController {
 
         return new GenericDto<UserResponseDto>(
                 HttpStatus.OK,
-                "All the users are: ",
+                "User retrieved successfully",
                 dto
         );
     }
@@ -1232,7 +1232,7 @@ public class AdminController {
 
         return new GenericDto<UserResponseDto>(
                 HttpStatus.OK,
-                "All the users are: ",
+                "User retrieved successfully",
                 dto
         );
     }
@@ -1316,7 +1316,7 @@ public class AdminController {
 
         return new GenericDto<List<UserResponseDto>>(
                 HttpStatus.OK,
-                "All the users are: ",
+                "Users within the specified age range retrieved successfully",
                 usersList
         );
     }
@@ -1421,7 +1421,7 @@ public class AdminController {
 
         return new GenericDto<BankAccountResponseDto>(
                 HttpStatus.OK,
-                "Account deleted!"
+                "Account deleted successfully"
         );
     }
 
@@ -1476,7 +1476,7 @@ public class AdminController {
 
         return new GenericDto<List<UserResponseDto>>(
                 HttpStatus.ACCEPTED,
-                "users with multiple accounts",
+                "Users with multiple accounts retrieved successfully",
                 usersWithMulAcc
         );
     }
@@ -1529,7 +1529,7 @@ public class AdminController {
 
         return new GenericDto<List<UserResponseDto>>(
                 HttpStatus.ACCEPTED,
-                "users with balance greater than 100000",
+                "Users with balance greater than 100000 retrieved successfully",
                 users
         );
     }
@@ -1577,7 +1577,7 @@ public class AdminController {
 
         return new GenericDto<BalanceResDto>(
                 HttpStatus.OK,
-                "Average of balance of all accounts",
+                "Average balance retrieved successfully",
                 dto
         );
     }
@@ -1630,7 +1630,7 @@ public class AdminController {
 
         return new GenericDto<List<BankAccountResponseDto>>(
                 HttpStatus.OK,
-                "Users with balance greater than average of balance of all accounts",
+                "Accounts with balance greater than average retrieved successfully",
                 listOfAcc
         );
     }
@@ -1701,7 +1701,7 @@ public class AdminController {
 
         return new GenericDto<InterestResponseDto>(
                 HttpStatus.OK,
-                "interest level updated",
+                "Interest rate updated successfully",
                 intDto
         );
     }
@@ -1772,7 +1772,7 @@ public class AdminController {
 
         return new GenericDto<OverDraftLimitRes>(
                 HttpStatus.OK,
-                "overdraft limit updated",
+                "Overdraft limit updated successfully",
                 odlRes
         );
     }
@@ -1847,7 +1847,7 @@ public class AdminController {
 
         return new GenericDto<UserResponseDto>(
                 HttpStatus.ACCEPTED,
-                "updated successfully",
+                "User updated successfully",
                 updatedUser
         );
     }
@@ -1953,7 +1953,7 @@ public class AdminController {
 
         return new GenericDto<UserResponseDto>(
                 HttpStatus.ACCEPTED,
-                "updated successfully",
+                "User partially updated successfully",
                 updatedUser
         );
     }
@@ -2020,7 +2020,7 @@ public class AdminController {
 
         return new GenericDto<UserResponseDto>(
                 HttpStatus.OK,
-                "User deleted!"
+                "User deleted successfully"
         );
     }
 }
