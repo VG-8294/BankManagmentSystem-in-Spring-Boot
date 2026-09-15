@@ -1,6 +1,7 @@
 package com.sevabank.SevaBank.controller;
 
 import com.sevabank.SevaBank.dto.generic.GenericDto;
+import com.sevabank.SevaBank.dto.request.AmountReq;
 import com.sevabank.SevaBank.dto.request.BalanceReq;
 import com.sevabank.SevaBank.dto.response.BalanceResDto;
 import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
@@ -315,12 +316,12 @@ public class BankAccountController {
                     description = "Amount to be deposited",
                     required = true
             )
-            @RequestBody BalanceReq balanceReq) {
+            @RequestBody AmountReq amountReq) {
 
         BankAccountResponseDto depositedAccount =
                 bankAccountService.depositInAccount(
                         accNo,
-                        balanceReq.getBalance()
+                        amountReq.getAmount()
                 );
 
         return new GenericDto<BankAccountResponseDto>(
@@ -467,12 +468,12 @@ public class BankAccountController {
                     description = "Amount to be withdrawn",
                     required = true
             )
-            @RequestBody BalanceReq balanceReq) {
+            @RequestBody AmountReq amountReq) {
 
         BankAccountResponseDto withdrawnInAccount =
                 bankAccountService.withdrawInAccount(
                         accNo,
-                        balanceReq.getBalance()
+                        amountReq.getAmount()
                 );
 
         return new GenericDto<BankAccountResponseDto>(
@@ -566,7 +567,7 @@ public class BankAccountController {
 
         return new GenericDto<BalanceResDto>(
                 HttpStatus.ACCEPTED,
-                "",
+                "Balance retrieved successfully",
                 balance
         );
     }
@@ -663,7 +664,7 @@ public class BankAccountController {
 
         return new GenericDto<InterestResponseDto>(
                 HttpStatus.ACCEPTED,
-                "",
+                "Interest retrieved successfully",
                 interest
         );
     }
@@ -700,7 +701,8 @@ public class BankAccountController {
                                                     + "\"data\":{"
                                                     + "\"accNo\":65,"
                                                     + "\"balance\":24567.0,"
-                                                    + "\"accountType\":\"SAVING\""
+                                                    + "\"accountType\":\"SAVING\","
+                                                    +"\"balance\":\"23589\""
                                                     + "}"
                                                     + "}"
                                     )
@@ -754,7 +756,7 @@ public class BankAccountController {
 
         return new GenericDto<BankAccountResponseDto>(
                 HttpStatus.OK,
-                "Here are your bank details: ",
+                "Bank account details retrieved successfully",
                 bankAccount
         );
     }

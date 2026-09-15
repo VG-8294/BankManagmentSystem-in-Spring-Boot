@@ -6,6 +6,7 @@ import com.sevabank.SevaBank.dto.response.*;
 import com.sevabank.SevaBank.entity.BankAccount;
 
 import java.util.List;
+import java.util.Set;
 
 public interface AdminServices {
     List<UserResponseDto> getAllUsers();

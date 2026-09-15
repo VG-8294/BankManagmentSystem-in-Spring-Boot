@@ -48,7 +48,7 @@ public class UserServicesImpln implements UserServices {
         User newUser = new User(dto.getName(),dto.getEmail(), dto.getPassword(), dto.getAge());
         if(userRepo.existsByEmail(newUser.getEmail())){
             log.error("user email already exists in db");
-            throw new UserAlreadyExistsException("User Already exists!");
+            throw new UserAlreadyExistsException("Email already registered");
         }
         if(newUser.getAge() < 0){
             log.error("age is negative");
@@ -64,7 +64,7 @@ public class UserServicesImpln implements UserServices {
         Optional<BankAccount> account = bankAccountRepository.findById(loginReqDto.getAccNo());
         if(!account.isPresent()){
             log.error("Account number doesn't exist in db");
-            throw new ResourceNotFoundException("Invalid account number!");
+            throw new ResourceNotFoundException("Bank account not found!");
         }
             User user = account.get().getUser();
         if(!user.getEmail().equals(loginReqDto.getEmail()) || !user.getPassword().equals(loginReqDto.getPassword())){
@@ -104,7 +104,7 @@ public class UserServicesImpln implements UserServices {
                 .getUser();
 
         if(user == null){
-            throw new ResourceNotFoundException("Account not found!");
+            throw new ResourceNotFoundException("User not found");
         }
 
         return mapToDto(user);

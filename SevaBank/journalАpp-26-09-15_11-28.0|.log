@@ -1,0 +1,5 @@
+11:28:40.829 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+11:28:40.831 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+11:28:40.833 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 2 ms
+11:28:40.932 [http-nio-8080-exec-1] INFO  c.s.S.service.impl.BankServicesImpln -Bank account created!
+11:28:40.932 [http-nio-8080-exec-1] INFO  c.s.S.service.impl.BankServicesImpln -normal bank class to dto converted

@@ -8,5 +8,6 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 public class InterestResponseDto {
+    private Long accNo;
     private Double interest;
 }

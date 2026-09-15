@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
         return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(UserAlreadyExistsException.class)
     public GenericDto<String> userAlreadyExistsException(UserAlreadyExistsException e){
         return new GenericDto<String>(HttpStatus.BAD_REQUEST, e.getMessage());

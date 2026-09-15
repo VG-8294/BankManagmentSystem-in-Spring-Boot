@@ -1,0 +1,2 @@
+11:40:50.013 [http-nio-8080-exec-10] INFO  c.s.S.service.impl.BankServicesImpln -Bank account created!
+11:40:50.015 [http-nio-8080-exec-10] INFO  c.s.S.service.impl.BankServicesImpln -normal bank class to dto converted

@@ -1,0 +1,4 @@
+11:58:04.395 [http-nio-8080-exec-5] ERROR c.s.S.service.impl.BankServicesImpln -Account number doesn't exist in db for deposition
+11:58:34.828 [http-nio-8080-exec-6] INFO  c.s.S.service.impl.BankServicesImpln -transaction saved!
+11:58:34.834 [http-nio-8080-exec-6] INFO  c.s.S.service.impl.BankServicesImpln -amount withdrawal successfully
+11:58:34.839 [http-nio-8080-exec-6] INFO  c.s.S.service.impl.BankServicesImpln -normal bank class to dto converted

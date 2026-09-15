@@ -219,7 +219,7 @@ public class UserController {
                                             name = "Valid Login",
                                             summary = "Successful login request",
                                             value = "{"
-                                                    + "\"accountNo\": 37,"
+                                                    + "\"accNo\": 37,"
                                                     + "\"email\": \"farhad@gmail.com\","
                                                     + "\"password\": \"123456\""
                                                     + "}"
@@ -228,7 +228,7 @@ public class UserController {
                                             name = "Invalid Login",
                                             summary = "Invalid credentials",
                                             value = "{"
-                                                    + "\"accountNo\": 37,"
+                                                    + "\"accNo\": 37,"
                                                     + "\"email\": \"wrong@gmail.com\","
                                                     + "\"password\": \"wrong\""
                                                     + "}"
@@ -237,7 +237,7 @@ public class UserController {
                                             name = "Invalid Account number",
                                             summary = "Account number not found",
                                             value = "{"
-                                                    + "\"accountNo\": 78,"
+                                                    + "\"accNo\": 78,"
                                                     + "\"email\": \"farhad@gmail.com\","
                                                     + "\"password\": \"123456\""
                                                     + "}"
@@ -364,8 +364,7 @@ public class UserController {
                                             name = "User Not Found",
                                             value = "{"
                                                     + "\"status\":\"NOT_FOUND\","
-                                                    + "\"message\":\"User not found\","
-                                                    + "\"data\":null"
+                                                    + "\"message\":\"User not found\""
                                                     + "}"
                                     )
                             )
@@ -379,8 +378,7 @@ public class UserController {
                                             name = "Internal Server Error",
                                             value = "{"
                                                     + "\"status\":\"INTERNAL_SERVER_ERROR\","
-                                                    + "\"message\":\"Internal server error\","
-                                                    + "\"data\":null"
+                                                    + "\"message\":\"Internal server error\""
                                                     + "}"
                                     )
                             )

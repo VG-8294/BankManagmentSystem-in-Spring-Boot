@@ -1,0 +1,2 @@
+12:09:06.981 [http-nio-8080-exec-6] ERROR c.s.S.service.impl.BankServicesImpln -Account number doesn't exist in db for interest check
+12:09:55.172 [http-nio-8080-exec-8] INFO  c.s.S.service.impl.BankServicesImpln -normal bank class to dto converted

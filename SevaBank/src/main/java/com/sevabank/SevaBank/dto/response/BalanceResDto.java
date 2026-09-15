@@ -8,5 +8,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class BalanceResDto {
+    private Long accNo;
     private Double balance;
 }

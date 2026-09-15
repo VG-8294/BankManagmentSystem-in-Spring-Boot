@@ -65,11 +65,15 @@ public class BankServicesImpln implements BankServices {
     public BankAccountResponseDto createBankAccount(CreateBankAccountRequest bankReq) {
 
         User user = userRepository.findById(bankReq.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         if(user == null){
             log.error("user record doesn't exist with id-{}", bankReq.getUserId());
-            throw new ResourceNotFoundException("User doesn't exist!");
+            throw new ResourceNotFoundException("User not found");
+        }
+
+        if(bankReq.getBalance() < 0){
+            throw new BalanceException("Balance cannot be negative");
         }
 
         AccountType type;
@@ -80,7 +84,7 @@ public class BankServicesImpln implements BankServices {
         }
         else{
             log.error("accountType is not valid");
-            throw new InvalidAccountTypeException("This type of account doesn't exist!");
+            throw new InvalidAccountTypeException("Invalid account type");
         }
         BankAccount createdBankAccount = new BankAccount(bankReq.getBalance(), type);
         createdBankAccount.setUser(user);
@@ -95,7 +99,7 @@ public class BankServicesImpln implements BankServices {
         
         if(!bankAccount.isPresent()){
             log.error("BankAccount record doesn't exist with id-{}", id);
-            throw new ResourceNotFoundException("Account not found!");
+            throw new ResourceNotFoundException("Account not found");
         }
         log.info("bank account found with id-{}", id);
         return bankAccount;
@@ -105,12 +109,12 @@ public class BankServicesImpln implements BankServices {
     public BankAccountResponseDto depositInAccount(Long id, double balance) {
         if(balance < 0){
             log.error("Amount is negative for deposit");
-            throw new InvalidAmountException("Amount is less then 0");
+            throw new InvalidAmountException("Amount must be greater than zero");
         }
         Boolean isAmountDep = bankAccountRepository.existsById(id);
         if(!isAmountDep){
             log.error("Account number doesn't exist in db for deposition");
-            throw new ResourceNotFoundException("Account not found!");
+            throw new ResourceNotFoundException("Account not found");
         }
         Optional<BankAccount> account = bankAccountRepository.findById(id);
         BankAccount accountInDep = account.get();
@@ -127,18 +131,18 @@ public class BankServicesImpln implements BankServices {
     public BankAccountResponseDto withdrawInAccount(Long id, double balance) {
         if(balance < 0){
             log.error("Amount is negative for withdrawal");
-            throw new InvalidAmountException("Amount is less then 0");
+            throw new InvalidAmountException("Amount must be greater than zero");
         }
         Boolean isAmountDep = bankAccountRepository.existsById(id);
         if(!isAmountDep){
             log.error("Account number doesn't exist in db for withdrawal");
-            throw new ResourceNotFoundException("Account not found!");
+            throw new ResourceNotFoundException("Account not found");
         }
         Optional<BankAccount> account = bankAccountRepository.findById(id);
         BankAccount accountInDep = account.get();
         if(accountInDep.getBalance() < balance){
             log.error("Amount entered is greater then balance");
-            throw new BalanceException("Balance less then " + balance);
+            throw new BalanceException("Insufficient balance");
         }
         accountInDep.withdraw(balance);
         bankAccountRepository.save(accountInDep);
@@ -158,6 +162,7 @@ public class BankServicesImpln implements BankServices {
         BankAccount accountToExist = accountExist.get();
         BalanceResDto balanceDto = new BalanceResDto();
         balanceDto.setBalance(accountToExist.getBalance());
+        balanceDto.setAccNo(id);
         log.info("balance checked!");
         return balanceDto;
     }
@@ -173,6 +178,7 @@ public class BankServicesImpln implements BankServices {
         saveTransaction(accountToExist, TransactionType.INTEREST, accountToExist.calculateInt(), accountToExist.getBalance());
         InterestResponseDto intDto = new InterestResponseDto();
         intDto.setInterest(accountToExist.calculateInt());
+        intDto.setAccNo(id);
         log.info("interest checked!");
         return intDto;
     }
