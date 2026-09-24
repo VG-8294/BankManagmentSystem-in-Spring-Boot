@@ -19,6 +19,8 @@ import com.sevabank.SevaBank.repository.UserRepository;
 import com.sevabank.SevaBank.service.BankServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -62,6 +64,10 @@ public class BankServicesImpln implements BankServices {
 
 
     @Override
+    @Transactional(
+            isolation = Isolation.SERIALIZABLE,
+            timeout = 5
+    )
     public BankAccountResponseDto createBankAccount(CreateBankAccountRequest bankReq) {
 
         Optional<User> user = Optional.of(userRepository.findById(bankReq.getUserId())
@@ -105,6 +111,9 @@ public class BankServicesImpln implements BankServices {
 //    }
 //
     @Override
+    @Transactional(
+            isolation = Isolation.SERIALIZABLE
+    )
     public BankAccountResponseDto depositInAccount(Long id, double balance) {
         if(balance < 0){
             log.error("Amount is negative for deposit");
@@ -129,6 +138,10 @@ public class BankServicesImpln implements BankServices {
 //
 //
     @Override
+    @Transactional(
+            isolation = Isolation.SERIALIZABLE,
+            timeout = 5
+    )
     public BankAccountResponseDto withdrawInAccount(Long id, double balance) {
         if(balance < 0){
             log.error("Amount is negative for withdrawal");

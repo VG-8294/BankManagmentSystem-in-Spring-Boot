@@ -1,0 +1,9 @@
+11:02:46.225 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+11:02:46.226 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+11:02:46.227 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 1 ms
+11:02:46.319 [http-nio-8080-exec-1] INFO  c.s.S.service.impl.BankServicesImpln -transaction saved!
+11:02:46.325 [http-nio-8080-exec-1] INFO  c.s.S.service.impl.BankServicesImpln -Amount deposited successfully!
+11:02:46.325 [http-nio-8080-exec-1] INFO  c.s.S.service.impl.BankServicesImpln -normal bank class to dto converted
+11:02:47.914 [http-nio-8080-exec-2] INFO  c.s.S.service.impl.BankServicesImpln -transaction saved!
+11:02:47.916 [http-nio-8080-exec-2] INFO  c.s.S.service.impl.BankServicesImpln -amount withdrawal successfully
+11:02:47.916 [http-nio-8080-exec-2] INFO  c.s.S.service.impl.BankServicesImpln -normal bank class to dto converted

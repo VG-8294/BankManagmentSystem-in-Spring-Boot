@@ -1,0 +1,38 @@
+17:41:06.785 [main] INFO  c.s.SevaBank.SevaBankApplication -Starting SevaBankApplication using Java 26.0.1 on 67s-MacBook-Pro.local with PID 16800 (/Users/vishalgautam/Downloads/BankManagementSys/SevaBank/target/classes started by vishalgautam in /Users/vishalgautam/Downloads/BankManagementSys/SevaBank)
+17:41:06.788 [main] INFO  c.s.SevaBank.SevaBankApplication -No active profile set, falling back to 1 default profile: "default"
+17:41:07.021 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate -Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+17:41:07.042 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate -Finished Spring Data repository scanning in 18 ms. Found 3 JPA repository interfaces.
+17:41:07.221 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer -Tomcat initialized with port(s): 8080 (http)
+17:41:07.224 [main] INFO  o.a.coyote.http11.Http11NioProtocol -Initializing ProtocolHandler ["http-nio-8080"]
+17:41:07.224 [main] INFO  o.a.catalina.core.StandardService -Starting service [Tomcat]
+17:41:07.224 [main] INFO  o.a.catalina.core.StandardEngine -Starting Servlet engine: [Apache Tomcat/9.0.83]
+17:41:07.257 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring embedded WebApplicationContext
+17:41:07.257 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext -Root WebApplicationContext: initialization completed in 444 ms
+17:41:07.334 [main] INFO  o.h.jpa.internal.util.LogHelper -HHH000204: Processing PersistenceUnitInfo [name: default]
+17:41:07.349 [main] INFO  org.hibernate.Version -HHH000412: Hibernate ORM core version 5.6.15.Final
+17:41:07.400 [main] INFO  o.h.annotations.common.Version -HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+17:41:07.425 [main] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Starting...
+17:41:07.461 [main] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Start completed.
+17:41:07.467 [main] INFO  org.hibernate.dialect.Dialect -HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+17:41:07.738 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator -HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+17:41:07.741 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean -Initialized JPA EntityManagerFactory for persistence unit 'default'
+17:41:07.924 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration -spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+17:41:08.034 [main] INFO  o.a.coyote.http11.Http11NioProtocol -Starting ProtocolHandler ["http-nio-8080"]
+17:41:08.047 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer -Tomcat started on port(s): 8080 (http) with context path ''
+17:41:08.051 [main] INFO  c.s.SevaBank.SevaBankApplication -Started SevaBankApplication in 1.403 seconds (JVM running for 1.605)
+17:41:10.403 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+17:41:10.403 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+17:41:10.404 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 1 ms
+17:41:10.440 [http-nio-8080-exec-1] ERROR c.s.S.s.impl.AdminServicesImpln -users list returned!
+17:41:10.440 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:41:10.440 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:41:10.440 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:41:10.440 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:41:10.440 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:41:10.440 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:41:10.440 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:41:10.440 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:41:10.440 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:41:10.440 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:41:10.440 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
+17:41:10.440 [http-nio-8080-exec-1] INFO  c.s.S.s.impl.AdminServicesImpln -user mapped to userDto
