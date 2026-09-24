@@ -21,8 +21,10 @@ import com.sevabank.SevaBank.repository.UserRepository;
 import com.sevabank.SevaBank.service.BankServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -65,6 +67,10 @@ public class BankServicesImpln implements BankServices {
 
 
     @Override
+    @Transactional(
+            isolation = Isolation.SERIALIZABLE,
+            timeout = 5
+    )
     public BankAccountResponseDto createBankAccount(CreateBankAccountRequest bankReq) {
 
         User user = userRepository.findById(bankReq.getUserId())
@@ -105,6 +111,10 @@ public class BankServicesImpln implements BankServices {
     }
 
     @Override
+    @Transactional(
+            isolation = Isolation.SERIALIZABLE,
+            timeout = 5
+    )
     public BankAccountResponseDto depositInAccount(Long id, double balance) {
         if(balance < 0){
             log.error("Amount is negative for deposit");
@@ -127,6 +137,10 @@ public class BankServicesImpln implements BankServices {
 
 
     @Override
+    @Transactional(
+            isolation = Isolation.SERIALIZABLE,
+            timeout = 5
+    )
     public BankAccountResponseDto withdrawInAccount(Long id, double balance) {
         if(balance < 0){
             log.error("Amount is negative for withdrawal");
@@ -151,20 +165,14 @@ public class BankServicesImpln implements BankServices {
     }
 
     @Override
-    @Transactional
+    @Transactional(
+            propagation = Propagation.REQUIRES_NEW,
+            isolation = Isolation.SERIALIZABLE,
+            timeout = 5
+    )
     public TransferResDto transferMoney(TransferReqDto reqDto){
-        Optional<BankAccount> acc1 = bankAccountRepository.findById(reqDto.getAccNo1());
-        Optional<BankAccount> acc2 = bankAccountRepository.findById(reqDto.getAccNo2());
-        if(!acc1.isPresent() || !acc2.isPresent()){
-            throw new ResourceNotFoundException("Either of the account doesn't exist");
-        }
-        if(acc1.get().getBalance() < reqDto.getAmt()){
-            throw new BalanceException("Balance is not enough in account");
-        }
-        acc1.get().withdraw(reqDto.getAmt());
-        acc2.get().deposit(reqDto.getAmt());
-        bankAccountRepository.save(acc1.get());
-        bankAccountRepository.save(acc2.get());
+        BankAccountResponseDto acc1 = withdrawInAccount(reqDto.getAccNo1(), reqDto.getAmt());
+        BankAccountResponseDto acc2 = depositInAccount(reqDto.getAccNo2(), reqDto.getAmt());
         TransferResDto resDto = new TransferResDto();
         resDto.setFrom(reqDto.getAccNo1());
         resDto.setTo(reqDto.getAccNo2());
