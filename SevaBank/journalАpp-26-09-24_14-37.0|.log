@@ -1,0 +1,4 @@
+14:37:28.569 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+14:37:28.571 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+14:37:28.576 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 3 ms
+14:37:34.681 [http-nio-8080-exec-1] INFO  c.s.S.service.impl.BankServicesImpln -transaction saved!
