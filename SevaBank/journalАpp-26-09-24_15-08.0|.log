@@ -1,0 +1,5 @@
+15:08:24.406 [http-nio-8080-exec-3] INFO  c.s.S.service.impl.BankServicesImpln -balance checked!
+15:08:35.997 [http-nio-8080-exec-2] ERROR c.s.S.service.impl.BankServicesImpln -Account number doesn't exist in db for balance check
+15:08:42.213 [http-nio-8080-exec-4] ERROR c.s.S.service.impl.BankServicesImpln -Account number doesn't exist in db for balance check
+15:08:47.265 [http-nio-8080-exec-5] INFO  c.s.S.service.impl.BankServicesImpln -balance checked!
+15:08:55.829 [http-nio-8080-exec-6] ERROR c.s.S.service.impl.BankServicesImpln -Account number doesn't exist in db for withdrawal

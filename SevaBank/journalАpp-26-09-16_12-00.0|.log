@@ -1,0 +1,1 @@
+12:00:01.716 [http-nio-8080-exec-8] ERROR c.s.S.service.impl.UserServicesImpln -user email already exists in db

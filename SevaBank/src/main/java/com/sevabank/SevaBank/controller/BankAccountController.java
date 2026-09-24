@@ -2,10 +2,12 @@ package com.sevabank.SevaBank.controller;
 
 import com.sevabank.SevaBank.dto.generic.GenericDto;
 import com.sevabank.SevaBank.dto.request.BalanceReq;
+import com.sevabank.SevaBank.dto.request.TransferReqDto;
 import com.sevabank.SevaBank.dto.response.BalanceResDto;
 import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
 import com.sevabank.SevaBank.dto.request.CreateBankAccountRequest;
 import com.sevabank.SevaBank.dto.response.InterestResponseDto;
+import com.sevabank.SevaBank.dto.response.TransferResDto;
 import com.sevabank.SevaBank.service.BankServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +42,13 @@ public class BankAccountController {
 
         return new GenericDto<BankAccountResponseDto>(HttpStatus.ACCEPTED, "Amount withdrawn", withdrawnInAccount);
     }
+
+    @PostMapping("/transfer")
+    public GenericDto<TransferResDto> transfer(@RequestBody TransferReqDto reqDto){
+        TransferResDto resDto = bankAccountService.transferMoney(reqDto);
+        return new GenericDto<TransferResDto>(HttpStatus.ACCEPTED, "Amount transferred", resDto);
+    }
+
 
     @GetMapping("/balance/{id}")
     public GenericDto<BalanceResDto> checkBalance(@PathVariable Long id){

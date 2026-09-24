@@ -2,10 +2,12 @@ package com.sevabank.SevaBank.service.impl;
 
 import com.sevabank.SevaBank.Enum.AccountType;
 import com.sevabank.SevaBank.Enum.TransactionType;
+import com.sevabank.SevaBank.dto.request.TransferReqDto;
 import com.sevabank.SevaBank.dto.response.BalanceResDto;
 import com.sevabank.SevaBank.dto.response.BankAccountResponseDto;
 import com.sevabank.SevaBank.dto.request.CreateBankAccountRequest;
 import com.sevabank.SevaBank.dto.response.InterestResponseDto;
+import com.sevabank.SevaBank.dto.response.TransferResDto;
 import com.sevabank.SevaBank.entity.BankAccount;
 import com.sevabank.SevaBank.entity.Transaction;
 import com.sevabank.SevaBank.entity.User;
@@ -19,6 +21,9 @@ import com.sevabank.SevaBank.repository.UserRepository;
 import com.sevabank.SevaBank.service.BankServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -62,6 +67,10 @@ public class BankServicesImpln implements BankServices {
 
 
     @Override
+    @Transactional(
+            isolation = Isolation.SERIALIZABLE,
+            timeout = 5
+    )
     public BankAccountResponseDto createBankAccount(CreateBankAccountRequest bankReq) {
 
         User user = userRepository.findById(bankReq.getUserId())
@@ -102,6 +111,10 @@ public class BankServicesImpln implements BankServices {
     }
 
     @Override
+    @Transactional(
+            isolation = Isolation.SERIALIZABLE,
+            timeout = 5
+    )
     public BankAccountResponseDto depositInAccount(Long id, double balance) {
         if(balance < 0){
             log.error("Amount is negative for deposit");
@@ -124,6 +137,10 @@ public class BankServicesImpln implements BankServices {
 
 
     @Override
+    @Transactional(
+            isolation = Isolation.SERIALIZABLE,
+            timeout = 5
+    )
     public BankAccountResponseDto withdrawInAccount(Long id, double balance) {
         if(balance < 0){
             log.error("Amount is negative for withdrawal");
@@ -146,6 +163,23 @@ public class BankServicesImpln implements BankServices {
         log.info("amount withdrawal successfully");
         return bankAccountToDto(accountInDep);
     }
+
+    @Override
+    @Transactional(
+            propagation = Propagation.REQUIRES_NEW,
+            isolation = Isolation.SERIALIZABLE,
+            timeout = 5
+    )
+    public TransferResDto transferMoney(TransferReqDto reqDto){
+        BankAccountResponseDto acc1 = withdrawInAccount(reqDto.getAccNo1(), reqDto.getAmt());
+        BankAccountResponseDto acc2 = depositInAccount(reqDto.getAccNo2(), reqDto.getAmt());
+        TransferResDto resDto = new TransferResDto();
+        resDto.setFrom(reqDto.getAccNo1());
+        resDto.setTo(reqDto.getAccNo2());
+        resDto.setAmt(reqDto.getAmt());
+        return resDto;
+    }
+
 
 
     @Override

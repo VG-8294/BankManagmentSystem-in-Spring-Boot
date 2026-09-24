@@ -1,0 +1,28 @@
+16:19:09.325 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean -Closing JPA EntityManagerFactory for persistence unit 'default'
+16:19:09.327 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Shutdown initiated...
+16:19:09.328 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Shutdown completed.
+16:19:10.768 [main] INFO  c.s.SevaBank.SevaBankApplication -Starting SevaBankApplication using Java 26.0.1 on 67s-MacBook-Pro.local with PID 29123 (/Users/vishalgautam/Downloads/BankManagementSys/SevaBank/target/classes started by vishalgautam in /Users/vishalgautam/Downloads/BankManagementSys/SevaBank)
+16:19:10.771 [main] INFO  c.s.SevaBank.SevaBankApplication -No active profile set, falling back to 1 default profile: "default"
+16:19:11.019 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate -Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+16:19:11.043 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate -Finished Spring Data repository scanning in 20 ms. Found 3 JPA repository interfaces.
+16:19:11.227 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer -Tomcat initialized with port(s): 8080 (http)
+16:19:11.231 [main] INFO  o.a.coyote.http11.Http11NioProtocol -Initializing ProtocolHandler ["http-nio-8080"]
+16:19:11.233 [main] INFO  o.a.catalina.core.StandardService -Starting service [Tomcat]
+16:19:11.233 [main] INFO  o.a.catalina.core.StandardEngine -Starting Servlet engine: [Apache Tomcat/9.0.83]
+16:19:11.270 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring embedded WebApplicationContext
+16:19:11.270 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext -Root WebApplicationContext: initialization completed in 470 ms
+16:19:11.339 [main] INFO  o.h.jpa.internal.util.LogHelper -HHH000204: Processing PersistenceUnitInfo [name: default]
+16:19:11.354 [main] INFO  org.hibernate.Version -HHH000412: Hibernate ORM core version 5.6.15.Final
+16:19:11.400 [main] INFO  o.h.annotations.common.Version -HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+16:19:11.424 [main] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Starting...
+16:19:11.459 [main] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Start completed.
+16:19:11.470 [main] INFO  org.hibernate.dialect.Dialect -HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+16:19:11.749 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator -HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+16:19:11.752 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean -Initialized JPA EntityManagerFactory for persistence unit 'default'
+16:19:11.950 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration -spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+16:19:12.058 [main] INFO  o.a.coyote.http11.Http11NioProtocol -Starting ProtocolHandler ["http-nio-8080"]
+16:19:12.066 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer -Tomcat started on port(s): 8080 (http) with context path ''
+16:19:12.070 [main] INFO  c.s.SevaBank.SevaBankApplication -Started SevaBankApplication in 1.458 seconds (JVM running for 1.668)
+16:19:14.979 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+16:19:14.980 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+16:19:14.981 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 1 ms

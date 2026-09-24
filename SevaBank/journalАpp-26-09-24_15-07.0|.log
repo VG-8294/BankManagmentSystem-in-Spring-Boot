@@ -1,0 +1,4 @@
+15:07:37.102 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+15:07:37.103 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+15:07:37.105 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 2 ms
+15:07:37.186 [http-nio-8080-exec-1] ERROR c.s.S.service.impl.BankServicesImpln -Account number doesn't exist in db for withdrawal

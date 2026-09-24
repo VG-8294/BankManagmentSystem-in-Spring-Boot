@@ -1,0 +1,7 @@
+16:23:02.097 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring DispatcherServlet 'dispatcherServlet'
+16:23:02.098 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Initializing Servlet 'dispatcherServlet'
+16:23:02.099 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -Completed initialization in 1 ms
+16:23:02.175 [http-nio-8080-exec-1] ERROR c.s.S.e.GlobalExceptionHandler -Could not commit JPA transaction; nested exception is javax.persistence.RollbackException: Error while committing the transaction
+16:23:37.447 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean -Closing JPA EntityManagerFactory for persistence unit 'default'
+16:23:37.448 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Shutdown initiated...
+16:23:37.449 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource -HikariPool-1 - Shutdown completed.
