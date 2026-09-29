@@ -15,6 +15,8 @@ import com.sevabank.SevaBank.repository.UserRepository;
 import com.sevabank.SevaBank.service.UserServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -42,6 +44,10 @@ public class UserServicesImpln implements UserServices {
 
 
     @Override
+    @Transactional(
+            isolation = Isolation.READ_COMMITTED,
+            timeout = 5
+    )
     public UserResponseDto createUser(RegisterReqDto dto){
         User newUser = new User(dto.getName(),dto.getEmail(), dto.getPassword(), dto.getAge());
         if(userRepo.existsByEmail(newUser.getEmail())){
@@ -98,6 +104,10 @@ public class UserServicesImpln implements UserServices {
 //    }
 //
     @Override
+    @Transactional(
+            isolation = Isolation.READ_COMMITTED,
+            timeout = 5
+    )
     public UserResponseDto updateUser(Long id, UpdateUserReq updateReqUser) {
         Optional<User> user = userRepo.findById(id)
                 .stream()
@@ -120,6 +130,10 @@ public class UserServicesImpln implements UserServices {
     }
 
     @Override
+    @Transactional(
+            isolation = Isolation.READ_COMMITTED,
+            timeout = 5
+    )
     public UserResponseDto updateDetailsUser(Long id, UpdateUserReq updateReqUser) {
         Optional<User> user = userRepo.findById(id)
                 .stream()

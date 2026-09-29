@@ -65,7 +65,7 @@ public class BankServicesImpln implements BankServices {
 
     @Override
     @Transactional(
-            isolation = Isolation.SERIALIZABLE,
+            isolation = Isolation.READ_COMMITTED,
             timeout = 5
     )
     public BankAccountResponseDto createBankAccount(CreateBankAccountRequest bankReq) {
@@ -97,22 +97,10 @@ public class BankServicesImpln implements BankServices {
         log.info("Bank account created!");
         return bankAccountToDto(createdBankAccount);
     }
-//
-//    @Override
-//    public Optional<BankAccount> getBankAccountById(Long id) {
-//        Optional<BankAccount> bankAccount = bankAccountRepository.findById(id);
-//
-//        if(!bankAccount.isPresent()){
-//            log.error("BankAccount record doesn't exist with id-{}", id);
-//            throw new ResourceNotFoundException("Account not found!");
-//        }
-//        log.info("bank account found with id-{}", id);
-//        return bankAccount;
-//    }
-//
     @Override
     @Transactional(
-            isolation = Isolation.SERIALIZABLE
+            isolation = Isolation.SERIALIZABLE,
+            timeout = 5
     )
     public BankAccountResponseDto depositInAccount(Long id, double balance) {
         if(balance < 0){
