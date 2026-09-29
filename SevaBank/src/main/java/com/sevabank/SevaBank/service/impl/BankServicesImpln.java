@@ -166,7 +166,6 @@ public class BankServicesImpln implements BankServices {
 
     @Override
     @Transactional(
-            propagation = Propagation.REQUIRES_NEW,
             isolation = Isolation.SERIALIZABLE,
             timeout = 5
     )
